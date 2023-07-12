@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head class="hide">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Google Calendar</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+
+	<body>
+		<header class="header"></header>
+		<div class="event-creation--modal">
+			<div class="event-creation--modal--header">
+				<button class="modal-close--button" aria-label="Close modal button">
+					X
+				</button>
+			</div>
+			<div class="event-creation--modal--wrap">
+				<div class="event-creation--modal--input">
+					<input
+						type="text"
+						aria-label="Add event title"
+						placeholder="Add title"
+					/>
+				</div>
+				<div class="event-creation--modal--time">
+					<label for="starting day" class="hide">Starting date</label>
+					<input type="date" name="starting date" id="starting date" />
+					<label for="starting time" class="hide">Starting time</label>
+					<input type="time" name="starting time" id="starting time" />
+					<div aria-label="until">-</div>
+					<label for="finishin time" class="hide">Finishing time</label>
+					<input type="time" name="finishing time" id="finishing time" />
+					<label for="finishing date" class="hide">Finishing date</label>
+					<input type="date" name="finishing date" id="finishing date" />
+				</div>
+				<div class="event-creation--modal--buttons">
+					<button type="button" class="modal-save--button">Save</button>
+				</div>
+			</div>
+		</div>
+		<section class="content-wrap">
+			<aside class="aside-left"></aside>
+			<div aria-hidden="true" class="calendar-header">
+				<span class="calendar-header--timezone">GMT+03</span>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">SUN</span>
+					<span class="calendar-header--cell--number">9</span>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">MON</span>
+					<span class="calendar-header--cell--number">10</span>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters current-day--letters"
+						>TUE</span
+					>
+					<span class="calendar-header--cell--number current-day--number"
+						>11</span
+					>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">WED</span>
+					<span class="calendar-header--cell--number">12</span>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">THU </span>
+					<span class="calendar-header--cell--number">13</span>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">FRI</span>
+					<span class="calendar-header--cell--number">14</span>
+				</div>
+				<div class="calendar-header--cell">
+					<span class="calendar-header--cell--letters">SAT</span>
+					<span class="calendar-header--cell--number">15</span>
+				</div>
+			</div>
+			<div class="calendar-wrap">
+				<div aria-hidden="true" class="calendar-table--time">
+					<span class="time-marker">1 AM</span>
+					<span class="time-marker">2 AM</span>
+					<span class="time-marker">3 AM</span>
+					<span class="time-marker">4 AM</span>
+					<span class="time-marker">5 AM</span>
+					<span class="time-marker">6 AM</span>
+					<span class="time-marker">7 AM</span>
+					<span class="time-marker">8 AM</span>
+					<span class="time-marker">9 AM</span>
+					<span class="time-marker">10 AM</span>
+					<span class="time-marker">11 AM</span>
+					<span class="time-marker">12 PM</span>
+					<span class="time-marker">1 PM</span>
+					<span class="time-marker">2 PM</span>
+					<span class="time-marker">3 PM</span>
+					<span class="time-marker">4 PM</span>
+					<span class="time-marker">5 PM</span>
+					<span class="time-marker">6 PM</span>
+					<span class="time-marker">7 PM</span>
+					<span class="time-marker">8 PM</span>
+					<span class="time-marker">9 PM</span>
+					<span class="time-marker">10 PM</span>
+					<span class="time-marker">11 PM</span>
+				</div>
+				<div class="calendar-table--wrap">
+					<div class="calendar-table">
+						<div class="calendar-event">
+							<span class="calendar-event--title">Test Meeting,</span>
+							<span class="calendar-event--time">9:00 AM - 10:45 AM</span>
+						</div>
+					</div>
+					<div class="calendar-table--invisible">
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<div class="calendar-table--cell"></div>
+						<!------------------------------------->
+					</div>
+				</div>
+			</div>
+			<aside class="aside-right"></aside>
+		</section>
+		<script src="script.js"></script>
+	</body>
+</html>
