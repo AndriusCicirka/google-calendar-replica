@@ -20,7 +20,7 @@ input {
 }
 
 .hide {
-	display: none;
+	font-size: 0;
 }
 
 /*
