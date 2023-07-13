@@ -46,22 +46,6 @@ input {
 	height: calc(100% - 60px);
 }
 
-.content-wrap--invisible {
-	display: grid;
-
-	position: absolute;
-	width: 100%;
-
-	top: calc(0% + 60px);
-
-	grid-template-columns: 300px 1fr 50px;
-	grid-template-rows: 120px 1fr;
-	grid-template-areas:
-		'abc b c'
-		'abc calendar-table--wrap--invisible c';
-	height: calc(100% - 60px);
-}
-
 /*
 *
 *
@@ -210,18 +194,19 @@ input {
 .calendar-table--invisible {
 	display: grid;
 	width: 100%;
+	height: inherit;
 	grid-template-columns: repeat(7, 1fr);
 	grid-template-rows: repeat(24, 60px);
 	grid-gap: 0px;
 
-	top: calc(-200% - 26px);
-	transform: translate(-1px);
+	transform: translate(-1px, -100%);
 	position: relative;
 	z-index: 1;
 }
 
 .calendar-table--wrap {
 	width: 100%;
+	height: inherit;
 }
 
 .calendar-table--invisible > .calendar-table--cell {
