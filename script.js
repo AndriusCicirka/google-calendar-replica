@@ -25,14 +25,14 @@ class Modal {
 }
 
 class Calendar {
-	constructor(callbacks) {
-		calendarTableWrap.addEventListener('click', callbacks.onClick);
+	constructor(tableWrap, callbacks) {
+		this.tableWrap = tableWrap.addEventListener('click', callbacks.onClick);
 	}
 }
 
 const modal = new Modal(eventModal, eventModalCloseBtn);
 
-const calendar = new Calendar({
+const calendar = new Calendar(calendarTableWrap, {
 	onClick() {
 		modal.toggle(eventModal);
 	},
