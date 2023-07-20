@@ -28,10 +28,13 @@ class Modal {
 }
 
 class Calendar {
-	constructor(table, callbacks) {
+	constructor(table, calendarHeaderCells, callbacks) {
 		this.today = new Date();
+		this.headerCells = calendarHeaderCells;
+		this.week = this.getCurrentWeek();
+
 		this.table = table.addEventListener('click', callbacks.onClick);
-		console.log(this.getCurrentWeek());
+		this.initCurrentWeek();
 	}
 	getCurrentWeek() {
 		return Array(7)
@@ -41,6 +44,17 @@ class Calendar {
 					this.today.setDate(this.today.getDate() - this.today.getDay() + index)
 				).getDate()
 			);
+	}
+
+	initCurrentWeek() {
+		this.today = new Date();
+		for (let [index, day] of this.headerCells.entries()) {
+			day.children[1].textContent = this.week[index];
+			if (this.week[index] === this.today.getDate()) {
+				day.children[0].classList.add('current-day--letters');
+				day.children[1].classList.add('current-day--number');
+			}
+		}
 	}
 }
 
@@ -55,7 +69,7 @@ class Event {
 
 const modal = new Modal(eventModal, eventModalCloseBtn);
 
-const calendar = new Calendar(calendarTable, {
+const calendar = new Calendar(calendarTable, calendarHeaderCells, {
 	onClick() {
 		modal.toggle();
 	},
