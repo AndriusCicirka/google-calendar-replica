@@ -45,6 +45,7 @@ class Calendar {
 		this.table = table.addEventListener('click', callbacks.onClick);
 		this.initWeek(this.today);
 	}
+
 	getWeekdays(date) {
 		if (!date) {
 			date = this.today;
@@ -58,6 +59,7 @@ class Calendar {
 
 	initWeek(date) {
 		this.today = new Date();
+		this.getWeekOfYear(this.today);
 		if (!date) {
 			date = this.today;
 		}
@@ -69,6 +71,25 @@ class Calendar {
 				day.children[1].classList.add('current-day--number');
 			}
 		}
+	}
+
+	getWeekOfYear(date) {
+		if (!date) {
+			date = this.today;
+		}
+		const copyDate = new Date(date);
+		copyDate.setHours(0, 0, 0, 0);
+		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 1);
+		const daysSinceFirstSunday =
+			(copyDate - firstDayOfYear) / (24 * 60 * 60 * 1000);
+
+		// Adjust week number if January 1st is not a Sunday
+		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
+		if (firstDayOfYear.getDay() !== 0) {
+			weekNumber--;
+		}
+
+		return weekNumber;
 	}
 }
 
