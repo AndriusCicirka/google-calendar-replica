@@ -2,19 +2,20 @@
 
 const calendarTableWrap = document.querySelector('.calendar-table--wrap');
 const calendarTableEvent = document.querySelector('.calendar-table');
-
 const eventModal = document.querySelector('.event-creation--modal');
 
 class Modal {
-	constructor(callbacks) {}
+	constructor(modal, callbacks) {
+		this.modal = modal;
+	}
 	open() {
-		eventModal.classList.remove('hide');
+		this.modal.classList.remove('hide');
 	}
 	hide() {
-		eventModal.classList.add('hide');
+		this.modal.classList.add('hide');
 	}
 	toggle() {
-		eventModal.classList.toggle('hide');
+		this.modal.classList.toggle('hide');
 	}
 }
 
@@ -24,10 +25,10 @@ class Calendar {
 	}
 }
 
-const modal = new Modal();
+const modal = new Modal(eventModal);
 
 const calendar = new Calendar({
 	onClick() {
-		modal.toggle();
+		modal.toggle(eventModal);
 	},
 });
