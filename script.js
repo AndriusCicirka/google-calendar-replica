@@ -1,7 +1,6 @@
 'use strict';
 
-const calendarTableWrap = document.querySelector('.calendar-table--wrap');
-const calendarTableEvent = document.querySelector('.calendar-table');
+const calendarTable = document.querySelector('.calendar-table');
 
 const eventModal = document.querySelector('.event-creation--modal');
 const eventModalCloseBtn = document.querySelector('.modal-close--button');
@@ -25,14 +24,14 @@ class Modal {
 }
 
 class Calendar {
-	constructor(tableWrap, callbacks) {
-		this.tableWrap = tableWrap.addEventListener('click', callbacks.onClick);
+	constructor(table, callbacks) {
+		this.table = table.addEventListener('click', callbacks.onClick);
 	}
 }
 
 const modal = new Modal(eventModal, eventModalCloseBtn);
 
-const calendar = new Calendar(calendarTableWrap, {
+const calendar = new Calendar(calendarTable, {
 	onClick() {
 		modal.toggle(eventModal);
 	},
