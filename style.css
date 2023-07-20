@@ -20,7 +20,7 @@ input {
 }
 
 .hide {
-	display: none;
+	display: none !important;
 }
 
 .hide-visibility {
