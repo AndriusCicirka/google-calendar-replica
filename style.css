@@ -363,7 +363,7 @@ input {
 
 	.calendar-header,
 	.calendar-wrap {
-		min-width: 800px;
+		min-width: 1000px;
 	}
 }
 
