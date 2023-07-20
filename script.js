@@ -1,5 +1,6 @@
 'use strict';
 
+const calendarHeaderCells = document.querySelectorAll('.calendar-header--cell');
 const calendarTable = document.querySelector('.calendar-table');
 
 const eventModal = document.querySelector('.event-creation--modal');
@@ -28,7 +29,18 @@ class Modal {
 
 class Calendar {
 	constructor(table, callbacks) {
+		this.today = new Date();
 		this.table = table.addEventListener('click', callbacks.onClick);
+		console.log(this.getCurrentWeek());
+	}
+	getCurrentWeek() {
+		return Array(7)
+			.fill()
+			.map((_, index) =>
+				new Date(
+					this.today.setDate(this.today.getDate() - this.today.getDay() + index)
+				).getDate()
+			);
 	}
 }
 
