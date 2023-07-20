@@ -12,12 +12,13 @@ class Modal {
 		this.modal = modal;
 		this.closeBtn = closeBtn;
 
-		this.closeBtn.addEventListener('click', () => this.hide());
+		this.closeBtn.addEventListener('click', (event) => this.hide(event));
 	}
 	open(eventBlobId) {
 		this.modal.classList.remove('hide');
 	}
-	hide() {
+	hide(event) {
+		event.preventDefault();
 		this.modal.classList.add('hide');
 	}
 	toggle() {
