@@ -31,23 +31,27 @@ class Calendar {
 	constructor(table, calendarHeaderCells, callbacks) {
 		this.today = new Date();
 		this.headerCells = calendarHeaderCells;
-		this.week = this.getCurrentWeek();
 
 		this.table = table.addEventListener('click', callbacks.onClick);
-		this.initCurrentWeek();
+		this.initWeek(this.today);
 	}
-	getCurrentWeek() {
+	getWeekdays(date) {
+		if (!date) {
+			date = this.today;
+		}
 		return Array(7)
 			.fill()
 			.map((_, index) =>
-				new Date(
-					this.today.setDate(this.today.getDate() - this.today.getDay() + index)
-				).getDate()
+				new Date(date.setDate(date.getDate() - date.getDay() + index)).getDate()
 			);
 	}
 
-	initCurrentWeek() {
+	initWeek(date) {
 		this.today = new Date();
+		if (!date) {
+			date = this.today;
+		}
+		this.week = this.getWeekdays(date);
 		for (let [index, day] of this.headerCells.entries()) {
 			day.children[1].textContent = this.week[index];
 			if (this.week[index] === this.today.getDate()) {
