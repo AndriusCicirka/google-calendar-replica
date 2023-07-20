@@ -21,7 +21,7 @@ class Modal {
 		this.modal.classList.add('hide');
 	}
 	toggle() {
-		//this.modal.classList.toggle('hide');
+		this.modal.classList.toggle('hide');
 	}
 }
 
@@ -41,7 +41,7 @@ const modal = new Modal(eventModal, eventModalCloseBtn);
 
 const calendar = new Calendar(calendarTable, {
 	onClick() {
-		modal.toggle(eventModal);
+		modal.toggle();
 	},
 });
 
