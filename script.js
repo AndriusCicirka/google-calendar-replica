@@ -35,6 +35,9 @@ class Event {
 	constructor(eventBlobs, callbacks) {
 		this.eventBlobs = eventBlobs;
 	}
+	generateId() {
+		return Date.now();
+	}
 }
 
 const modal = new Modal(eventModal, eventModalCloseBtn);
