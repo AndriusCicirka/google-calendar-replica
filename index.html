@@ -15,7 +15,7 @@
 
 	<body>
 		<header class="header"></header>
-		<div class="event-creation--modal hide">
+		<form class="event-creation--modal">
 			<div class="event-creation--modal--header">
 				<button class="modal-close--button" aria-label="Close modal button">
 					X
@@ -25,6 +25,7 @@
 				<div class="event-creation--modal--input">
 					<input
 						type="text"
+						name="name"
 						aria-label="Add event title"
 						placeholder="Add title"
 					/>
@@ -33,26 +34,31 @@
 					<label for="starting-date" class="hide-visibility"
 						>Starting date</label
 					>
-					<input type="date" name="starting date" id="starting-date" />
+					<input type="date" name="startingDate" id="starting-date" />
 					<label for="starting-time" class="hide-visibility"
 						>Starting time</label
 					>
-					<input type="time" name="starting time" id="starting-time" />
+					<input type="time" name="startingTime" id="starting-time" />
 					<div aria-label="until">-</div>
 					<label for="finishing-time" class="hide-visibility"
 						>Finishing time</label
 					>
-					<input type="time" name="finishing time" id="finishing-time" />
+					<input type="time" name="finishingTime" id="finishing-time" />
 					<label for="finishing-date" class="hide-visibility"
 						>Finishing date</label
 					>
-					<input type="date" name="finishing date" id="finishing-date" />
+					<input type="date" name="finishingDate" id="finishing-date" />
 				</div>
+				<textarea
+					name="description"
+					class="event-creation--modal--description"
+					placeholder="Description of the meeting"
+				></textarea>
 				<div class="event-creation--modal--buttons">
-					<button type="button" class="modal-save--button">Save</button>
+					<button type="submit" class="modal-save--button">Save</button>
 				</div>
 			</div>
-		</div>
+		</form>
 		<section class="content-wrap">
 			<aside class="aside-left"></aside>
 			<div aria-hidden="true" class="calendar-header">
@@ -121,8 +127,12 @@
 						<div class="calendar-event">
 							<span class="calendar-event--title">Test Meeting,</span>
 							<span class="calendar-event--time">9:00 AM - 10:45 AM</span>
+							<p class="calendar-event--description">
+								This is a random description. Skill issue + ratio.
+							</p>
 						</div>
 					</div>
+
 					<div class="calendar-table--invisible">
 						<!------------------------------------->
 						<div class="calendar-table--cell"></div>
