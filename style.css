@@ -20,6 +20,11 @@ input {
 }
 
 .hide {
+	display: none;
+}
+
+.hide-visibility {
+	visibility: hidden;
 	font-size: 0;
 }
 
@@ -363,7 +368,7 @@ input {
 
 	.calendar-header,
 	.calendar-wrap {
-		min-width: 1000px;
+		min-width: 950px;
 	}
 }
 
