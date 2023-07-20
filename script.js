@@ -8,6 +8,13 @@ const eventModalCloseBtn = document.querySelector('.modal-close--button');
 
 const eventBlobs = document.querySelectorAll('.calendar-event');
 
+/*
+ *
+ *
+ *
+ *
+ */
+
 class Modal {
 	constructor(modal, closeBtn, callbacks) {
 		this.modal = modal;
@@ -26,6 +33,9 @@ class Modal {
 		this.modal.classList.toggle('hide');
 	}
 }
+
+/*
+ */
 
 class Calendar {
 	constructor(table, calendarHeaderCells, callbacks) {
@@ -62,6 +72,9 @@ class Calendar {
 	}
 }
 
+/*
+ */
+
 class Event {
 	constructor(eventBlobs, callbacks) {
 		this.eventBlobs = eventBlobs;
@@ -70,6 +83,13 @@ class Event {
 		return Date.now();
 	}
 }
+
+/*
+ *
+ *
+ *
+ *
+ */
 
 const modal = new Modal(eventModal, eventModalCloseBtn);
 
