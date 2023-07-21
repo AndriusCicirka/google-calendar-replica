@@ -46,10 +46,7 @@ class Calendar {
 		this.initWeek(this.today);
 	}
 
-	getWeekdays(date) {
-		if (!date) {
-			date = this.today;
-		}
+	getWeekdays(date = this.today) {
 		return Array(7)
 			.fill()
 			.map((_, index) =>
@@ -57,12 +54,9 @@ class Calendar {
 			);
 	}
 
-	initWeek(date) {
+	initWeek(date = this.today) {
 		this.today = new Date();
 		this.getWeekOfYear(this.today);
-		if (!date) {
-			date = this.today;
-		}
 		this.week = this.getWeekdays(date);
 		for (let [index, day] of this.headerCells.entries()) {
 			day.children[1].textContent = this.week[index];
@@ -73,10 +67,7 @@ class Calendar {
 		}
 	}
 
-	getWeekOfYear(date) {
-		if (!date) {
-			date = this.today;
-		}
+	getWeekOfYear(date = this.today) {
 		const copyDate = new Date(date);
 		copyDate.setHours(0, 0, 0, 0);
 		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 1);
