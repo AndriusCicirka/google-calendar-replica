@@ -101,7 +101,13 @@ class Event {
 }
 
 class Storage {
-	constructor() {}
+	constructor() {
+		console.log(this.idByDate());
+	}
+
+	idByDate(date = calendar.getToday()) {
+		return `${calendar.getWeekOfYear(date)}/${date.getFullYear()}`;
+	}
 }
 
 /*
@@ -120,3 +126,5 @@ const calendar = new Calendar(calendarTable, calendarHeaderCells, {
 });
 
 const event = new Event(eventBlobs, {});
+
+const storage = new Storage();
