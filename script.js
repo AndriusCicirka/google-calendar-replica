@@ -5,6 +5,7 @@ const calendarTable = document.querySelector('.calendar-table');
 
 const eventModal = document.querySelector('.event-creation--modal');
 const eventModalCloseBtn = document.querySelector('.modal-close--button');
+const eventModalSaveBtn = document.querySelector('.modal-save--button');
 
 const eventBlobs = document.querySelectorAll('.calendar-event');
 
@@ -16,11 +17,13 @@ const eventBlobs = document.querySelectorAll('.calendar-event');
  */
 
 class Modal {
-	constructor(modal, closeBtn, callbacks) {
+	constructor(modal, closeBtn, saveBtn, callbacks) {
 		this.modal = modal;
 		this.closeBtn = closeBtn;
+		this.saveBtn = saveBtn;
 
 		this.closeBtn.addEventListener('click', (event) => this.hide(event));
+		this.saveBtn.addEventListener('click', (event) => this.hide(event));
 	}
 	open(eventBlobId) {
 		this.modal.classList.remove('hide');
@@ -117,7 +120,7 @@ class Storage {
  *
  */
 
-const modal = new Modal(eventModal, eventModalCloseBtn);
+const modal = new Modal(eventModal, eventModalCloseBtn, eventModalSaveBtn);
 
 const calendar = new Calendar(calendarTable, calendarHeaderCells, {
 	onClick() {
