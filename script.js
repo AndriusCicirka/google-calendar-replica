@@ -39,11 +39,15 @@ class Modal {
 
 class Calendar {
 	constructor(table, calendarHeaderCells, callbacks) {
-		this.today = new Date();
+		this.today = this.getToday();
 		this.headerCells = calendarHeaderCells;
 
 		this.table = table.addEventListener('click', callbacks.onClick);
 		this.initWeek(this.today);
+	}
+
+	getToday() {
+		return new Date();
 	}
 
 	getWeekdays(date = this.today) {
