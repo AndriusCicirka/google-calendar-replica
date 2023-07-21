@@ -105,6 +105,10 @@ class Event {
 	}
 }
 
+class Storage {
+	constructor() {}
+}
+
 /*
  *
  *
