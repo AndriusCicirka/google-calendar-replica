@@ -22,8 +22,9 @@ class Modal {
 		this.closeBtn = closeBtn;
 		this.saveBtn = saveBtn;
 
+		this.modal.addEventListener('submit', (event) => this.onSubmit(event));
 		this.closeBtn.addEventListener('click', (event) => this.hide(event));
-		this.saveBtn.addEventListener('click', (event) => this.hide(event));
+		this.saveBtn.addEventListener('submit', (event) => event.preventDefault());
 	}
 	open(eventBlobId) {
 		this.modal.classList.remove('hide');
@@ -34,6 +35,11 @@ class Modal {
 	}
 	toggle() {
 		this.modal.classList.toggle('hide');
+	}
+
+	onSubmit(event) {
+		event.preventDefault();
+		console.log(event);
 	}
 }
 
@@ -101,6 +107,8 @@ class Event {
 	generateId() {
 		return Date.now();
 	}
+
+	getEventData() {}
 }
 
 class Storage {
