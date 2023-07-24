@@ -173,7 +173,21 @@ class Event {
 		this.formatBlobData(id, overlappingDay);
 	}
 
-	formatEventData() {}
+	formatBlobData(data, overlapping) {
+		if (overlapping) {
+		} else {
+			return {
+				id,
+				width: '100%',
+				gridRow: `${data.startingDate.getHour() - 1}/${
+					data.finishingDate.getHour() - 1
+				}`,
+				gridColumn: `${data.startingDate.getDay()}`,
+				marginTop: `${data.startingDate.getMinutes()}px`,
+				marginBottom: `${60 - data.finishingDate.getMinutes()}px`,
+			};
+		}
+	}
 }
 
 class Storage {
