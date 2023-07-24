@@ -160,8 +160,10 @@ class Event {
 		}
 
 		const formattedData = this.formatBlobData(eventData, overlappingDay);
-		setData(formattedData);
-		setBlobs(formattedData);
+		//storage.setData(formattedData);
+		//storage.setBlobs(formattedData);
+
+		console.log(storage.getBlobs());
 	}
 
 	formatBlobData(data, overlapping) {
@@ -242,17 +244,24 @@ class Storage {
 	}
 
 	setData(data) {
-		localStorage.setItem(`${this.idByDate(data.startingDate)}/data`);
+		localStorage.setItem(
+			`${this.idByDate(data.startingDate)}/data`,
+			JSON.stringify(data)
+		);
 	}
 
 	setBlobs(event) {
 		if (event.blobs) {
-			for (let blob of this.blobs) {
-				localStorage.setItem(`${blob.storageId}/blobs`, blob);
+			for (let blob of event.blobs) {
+				localStorage.setItem(`${blob.storageId}/blobs`, JSON.stringify(blob));
 			}
 		} else {
-			localStorage.setItem(`${event.storageId}/blobs`, event);
+			localStorage.setItem(`${event.storageId}/blobs`, JSON.stringify(event));
 		}
+	}
+
+	getBlobs(id = this.idByDate()) {
+		return JSON.parse(localStorage.getItem(`${id}/blobs`));
 	}
 }
 
