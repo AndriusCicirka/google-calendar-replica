@@ -50,15 +50,13 @@ class Modal {
 		const combinedStart = new Date(`${startingDate}T${startingTime}`);
 		const combinedFinish = new Date(`${finishingDate}T${finishingTime}`);
 
-		const minimalTimeDiff = combinedFinish.getMinutes();
-
 		if (
 			title.length > 2 &&
 			startingDate &&
 			startingTime &&
 			finishingTime &&
 			finishingDate &&
-			combinedStart <= combinedFinish.setMinutes(minimalTimeDiff - 15)
+			combinedStart <= combinedFinish
 		) {
 			console.log('pog');
 			evnt.getModalData(title, description, combinedStart, combinedFinish);
@@ -158,8 +156,8 @@ class Event {
 			id,
 			title,
 			description,
-			startingDate,
-			finishingDate,
+			startingDate: startingDate,
+			finishingDate: finishingDate,
 		};
 
 		let overlappingDay = false;
@@ -174,17 +172,19 @@ class Event {
 	}
 
 	formatBlobData(data, overlapping) {
+		console.log(data.startingDate);
 		if (overlapping) {
 		} else {
 			return {
-				id,
+				id: data.id,
+				storageId: storage.idByDate(data.startingDate),
 				width: '100%',
-				gridRow: `${data.startingDate.getHour() - 1}/${
-					data.finishingDate.getHour() - 1
-				}`,
+				gridRow: `${
+					data.startingDate.getHours() - 1
+				}/${data.finishingDate.getHours()}`,
 				gridColumn: `${data.startingDate.getDay()}`,
 				marginTop: `${data.startingDate.getMinutes()}px`,
-				marginBottom: `${60 - data.finishingDate.getMinutes()}px`,
+				marginBottom: `${-(60 - data.finishingDate.getMinutes())}px`,
 			};
 		}
 	}
