@@ -37,8 +37,8 @@ class Modal {
 		this.modal.classList.toggle('hide');
 	}
 
-	onSubmit(event) {
-		event.preventDefault();
+	onSubmit(e) {
+		e.preventDefault();
 		let title = document.getElementById('event-title').value.trim();
 		let description = document.getElementById('event-description').value.trim();
 
@@ -61,6 +61,7 @@ class Modal {
 			combinedStart <= combinedFinish.setMinutes(minimalTimeDiff - 15)
 		) {
 			console.log('pog');
+			event.getModalData(title, description, combinedStart, combinedFinish);
 			this.modal.reset();
 			this.hide();
 		} else {
@@ -151,7 +152,9 @@ class Event {
 		return Date.now();
 	}
 
-	getModalData(title, description, startingDate, finishingTime) {}
+	getModalData(title, description, startingDate, finishingTime) {
+		console.log(startingDate);
+	}
 }
 
 class Storage {
