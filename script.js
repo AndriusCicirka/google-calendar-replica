@@ -159,7 +159,9 @@ class Event {
 			overlappingDay = true;
 		}
 
-		this.formatBlobData(eventData, overlappingDay);
+		const formattedData = this.formatBlobData(eventData, overlappingDay);
+		setData(formattedData);
+		setBlobs(formattedData);
 	}
 
 	formatBlobData(data, overlapping) {
