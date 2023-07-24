@@ -39,6 +39,24 @@ class Modal {
 
 	onSubmit(event) {
 		event.preventDefault();
+		let title = document.getElementById('event-title').value;
+		let description = document.getElementById('event-description').value;
+
+		let startingDate = formatDateToYYYYMMDD(
+			new Date(document.getElementById('starting-date').value)
+		);
+		let startingTime = document.getElementById('starting-time').value;
+		let finishingTime = document.getElementById('finishing-time').value;
+		let finishingDate = document.getElementById('finishing-date').value;
+
+		console.log(
+			title,
+			description,
+			startingDate,
+			startingTime,
+			finishingTime,
+			finishingDate
+		);
 	}
 }
 
