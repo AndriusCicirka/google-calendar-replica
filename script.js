@@ -239,9 +239,19 @@ class Storage {
 		return `${calendar.getWeekOfYear(date)}/${date.getFullYear()}`;
 	}
 
-	setData(data) {}
+	setData(data) {
+		localStorage.setItem(`${this.idByDate(data.startingDate)}/data`);
+	}
 
-	setBlobs() {}
+	setBlobs(event) {
+		if (event.blobs) {
+			for (let blob of this.blobs) {
+				localStorage.setItem(`${blob.storageId}/blobs`, blob);
+			}
+		} else {
+			localStorage.setItem(`${event.storageId}/blobs`, event);
+		}
+	}
 }
 
 /*
