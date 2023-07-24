@@ -196,10 +196,10 @@ class Event {
 						),
 						width: '100%',
 						gridRow: `${0}/${24}`,
-						gridColumn: `${(date = data.startingDate, i = i) => {
+						gridColumn: (date = data.startingDate, i = i) => {
 							let temp = date;
 							return temp.setDate(temp.getDate() + i).getDay();
-						}}`,
+						},
 						paddingBottom: '25px',
 						paddingTop: '25px',
 					});
