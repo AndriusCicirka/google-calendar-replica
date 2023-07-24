@@ -39,15 +39,33 @@ class Modal {
 
 	onSubmit(event) {
 		event.preventDefault();
-		let title = document.getElementById('event-title').value;
-		let description = document.getElementById('event-description').value;
+		let title = document.getElementById('event-title').value.trim();
+		let description = document.getElementById('event-description').value.trim();
 
-		let startingDate = formatDateToYYYYMMDD(
-			new Date(document.getElementById('starting-date').value)
-		);
+		let startingDate = document.getElementById('starting-date').value;
 		let startingTime = document.getElementById('starting-time').value;
 		let finishingTime = document.getElementById('finishing-time').value;
 		let finishingDate = document.getElementById('finishing-date').value;
+
+		const combinedStart = new Date(`${startingDate}T${startingTime}`);
+		const combinedFinish = new Date(`${finishingDate}T${finishingTime}`);
+
+		const minimalTimeDiff = combinedFinish.getMinutes();
+
+		if (
+			title.length > 2 &&
+			startingDate &&
+			startingTime &&
+			finishingTime &&
+			finishingDate &&
+			combinedStart <= combinedFinish.setMinutes(minimalTimeDiff - 15)
+		) {
+			console.log('pog');
+			this.modal.reset();
+			this.hide();
+		} else {
+			console.log('unpog');
+		}
 
 		console.log(
 			title,
