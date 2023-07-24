@@ -65,15 +65,6 @@ class Modal {
 		} else {
 			console.log('unpog');
 		}
-
-		// console.log(
-		// 	title,
-		// 	description,
-		// 	startingDate,
-		// 	startingTime,
-		// 	finishingTime,
-		// 	finishingDate
-		// );
 	}
 }
 
@@ -168,12 +159,61 @@ class Event {
 			overlappingDay = true;
 		}
 
-		console.log(this.formatBlobData(eventData, overlappingDay));
+		this.formatBlobData(eventData, overlappingDay);
 	}
 
 	formatBlobData(data, overlapping) {
-		console.log(data.startingDate);
 		if (overlapping) {
+			const blobArray = [];
+			const loopLength = Math.floor(
+				(data.finishingDate - data.startingDate) / (3600 * 24 * 1000)
+			);
+
+			let iterableDate = data.startingDate;
+
+			blobArray.push({
+				id: data.id,
+				blobId: `${data.id}-0`,
+				storageId: storage.idByDate(data.startingDate),
+				width: '100%',
+				gridRow: `${data.startingDate.getHours() - 1}/${24}`,
+				gridColumn: `${data.startingDate.getDay()}`,
+				marginTop: `${data.startingDate.getMinutes()}px`,
+				paddingBottom: '25px',
+			});
+
+			if (loopLength > 2) {
+				for (let i = 1; i < loopLength; i++) {
+					blobArray.push({
+						id: data.id,
+						blobId: `${data.id}-${i}`,
+						storageId: storage.idByDate(
+							new Date(iterableDate.setDate(iterableDate.getDate() + 1))
+						),
+						width: '100%',
+						gridRow: `${0}/${24}`,
+						gridColumn: `${(date = data.startingDate, i = i) => {
+							let temp = date;
+							return temp.setDate(temp.getDate() + i).getDay();
+						}}`,
+						paddingBottom: '25px',
+						paddingTop: '25px',
+					});
+				}
+			}
+			blobArray.push({
+				id: data.id,
+				blobId: `${data.id}-${loopLength}`,
+				storageId: storage.idByDate(data.finishingDate),
+				width: '100%',
+				gridRow: `${0}/${data.finishingDate.getHours()}`,
+				gridColumn: `${data.finishingDate.getDay()}`,
+				marginBottom: `${-(60 - data.finishingDate.getMinutes())}px`,
+				paddingTop: '25px',
+			});
+
+			console.log(blobArray);
+			return { id: data.id, blobs: blobArray };
 		} else {
 			return {
 				id: data.id,
@@ -198,6 +238,10 @@ class Storage {
 	idByDate(date = calendar.getToday()) {
 		return `${calendar.getWeekOfYear(date)}/${date.getFullYear()}`;
 	}
+
+	setData(data) {}
+
+	setBlobs() {}
 }
 
 /*
