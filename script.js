@@ -39,7 +39,6 @@ class Modal {
 
 	onSubmit(event) {
 		event.preventDefault();
-		console.log(event);
 	}
 }
 
@@ -94,6 +93,14 @@ class Calendar {
 		}
 
 		return weekNumber;
+	}
+
+	formatDateToDDMMYY(date) {
+		const year = date.getFullYear().slice(2);
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
+
+		return `${day}/${month}/${year}`;
 	}
 }
 
