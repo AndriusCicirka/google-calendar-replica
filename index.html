@@ -28,13 +28,14 @@
 						name="name"
 						aria-label="Add event title"
 						placeholder="Add title"
+						id="event-title"
 					/>
 				</div>
 				<div class="event-creation--modal--time">
-					<label for="starting-date" class="hide-visibility"
+					<label for="starting-date" class="hide-visibility" id="starting-date"
 						>Starting date</label
 					>
-					<input type="date" name="startingDate" id="starting-date" />
+					<input type="date" name="startingDate" id="starting-time" />
 					<label for="starting-time" class="hide-visibility"
 						>Starting time</label
 					>
@@ -120,9 +121,16 @@
 				</div>
 				<div class="calendar-table--wrap">
 					<div class="calendar-table">
-						<div class="calendar-event">
+						<div class="calendar-event test1">
 							<span class="calendar-event--title">Test Meeting,</span>
 							<span class="calendar-event--time">9:00 AM - 10:45 AM</span>
+							<p class="calendar-event--description">
+								This is a random description. Skill issue + ratio.
+							</p>
+						</div>
+						<div class="calendar-event test2">
+							<span class="calendar-event--title">Test Meeting,</span>
+							<span class="calendar-event--time">9:45 AM - 11:00 AM</span>
 							<p class="calendar-event--description">
 								This is a random description. Skill issue + ratio.
 							</p>
