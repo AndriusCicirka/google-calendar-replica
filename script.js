@@ -251,12 +251,21 @@ class Storage {
 	}
 
 	setBlobs(event) {
+		let temp;
 		if (event.blobs) {
 			for (let blob of event.blobs) {
-				localStorage.setItem(`${blob.storageId}/blobs`, JSON.stringify(blob));
+				temp = this.getBlobs(blob.storageId);
+				localStorage.setItem(
+					`${blob.storageId}/blobs`,
+					JSON.stringify(...temp, blob)
+				);
 			}
 		} else {
-			localStorage.setItem(`${event.storageId}/blobs`, JSON.stringify(event));
+			temp = this.getBlobs(event.storageId);
+			localStorage.setItem(
+				`${event.storageId}/blobs`,
+				JSON.stringify(...temp, event)
+			);
 		}
 	}
 
