@@ -62,20 +62,20 @@ class Modal {
 		) {
 			console.log('pog');
 			event.getModalData(title, description, combinedStart, combinedFinish);
-			this.modal.reset();
-			this.hide();
+			//this.modal.reset();
+			//this.hide();
 		} else {
 			console.log('unpog');
 		}
 
-		console.log(
-			title,
-			description,
-			startingDate,
-			startingTime,
-			finishingTime,
-			finishingDate
-		);
+		// console.log(
+		// 	title,
+		// 	description,
+		// 	startingDate,
+		// 	startingTime,
+		// 	finishingTime,
+		// 	finishingDate
+		// );
 	}
 }
 
@@ -133,7 +133,7 @@ class Calendar {
 	}
 
 	formatDateToDDMMYY(date) {
-		const year = date.getFullYear().slice(2);
+		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1).padStart(2, '0');
 		const day = String(date.getDate()).padStart(2, '0');
 
@@ -152,9 +152,28 @@ class Event {
 		return Date.now();
 	}
 
-	getModalData(title, description, startingDate, finishingTime) {
-		console.log(startingDate);
+	getModalData(title, description, startingDate, finishingDate) {
+		const id = this.generateId();
+		const eventData = {
+			id,
+			title,
+			description,
+			startingDate,
+			finishingDate,
+		};
+
+		let overlappingDay = false;
+		if (
+			calendar.formatDateToDDMMYY(startingDate) !==
+			calendar.formatDateToDDMMYY(finishingDate)
+		) {
+			overlappingDay = true;
+		}
+
+		this.formatBlobData(id, overlappingDay);
 	}
+
+	formatEventData() {}
 }
 
 class Storage {
