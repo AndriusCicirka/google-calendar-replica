@@ -151,7 +151,7 @@ class Event {
 		return Date.now();
 	}
 
-	getEventData() {}
+	getModalData(title, description, startingDate, finishingTime) {}
 }
 
 class Storage {
