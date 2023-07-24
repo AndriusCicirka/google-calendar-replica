@@ -37,8 +37,8 @@ class Modal {
 		this.modal.classList.toggle('hide');
 	}
 
-	onSubmit(e) {
-		e.preventDefault();
+	onSubmit(event) {
+		event.preventDefault();
 		let title = document.getElementById('event-title').value.trim();
 		let description = document.getElementById('event-description').value.trim();
 
@@ -61,7 +61,7 @@ class Modal {
 			combinedStart <= combinedFinish.setMinutes(minimalTimeDiff - 15)
 		) {
 			console.log('pog');
-			event.getModalData(title, description, combinedStart, combinedFinish);
+			evnt.getModalData(title, description, combinedStart, combinedFinish);
 			//this.modal.reset();
 			//this.hide();
 		} else {
@@ -170,7 +170,7 @@ class Event {
 			overlappingDay = true;
 		}
 
-		this.formatBlobData(id, overlappingDay);
+		console.log(this.formatBlobData(eventData, overlappingDay));
 	}
 
 	formatBlobData(data, overlapping) {
@@ -215,6 +215,6 @@ const calendar = new Calendar(calendarTable, calendarHeaderCells, {
 	},
 });
 
-const event = new Event(eventBlobs, {});
+const evnt = new Event(eventBlobs, {});
 
 const storage = new Storage();
