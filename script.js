@@ -152,22 +152,13 @@ class Event {
 			startingDate: startingDate,
 			finishingDate: finishingDate,
 		};
+	}
 
-		let overlappingDay = false;
+	calculateEventData(data) {
 		if (
 			calendar.formatDateToDDMMYY(startingDate) !==
 			calendar.formatDateToDDMMYY(finishingDate)
 		) {
-			overlappingDay = true;
-		}
-
-		const formattedData = this.formatBlobData(eventData, overlappingDay);
-
-		console.log(storage.getBlobs());
-	}
-
-	formatBlobData(data, overlapping) {
-		if (overlapping) {
 			const blobArray = [];
 			const loopLength = Math.floor(
 				(data.finishingDate - data.startingDate) / (3600 * 24 * 1000)
