@@ -154,7 +154,7 @@ class Event {
 		};
 	}
 
-	calculateEventData(data) {
+	calculateStyles(data) {
 		if (
 			calendar.formatDateToDDMMYY(startingDate) !==
 			calendar.formatDateToDDMMYY(finishingDate)
@@ -208,7 +208,7 @@ class Event {
 			});
 
 			console.log(blobArray);
-			return { id: data.id, blobs: blobArray };
+			return blobArray;
 		} else {
 			return {
 				id: data.id,
