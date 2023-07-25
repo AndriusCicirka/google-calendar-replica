@@ -105,8 +105,6 @@ class Storage {
 
 	async setData(data) {
 		let prevData = await this.getData();
-
-		console.log(prevData);
 		if (prevData === null) {
 			prevData = [{}];
 		}
@@ -252,11 +250,14 @@ class Calendar {
 	}
 
 	renderEvents(dateId = utils.generateDateId(this.getToday())) {
-		// let data = storage.getData().then((data) => {
-		// 	if (data) {
-		// 		console.log(data);
-		// 	}
-		// });
+		storage.getData().then((data) => {
+			if (data) {
+				data = data.filter(
+					(event) =>
+						event.startingDateId === dateId || event.finishingDateId === dateId
+				);
+			}
+		});
 	}
 }
 
