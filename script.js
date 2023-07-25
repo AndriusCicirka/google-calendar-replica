@@ -230,6 +230,7 @@ class Calendar {
 	renderEvents(dateId = utils.generateDateId(this.getToday())) {
 		let data = storage.getData().then((data) => {
 			if (data) {
+				console.log(data);
 			}
 		});
 	}
@@ -240,9 +241,12 @@ class Calendar {
 
 class Storage {
 	constructor() {
-		if (!this.getData()) {
-			this.setData([]);
-		}
+		this.getData().then((data) => {
+			if (!data) {
+				this.setData([]);
+			}
+		});
+
 		console.log(utils.generateDateId());
 	}
 
