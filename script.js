@@ -168,8 +168,8 @@ class Calendar {
 	 */
 
 	getModalData(title, description, startingDate, finishingDate) {
-		const id = this.generateId();
-		setData({
+		const id = utils.generateId();
+		storage.setData({
 			id,
 			title,
 			description,
