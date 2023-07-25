@@ -16,6 +16,34 @@ const eventBlobs = document.querySelectorAll('.calendar-event');
  *
  */
 
+class Utils {
+	constructor() {}
+
+	generateId() {
+		return Date.now();
+	}
+
+	generateDateId(date = new Date()) {
+		return `${this.getWeekOfYear(date)}/${date.getFullYear()}`;
+	}
+
+	getWeekOfYear(date = new Date()) {
+		const copyDate = new Date(date);
+		copyDate.setHours(0, 0, 0, 0);
+		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 1);
+		const daysSinceFirstSunday =
+			(copyDate - firstDayOfYear) / (24 * 60 * 60 * 1000);
+
+		// Adjust week number if January 1st is not a Sunday
+		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
+		if (firstDayOfYear.getDay() !== 0) {
+			weekNumber--;
+		}
+
+		return weekNumber;
+	}
+}
+
 class Modal {
 	constructor(modal, closeBtn, saveBtn, callbacks) {
 		this.modal = modal;
@@ -36,7 +64,6 @@ class Modal {
 	toggle() {
 		this.modal.classList.toggle('hide');
 	}
-
 	onSubmit(event) {
 		event.preventDefault();
 		let title = document.getElementById('event-title').value.trim();
@@ -78,6 +105,7 @@ class Calendar {
 
 		this.table = table.addEventListener('click', callbacks.onClick);
 		this.initWeek(this.today);
+		this.renderEvents();
 	}
 
 	getToday() {
@@ -94,7 +122,7 @@ class Calendar {
 
 	initWeek(date = this.today) {
 		this.today = new Date();
-		this.getWeekOfYear(this.today);
+		utils.getWeekOfYear(this.today);
 		this.week = this.getWeekdays(date);
 		for (let [index, day] of this.headerCells.entries()) {
 			day.children[1].textContent = this.week[index];
@@ -105,22 +133,6 @@ class Calendar {
 		}
 	}
 
-	getWeekOfYear(date = this.today) {
-		const copyDate = new Date(date);
-		copyDate.setHours(0, 0, 0, 0);
-		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 1);
-		const daysSinceFirstSunday =
-			(copyDate - firstDayOfYear) / (24 * 60 * 60 * 1000);
-
-		// Adjust week number if January 1st is not a Sunday
-		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
-		if (firstDayOfYear.getDay() !== 0) {
-			weekNumber--;
-		}
-
-		return weekNumber;
-	}
-
 	formatDateToDDMMYY(date) {
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -128,18 +140,9 @@ class Calendar {
 
 		return `${day}/${month}/${year}`;
 	}
-}
 
-/*
- */
-
-class Event {
-	constructor(eventBlobs, callbacks) {
-		this.eventBlobs = eventBlobs;
-	}
-	generateId() {
-		return Date.now();
-	}
+	/*
+	 */
 
 	getModalData(title, description, startingDate, finishingDate) {
 		const id = this.generateId();
@@ -147,8 +150,8 @@ class Event {
 			id,
 			title,
 			description,
-			startingDateId: evnt.idByDate(startingDate),
-			finishingDateId: evnt.idByDate(finishingDate),
+			startingDateId: utils.generateDateId(startingDate),
+			finishingDateId: utils.generateDateId(finishingDate),
 			startingDate: startingDate,
 			finishingDate: finishingDate,
 		};
@@ -156,8 +159,8 @@ class Event {
 
 	calculateStyles(data) {
 		if (
-			calendar.formatDateToDDMMYY(startingDate) !==
-			calendar.formatDateToDDMMYY(finishingDate)
+			this.formatDateToDDMMYY(startingDate) !==
+			this.formatDateToDDMMYY(finishingDate)
 		) {
 			const blobArray = [];
 			const loopLength = Math.floor(
@@ -169,7 +172,7 @@ class Event {
 			blobArray.push({
 				id: data.id,
 				blobId: `${data.id}-0`,
-				storageId: storage.idByDate(data.startingDate),
+				storageId: utils.generateDateId(data.startingDate),
 				width: '100%',
 				gridRow: `${data.startingDate.getHours() - 1}/${24}`,
 				gridColumn: `${data.startingDate.getDay()}`,
@@ -182,7 +185,7 @@ class Event {
 					blobArray.push({
 						id: data.id,
 						blobId: `${data.id}-${i}`,
-						storageId: storage.idByDate(
+						storageId: utils.generateDateId(
 							new Date(iterableDate.setDate(iterableDate.getDate() + 1))
 						),
 						width: '100%',
@@ -199,7 +202,7 @@ class Event {
 			blobArray.push({
 				id: data.id,
 				blobId: `${data.id}-${loopLength}`,
-				storageId: storage.idByDate(data.finishingDate),
+				storageId: utils.generateDateId(data.finishingDate),
 				width: '100%',
 				gridRow: `${0}/${data.finishingDate.getHours()}`,
 				gridColumn: `${data.finishingDate.getDay()}`,
@@ -223,25 +226,31 @@ class Event {
 			};
 		}
 	}
+
+	renderEvents(dateId = utils.generateDateId(this.getToday())) {
+		let data = storage.getData().then((data) => {
+			if (data) {
+			}
+		});
+	}
 }
+
+/*
+ */
 
 class Storage {
 	constructor() {
 		if (!this.getData()) {
 			this.setData([]);
 		}
-		console.log(this.idByDate());
-	}
-
-	idByDate(date = calendar.getToday()) {
-		return `${calendar.getWeekOfYear(date)}/${date.getFullYear()}`;
+		console.log(utils.generateDateId());
 	}
 
 	setData(data) {
-		localStorage.setItem('events', JSON.stringify([...this.getData(), data]));
+		localStorage.setItem('events', JSON.stringify([this.getData(), data]));
 	}
 
-	getData() {
+	async getData() {
 		return JSON.parse(localStorage.getItem('events'));
 	}
 }
@@ -253,14 +262,14 @@ class Storage {
  *
  */
 
+const utils = new Utils();
+
 const modal = new Modal(eventModal, eventModalCloseBtn, eventModalSaveBtn);
+
+const storage = new Storage();
 
 const calendar = new Calendar(calendarTable, calendarHeaderCells, {
 	onClick() {
 		modal.toggle();
 	},
 });
-
-const evnt = new Event(eventBlobs, {});
-
-const storage = new Storage();
