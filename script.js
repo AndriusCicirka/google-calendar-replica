@@ -100,21 +100,22 @@ class Modal {
 
 class Storage {
 	constructor() {
-		this.getData().then((data) => {
-			if (!data) {
-				this.setData([]);
-			}
-		});
-
 		console.log(utils.generateDateId());
 	}
 
-	setData(data) {
-		localStorage.setItem('events', JSON.stringify([this.getData(), data]));
+	async setData(data) {
+		let prevData = await this.getData();
+
+		console.log(prevData);
+		if (prevData === null) {
+			prevData = [{}];
+		}
+		localStorage.setItem('events', JSON.stringify([...prevData, data]));
 	}
 
 	async getData() {
-		return JSON.parse(localStorage.getItem('events'));
+		const data = await Promise.resolve(localStorage.getItem('events'));
+		return JSON.parse(data);
 	}
 }
 
@@ -251,11 +252,11 @@ class Calendar {
 	}
 
 	renderEvents(dateId = utils.generateDateId(this.getToday())) {
-		let data = storage.getData().then((data) => {
-			if (data) {
-				console.log(data);
-			}
-		});
+		// let data = storage.getData().then((data) => {
+		// 	if (data) {
+		// 		console.log(data);
+		// 	}
+		// });
 	}
 }
 
