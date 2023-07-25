@@ -147,6 +147,8 @@ class Event {
 			id,
 			title,
 			description,
+			startingDateId: evnt.idByDate(startingDate),
+			finishingDateId: evnt.idByDate(finishingDate),
 			startingDate: startingDate,
 			finishingDate: finishingDate,
 		};
