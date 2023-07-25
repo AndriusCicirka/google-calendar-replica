@@ -86,12 +86,35 @@ class Modal {
 			combinedStart <= combinedFinish
 		) {
 			console.log('pog');
-			evnt.getModalData(title, description, combinedStart, combinedFinish);
+			calendar.getModalData(title, description, combinedStart, combinedFinish);
 			//this.modal.reset();
 			//this.hide();
 		} else {
 			console.log('unpog');
 		}
+	}
+}
+
+/*
+ */
+
+class Storage {
+	constructor() {
+		this.getData().then((data) => {
+			if (!data) {
+				this.setData([]);
+			}
+		});
+
+		console.log(utils.generateDateId());
+	}
+
+	setData(data) {
+		localStorage.setItem('events', JSON.stringify([this.getData(), data]));
+	}
+
+	async getData() {
+		return JSON.parse(localStorage.getItem('events'));
 	}
 }
 
@@ -146,7 +169,7 @@ class Calendar {
 
 	getModalData(title, description, startingDate, finishingDate) {
 		const id = this.generateId();
-		const eventData = {
+		setData({
 			id,
 			title,
 			description,
@@ -154,7 +177,7 @@ class Calendar {
 			finishingDateId: utils.generateDateId(finishingDate),
 			startingDate: startingDate,
 			finishingDate: finishingDate,
-		};
+		});
 	}
 
 	calculateStyles(data) {
@@ -233,29 +256,6 @@ class Calendar {
 				console.log(data);
 			}
 		});
-	}
-}
-
-/*
- */
-
-class Storage {
-	constructor() {
-		this.getData().then((data) => {
-			if (!data) {
-				this.setData([]);
-			}
-		});
-
-		console.log(utils.generateDateId());
-	}
-
-	setData(data) {
-		localStorage.setItem('events', JSON.stringify([this.getData(), data]));
-	}
-
-	async getData() {
-		return JSON.parse(localStorage.getItem('events'));
 	}
 }
 
