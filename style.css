@@ -192,6 +192,7 @@ input {
 	grid-template-rows: repeat(24, 60px);
 	grid-gap: 0px;
 
+	overflow: hidden;
 	position: relative;
 	z-index: 2;
 }
