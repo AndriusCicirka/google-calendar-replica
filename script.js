@@ -3,6 +3,9 @@
 const calendarHeaderCells = document.querySelectorAll('.calendar-header--cell');
 const calendarTable = document.querySelector('.calendar-table');
 
+const weekBackBtn = document.querySelector('.button-week--back');
+const weekForwardBtn = document.querySelector('.button-week--forward');
+
 const eventModal = document.querySelector('.event-creation--modal');
 const eventModalCloseBtn = document.querySelector('.modal-close--button');
 const eventModalSaveBtn = document.querySelector('.modal-save--button');
@@ -98,7 +101,7 @@ class Modal {
 			this.modal.reset();
 			this.hide();
 			storage.getData().then((data) => {
-				calendar.renderEvents(data);
+				calendar.renderEvents(data, utils.generateDateId(calendar.currentView));
 			});
 		} else {
 			mandatoryInputs.forEach((input) => {
@@ -138,12 +141,35 @@ class Storage {
 class Calendar {
 	constructor(table, calendarHeaderCells, callbacks) {
 		this.today = this.getToday();
+		this.currentView = this.today;
 		this.headerCells = calendarHeaderCells;
 
 		this.table = table.addEventListener('click', callbacks.onClick);
 		this.initWeek(this.today);
 		storage.getData().then((data) => {
 			this.renderEvents(data);
+		});
+
+		this.weekBackButton = weekBackBtn.addEventListener('click', () => {
+			this.currentView = new Date(
+				this.currentView.setDate(this.currentView.getDate() - 7)
+			);
+			console.log(this.currentView);
+			this.initWeek(this.currentView);
+			storage.getData().then((data) => {
+				this.renderEvents(data, utils.generateDateId(this.currentView));
+			});
+		});
+
+		this.weekForwardButton = weekForwardBtn.addEventListener('click', () => {
+			this.currentView = new Date(
+				this.currentView.setDate(this.currentView.getDate() + 7)
+			);
+			console.log(this.currentView);
+			this.initWeek(this.currentView);
+			storage.getData().then((data) => {
+				this.renderEvents(data, utils.generateDateId(this.currentView));
+			});
 		});
 	}
 
@@ -154,8 +180,9 @@ class Calendar {
 	getWeekdays(date = this.today) {
 		return Array(7)
 			.fill()
-			.map((_, index) =>
-				new Date(date.setDate(date.getDate() - date.getDay() + index)).getDate()
+			.map(
+				(_, index) =>
+					new Date(date.setDate(date.getDate() - date.getDay() + index))
 			);
 	}
 
@@ -164,10 +191,17 @@ class Calendar {
 		utils.getWeekOfYear(this.today);
 		this.week = this.getWeekdays(date);
 		for (let [index, day] of this.headerCells.entries()) {
-			day.children[1].textContent = this.week[index];
-			if (this.week[index] === this.today.getDate()) {
+			day.children[1].textContent = this.week[index].getDate();
+			if (
+				this.week[index].getFullYear() === this.today.getFullYear() &&
+				this.week[index].getMonth() === this.today.getMonth() &&
+				this.week[index].getDate() === this.today.getDate()
+			) {
 				day.children[0].classList.add('current-day--letters');
 				day.children[1].classList.add('current-day--number');
+			} else {
+				day.children[0].classList.remove('current-day--letters');
+				day.children[1].classList.remove('current-day--number');
 			}
 		}
 	}
@@ -291,6 +325,8 @@ class Calendar {
 	}
 
 	renderEvents(data, dateId = utils.generateDateId(this.getToday())) {
+		calendarTable.innerHTML = '';
+
 		if (data) {
 			console.log(data);
 			data = data.filter(
