@@ -191,10 +191,18 @@ class Calendar {
 	}
 
 	calculateStyles(data) {
-		if (
+		const overlapping =
 			this.formatDateToDDMMYY(data.startingDate) !==
-			this.formatDateToDDMMYY(data.finishingDate)
-		) {
+			this.formatDateToDDMMYY(data.finishingDate);
+		const metaData = {
+			title: data.title,
+			description: data.description,
+			startingDate: data.startingDate,
+			finishingDate: data.finishingDate,
+			overlapping,
+		};
+
+		if (overlapping) {
 			const blobArray = [];
 			const loopLength = Math.floor(
 				(new Date(data.finishingDate) - new Date(data.startingDate)) /
@@ -203,7 +211,10 @@ class Calendar {
 
 			let iterableDate = new Date(data.startingDate);
 
+			console.log(data);
+
 			blobArray.push({
+				...metaData,
 				id: data.id,
 				blobId: `${data.id}-0`,
 				storageId: utils.generateDateId(data.startingDate),
@@ -218,6 +229,7 @@ class Calendar {
 			if (loopLength > 2) {
 				for (let i = 1; i < loopLength; i++) {
 					blobArray.push({
+						...metaData,
 						id: data.id,
 						blobId: `${data.id}-${i}`,
 						storageId: utils.generateDateId(
@@ -237,6 +249,7 @@ class Calendar {
 				}
 			}
 			blobArray.push({
+				...metaData,
 				id: data.id,
 				blobId: `${data.id}-${loopLength}`,
 				storageId: utils.generateDateId(data.finishingDate),
@@ -253,6 +266,7 @@ class Calendar {
 		} else {
 			return [
 				{
+					...metaData,
 					id: data.id,
 					blobId: `${data.id}`,
 					storageId: utils.generateDateId(data.startingDate),
@@ -288,7 +302,31 @@ class Calendar {
 						'beforeend',
 						`<div class="calendar-event ${blob.blobId}">
 							<span class="calendar-event--title">${blob.title},</span>
-							<span class="calendar-event--time">${blob.startingDate} - ${blob.finishingDate}</span>
+							<span class="calendar-event--time">${
+								blob.overlapping
+									? `${new Date(blob.startingDate).toLocaleString('en-US', {
+											month: 'short',
+									  })} ${new Date(blob.startingDate).getDate()}, `
+									: ''
+							}${String(new Date(blob.startingDate).getHours()).padStart(
+							2,
+							'0'
+						)}:${String(new Date(blob.startingDate).getMinutes()).padStart(
+							2,
+							'0'
+						)} - ${String(new Date(blob.finishingDate).getHours()).padStart(
+							2,
+							'0'
+						)}:${String(new Date(blob.finishingDate).getMinutes()).padStart(
+							2,
+							'0'
+						)}${
+							blob.overlapping
+								? `, ${new Date(blob.finishingDate).toLocaleString('en-US', {
+										month: 'short',
+								  })} ${new Date(blob.finishingDate).getDate()}`
+								: ''
+						} </span>
 							<p class="calendar-event--description">
 								${blob.description}
 							</p>
