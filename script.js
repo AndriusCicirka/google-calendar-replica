@@ -97,7 +97,9 @@ class Modal {
 			calendar.getModalData(title, description, combinedStart, combinedFinish);
 			this.modal.reset();
 			this.hide();
-			calendar.renderEvents();
+			storage.getData().then((data) => {
+				calendar.renderEvents(data);
+			});
 		} else {
 			mandatoryInputs.forEach((input) => {
 				if (!input.value) {
@@ -106,7 +108,6 @@ class Modal {
 					input.style.color = 'black';
 				}
 			});
-			console.log('unpog');
 		}
 	}
 }
@@ -115,10 +116,7 @@ class Modal {
  */
 
 class Storage {
-	constructor() {
-		console.log(utils.generateDateId('2023-07-23'));
-		console.log(utils.generateDateId());
-	}
+	constructor() {}
 
 	async setData(data) {
 		let prevData = await this.getData();
@@ -144,7 +142,9 @@ class Calendar {
 
 		this.table = table.addEventListener('click', callbacks.onClick);
 		this.initWeek(this.today);
-		this.renderEvents();
+		storage.getData().then((data) => {
+			this.renderEvents(data);
+		});
 	}
 
 	getToday() {
@@ -290,25 +290,24 @@ class Calendar {
 		}
 	}
 
-	renderEvents(dateId = utils.generateDateId(this.getToday())) {
-		storage.getData().then((data) => {
-			if (data) {
-				console.log(data);
-				data = data.filter(
-					(event) =>
-						event.startingDateId === dateId || event.finishingDateId === dateId
-				);
-				data = data.map((event) => this.calculateStyles(event));
-				data = data.flat();
-				data = data.filter((blob) => {
-					return blob.storageId.localeCompare(dateId) === 0;
-				});
+	renderEvents(data, dateId = utils.generateDateId(this.getToday())) {
+		if (data) {
+			console.log(data);
+			data = data.filter(
+				(event) =>
+					event.startingDateId === dateId || event.finishingDateId === dateId
+			);
+			data = data.map((event) => this.calculateStyles(event));
+			data = data.flat();
+			data = data.filter((blob) => {
+				return blob.storageId.localeCompare(dateId) === 0;
+			});
 
-				data.map((blob) => {
-					console.log(blob);
-					calendarTable.insertAdjacentHTML(
-						'beforeend',
-						`<div class="calendar-event ${blob.blobId}">
+			data.map((blob) => {
+				console.log(blob);
+				calendarTable.insertAdjacentHTML(
+					'beforeend',
+					`<div class="calendar-event ${blob.blobId}">
 							<span class="calendar-event--title">${blob.title},</span>
 							<span class="calendar-event--time">${
 								blob.overlapping
@@ -317,44 +316,40 @@ class Calendar {
 									  })} ${new Date(blob.startingDate).getDate()}, `
 									: ''
 							}${String(new Date(blob.startingDate).getHours()).padStart(
-							2,
-							'0'
-						)}:${String(new Date(blob.startingDate).getMinutes()).padStart(
-							2,
-							'0'
-						)} - ${String(new Date(blob.finishingDate).getHours()).padStart(
-							2,
-							'0'
-						)}:${String(new Date(blob.finishingDate).getMinutes()).padStart(
-							2,
-							'0'
-						)}${
-							blob.overlapping
-								? `, ${new Date(blob.finishingDate).toLocaleString('en-US', {
-										month: 'short',
-								  })} ${new Date(blob.finishingDate).getDate()}`
-								: ''
-						} </span>
+						2,
+						'0'
+					)}:${String(new Date(blob.startingDate).getMinutes()).padStart(
+						2,
+						'0'
+					)} - ${String(new Date(blob.finishingDate).getHours()).padStart(
+						2,
+						'0'
+					)}:${String(new Date(blob.finishingDate).getMinutes()).padStart(
+						2,
+						'0'
+					)}${
+						blob.overlapping
+							? `, ${new Date(blob.finishingDate).toLocaleString('en-US', {
+									month: 'short',
+							  })} ${new Date(blob.finishingDate).getDate()}`
+							: ''
+					} </span>
 							<p class="calendar-event--description">
 								${blob.description}
 							</p>
 					</div>`
-					);
+				);
 
-					let temp = calendarTable.lastElementChild;
+				let temp = calendarTable.lastElementChild;
 
-					temp.style.gridColumn = blob.gridColumn;
-					temp.style.gridRow = blob.gridRow;
-					temp.style.marginTop = blob.marginTop;
-					temp.style.marginBottom = blob.marginBottom;
-					temp.style.paddingTop = blob.paddingTop;
-					temp.style.paddingBottom = blob.paddingBottom;
-				});
-			}
-		});
-
-		calendarTable.style.display = 'none';
-		calendarTable.style.display = 'grid';
+				temp.style.gridColumn = blob.gridColumn;
+				temp.style.gridRow = blob.gridRow;
+				temp.style.marginTop = blob.marginTop;
+				temp.style.marginBottom = blob.marginBottom;
+				temp.style.paddingTop = blob.paddingTop;
+				temp.style.paddingBottom = blob.paddingBottom;
+			});
+		}
 	}
 }
 
