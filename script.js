@@ -9,6 +9,7 @@ const eventModalSaveBtn = document.querySelector('.modal-save--button');
 
 const eventBlobs = document.querySelectorAll('.calendar-event');
 
+const mandatoryInputs = document.querySelectorAll('.mandatory-input');
 /*
  *
  *
@@ -98,6 +99,13 @@ class Modal {
 			this.hide();
 			calendar.renderEvents();
 		} else {
+			mandatoryInputs.forEach((input) => {
+				if (!input.value) {
+					input.style.color = 'red';
+				} else {
+					input.style.color = 'black';
+				}
+			});
 			console.log('unpog');
 		}
 	}
