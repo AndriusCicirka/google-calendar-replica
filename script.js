@@ -100,9 +100,14 @@ class Modal {
 			calendar.getModalData(title, description, combinedStart, combinedFinish);
 			this.modal.reset();
 			this.hide();
-			storage.getData().then((data) => {
-				calendar.renderEvents(data, utils.generateDateId(calendar.currentView));
-			});
+			setTimeout(() => {
+				storage.getData().then((data) => {
+					calendar.renderEvents(
+						data,
+						utils.generateDateId(calendar.currentView)
+					);
+				});
+			}, 100);
 		} else {
 			mandatoryInputs.forEach((input) => {
 				if (!input.value) {
@@ -124,7 +129,7 @@ class Storage {
 	async setData(data) {
 		let prevData = await this.getData();
 		if (prevData === null) {
-			prevData = [{}];
+			prevData = [];
 		}
 		localStorage.setItem('events', JSON.stringify([...prevData, data]));
 	}
@@ -154,7 +159,6 @@ class Calendar {
 			this.currentView = new Date(
 				this.currentView.setDate(this.currentView.getDate() - 7)
 			);
-			console.log(this.currentView);
 			this.initWeek(this.currentView);
 			storage.getData().then((data) => {
 				this.renderEvents(data, utils.generateDateId(this.currentView));
@@ -165,7 +169,6 @@ class Calendar {
 			this.currentView = new Date(
 				this.currentView.setDate(this.currentView.getDate() + 7)
 			);
-			console.log(this.currentView);
 			this.initWeek(this.currentView);
 			storage.getData().then((data) => {
 				this.renderEvents(data, utils.generateDateId(this.currentView));
@@ -233,6 +236,7 @@ class Calendar {
 	}
 
 	calculateStyles(data) {
+		console.log(data);
 		const overlapping =
 			this.formatDateToDDMMYY(data.startingDate) !==
 			this.formatDateToDDMMYY(data.finishingDate);
