@@ -44,7 +44,7 @@ class Utils {
 		}
 
 		const daysSinceFirstSunday =
-			(copyDate - firstDayOfYear) / (24 * 60 * 60 * 1000);
+			(copyDate.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000);
 
 		// Adjust week number if January 1st is not a Sunday
 		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
