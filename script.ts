@@ -141,7 +141,7 @@ class Modal {
 class Storage {
 	constructor() {}
 
-	async setData(data) {
+	async setData(data: string) {
 		let prevData = await this.getData();
 		if (prevData === null) {
 			prevData = [];
@@ -151,7 +151,9 @@ class Storage {
 
 	async getData() {
 		const data = await Promise.resolve(localStorage.getItem('events'));
-		return JSON.parse(data);
+		if (data) {
+			return JSON.parse(data);
+		}
 	}
 }
 
