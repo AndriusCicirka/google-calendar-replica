@@ -31,7 +31,7 @@ class Utils {
 		return `${this.getWeekOfYear(date)}/${new Date(date).getFullYear()}`;
 	}
 
-	getWeekOfYear(date = new Date()) {
+	getWeekOfYear(date: Date = new Date()) {
 		const copyDate = new Date(date);
 		copyDate.setHours(0, 0, 0, 0);
 		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 0);
@@ -40,33 +40,35 @@ class Utils {
 		firstSundayOfYear.setDate(firstDayOfYear.getDate() + firstSundayOffset);
 
 		if (copyDate < firstSundayOfYear) {
-			return 1; // It's still part of the first week of the year
+			return 1;
 		}
 
 		const daysSinceFirstSunday =
 			(copyDate.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000);
 
-		// Adjust week number if January 1st is not a Sunday
 		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
-		// if (firstDayOfYear.getDay() !== 0) {
-		// 	weekNumber--;
-		// }
 
 		return weekNumber;
 	}
 }
 
 class Modal {
-	constructor(modal, closeBtn, saveBtn, callbacks) {
+	modal: HTMLElement;
+	closeBtn: HTMLElement;
+	saveBtn: HTMLElement;
+
+	constructor(modal: HTMLElement, closeBtn: HTMLElement, saveBtn: HTMLElement) {
 		this.modal = modal;
 		this.closeBtn = closeBtn;
 		this.saveBtn = saveBtn;
 
-		this.modal.addEventListener('submit', (event) => this.onSubmit(event));
-		this.closeBtn.addEventListener('click', (event) => this.hide(event));
-		this.saveBtn.addEventListener('submit', (event) => event.preventDefault());
+		this.modal.addEventListener('submit', (event: Event) =>
+			this.onSubmit(event)
+		);
+		this.closeBtn.addEventListener('click', () => this.hide());
 	}
-	open(eventBlobId) {
+
+	open() {
 		this.modal.classList.remove('hide');
 	}
 	hide() {
@@ -75,15 +77,27 @@ class Modal {
 	toggle() {
 		this.modal.classList.toggle('hide');
 	}
-	onSubmit(event) {
+	onSubmit(event: Event) {
 		event.preventDefault();
-		let title = document.getElementById('event-title').value.trim();
-		let description = document.getElementById('event-description').value.trim();
 
-		let startingDate = document.getElementById('starting-date').value;
-		let startingTime = document.getElementById('starting-time').value;
-		let finishingTime = document.getElementById('finishing-time').value;
-		let finishingDate = document.getElementById('finishing-date').value;
+		let title = (
+			document.getElementById('event-title') as HTMLInputElement
+		).value.trim();
+		let description = (
+			document.getElementById('event-description') as HTMLInputElement
+		).value.trim();
+		let startingDate = (
+			document.getElementById('starting-date') as HTMLInputElement
+		).value;
+		let startingTime = (
+			document.getElementById('starting-time') as HTMLInputElement
+		).value;
+		let finishingTime = (
+			document.getElementById('finishing-time') as HTMLInputElement
+		).value;
+		let finishingDate = (
+			document.getElementById('finishing-date') as HTMLInputElement
+		).value;
 
 		const combinedStart = new Date(`${startingDate}T${startingTime}`);
 		const combinedFinish = new Date(`${finishingDate}T${finishingTime}`);
@@ -96,12 +110,11 @@ class Modal {
 			finishingDate &&
 			combinedStart <= combinedFinish
 		) {
-			console.log('pog');
 			calendar.getModalData(title, description, combinedStart, combinedFinish);
-			this.modal.reset();
+			(this.modal as HTMLFormElement).reset();
 			this.hide();
 			setTimeout(() => {
-				storage.getData().then((data) => {
+				storage.getData().then((data: String) => {
 					calendar.renderEvents(
 						data,
 						utils.generateDateId(calendar.currentView)
@@ -109,13 +122,15 @@ class Modal {
 				});
 			}, 100);
 		} else {
-			mandatoryInputs.forEach((input) => {
-				if (!input.value) {
-					input.style.color = 'red';
-				} else {
-					input.style.color = 'black';
+			for (const input of mandatoryInputs) {
+				if (input instanceof HTMLInputElement) {
+					if (!input.value) {
+						input.style.color = 'red';
+					} else {
+						input.style.color = 'black';
+					}
 				}
-			});
+			}
 		}
 	}
 }
@@ -144,6 +159,12 @@ class Storage {
  */
 
 class Calendar {
+	today: Date;
+	headerCells: any;
+	table: any;
+	weekBackButton: void;
+	weekForwardButton: void;
+	currentView: Date;
 	constructor(table, calendarHeaderCells, callbacks) {
 		this.today = this.getToday();
 		this.currentView = this.today;
