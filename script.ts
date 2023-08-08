@@ -1,24 +1,26 @@
 'use strict';
 
-const calendarHeaderCells = document.querySelectorAll('.calendar-header--cell');
-const calendarTable = document.querySelector('.calendar-table');
-
-const weekBackBtn = document.querySelector('.button-week--back');
-const weekForwardBtn = document.querySelector('.button-week--forward');
-
-const eventModal = document.querySelector('.event-creation--modal');
-const eventModalCloseBtn = document.querySelector('.modal-close--button');
-const eventModalSaveBtn = document.querySelector('.modal-save--button');
-
-const eventBlobs = document.querySelectorAll('.calendar-event');
-
-const mandatoryInputs = document.querySelectorAll('.mandatory-input');
-/*
- *
- *
- *
- *
- */
+const calendarHeaderCells: NodeListOf<HTMLElement> = document.querySelectorAll(
+	'.calendar-header--cell'
+)!;
+const calendarTable = document.querySelector<HTMLElement>('.calendar-table')!;
+const weekBackBtn =
+	document.querySelector<HTMLButtonElement>('button-week--back');
+const weekForwardBtn = document.querySelector<HTMLButtonElement>(
+	'.button-week--forward'
+);
+const eventModal = document.querySelector<HTMLElement>(
+	'.event-creation--modal'
+);
+const eventModalCloseBtn = document.querySelector<HTMLButtonElement>(
+	'.modal-close--button'
+);
+const eventModalSaveBtn = document.querySelector<HTMLButtonElement>(
+	'.modal-save--button'
+);
+const eventBlobs = document.querySelectorAll<HTMLElement>('.calendar-event');
+const mandatoryInputs =
+	document.querySelectorAll<HTMLInputElement>('.mandatory-input');
 
 class Utils {
 	constructor() {}
@@ -27,7 +29,7 @@ class Utils {
 		return Date.now();
 	}
 
-	generateDateId(date = new Date()) {
+	generateDateId(date: Date = new Date()) {
 		return `${this.getWeekOfYear(date)}/${new Date(date).getFullYear()}`;
 	}
 
@@ -114,7 +116,7 @@ class Modal {
 			(this.modal as HTMLFormElement).reset();
 			this.hide();
 			setTimeout(() => {
-				storage.getData().then((data: String) => {
+				storage.getData().then((data: StyledData[]) => {
 					calendar.renderEvents(
 						data,
 						utils.generateDateId(calendar.currentView)
@@ -135,13 +137,10 @@ class Modal {
 	}
 }
 
-/*
- */
-
-class Storage {
+class CalendarStorage {
 	constructor() {}
 
-	async setData(data: string) {
+	async setData(data: Object) {
 		let prevData = await this.getData();
 		if (prevData === null) {
 			prevData = [];
@@ -157,43 +156,69 @@ class Storage {
 	}
 }
 
-/*
- */
+interface Data {
+	title: string;
+	id?: string;
+	storageId?: string;
+	description?: string;
+	startingDate: Date;
+	finishingDate: Date;
+	startingDateId?: string;
+	finishingDateId?: string;
+}
+
+interface StyledData extends Data {
+	blobId?: string;
+	width?: string;
+	gridRow?: string;
+	gridColumn?: string;
+	marginTop?: string;
+	marginBottom?: string;
+	paddingBottom?: string;
+	paddingTop?: string;
+	overlapping?: boolean;
+}
 
 class Calendar {
 	today: Date;
-	headerCells: any;
-	table: any;
-	weekBackButton: void;
-	weekForwardButton: void;
 	currentView: Date;
-	constructor(table, calendarHeaderCells, callbacks) {
+	week: Date[] = [];
+	headerCells;
+	table;
+	weekBackButton;
+	weekForwardButton;
+
+	constructor(
+		table: HTMLElement,
+		calendarHeaderCells: NodeListOf<HTMLElement>,
+		callbacks: Record<string, Function>
+	) {
 		this.today = this.getToday();
 		this.currentView = this.today;
 		this.headerCells = calendarHeaderCells;
 
-		this.table = table.addEventListener('click', callbacks.onClick);
+		this.table = table.addEventListener('click', callbacks.onClick());
 		this.initWeek(this.today);
-		storage.getData().then((data) => {
+		storage.getData().then((data: Array<Data>) => {
 			this.renderEvents(data);
 		});
 
-		this.weekBackButton = weekBackBtn.addEventListener('click', () => {
+		this.weekBackButton = weekBackBtn?.addEventListener('click', () => {
 			this.currentView = new Date(
 				this.currentView.setDate(this.currentView.getDate() - 7)
 			);
 			this.initWeek(this.currentView);
-			storage.getData().then((data) => {
+			storage.getData().then((data: Data[]) => {
 				this.renderEvents(data, utils.generateDateId(this.currentView));
 			});
 		});
 
-		this.weekForwardButton = weekForwardBtn.addEventListener('click', () => {
+		this.weekForwardButton = weekForwardBtn?.addEventListener('click', () => {
 			this.currentView = new Date(
 				this.currentView.setDate(this.currentView.getDate() + 7)
 			);
 			this.initWeek(this.currentView);
-			storage.getData().then((data) => {
+			storage.getData().then((data: Data[]) => {
 				this.renderEvents(data, utils.generateDateId(this.currentView));
 			});
 		});
@@ -205,7 +230,7 @@ class Calendar {
 
 	getWeekdays(date = this.today) {
 		return Array(7)
-			.fill()
+			.fill('')
 			.map(
 				(_, index) =>
 					new Date(date.setDate(date.getDate() - date.getDay() + index))
@@ -217,7 +242,7 @@ class Calendar {
 		utils.getWeekOfYear(this.today);
 		this.week = this.getWeekdays(date);
 		for (let [index, day] of this.headerCells.entries()) {
-			day.children[1].textContent = this.week[index].getDate();
+			day.children[1].textContent = this.week[index].getDate().toString();
 			if (
 				this.week[index].getFullYear() === this.today.getFullYear() &&
 				this.week[index].getMonth() === this.today.getMonth() &&
@@ -232,7 +257,7 @@ class Calendar {
 		}
 	}
 
-	formatDateToDDMMYY(date) {
+	formatDateToDDMMYY(date: Date) {
 		const year = new Date(date).getFullYear();
 		const month = String(new Date(date).getMonth() + 1).padStart(2, '0');
 		const day = String(new Date(date).getDate()).padStart(2, '0');
@@ -240,25 +265,27 @@ class Calendar {
 		return `${day}/${month}/${year}`;
 	}
 
-	/*
-	 */
-
-	getModalData(title, description, startingDate, finishingDate) {
-		setTimeout(100);
-		const id = utils.generateId();
-
-		storage.setData({
-			id,
-			title,
-			description,
-			startingDateId: utils.generateDateId(startingDate),
-			finishingDateId: utils.generateDateId(finishingDate),
-			startingDate: startingDate,
-			finishingDate: finishingDate,
-		});
+	getModalData(
+		title: string,
+		description: string,
+		startingDate: Date,
+		finishingDate: Date
+	) {
+		setTimeout(() => {
+			const id = utils.generateId();
+			storage.setData({
+				id,
+				title,
+				description,
+				startingDateId: utils.generateDateId(startingDate),
+				finishingDateId: utils.generateDateId(finishingDate),
+				startingDate: startingDate,
+				finishingDate: finishingDate,
+			});
+		}, 100);
 	}
 
-	calculateStyles(data) {
+	calculateStyles(data: Data) {
 		console.log(data);
 		const overlapping =
 			this.formatDateToDDMMYY(data.startingDate) !==
@@ -274,7 +301,7 @@ class Calendar {
 		if (overlapping) {
 			const blobArray = [];
 			const loopLength = Math.floor(
-				(new Date(data.finishingDate) - new Date(data.startingDate)) /
+				(data.finishingDate.getTime() - data.startingDate.getTime()) /
 					(3600 * 24 * 1000)
 			);
 
@@ -302,7 +329,7 @@ class Calendar {
 						id: data.id,
 						blobId: `${data.id}-${i}`,
 						storageId: utils.generateDateId(
-							iterableDate.setDate(iterableDate.getDate() + 1)
+							new Date(iterableDate.setDate(iterableDate.getDate() + 1))
 						),
 						width: '100%',
 						gridRow: `${1}/${25}`,
@@ -351,8 +378,11 @@ class Calendar {
 		}
 	}
 
-	renderEvents(data, dateId = utils.generateDateId(this.getToday())) {
-		calendarTable.innerHTML = '';
+	renderEvents(
+		data: Array<Data>,
+		dateId = utils.generateDateId(this.getToday())
+	) {
+		calendarTable!.innerHTML = '';
 
 		if (data) {
 			console.log(data);
@@ -360,15 +390,14 @@ class Calendar {
 				(event) =>
 					event.startingDateId === dateId || event.finishingDateId === dateId
 			);
-			data = data.map((event) => this.calculateStyles(event));
-			data = data.flat();
+			data = data.map((event) => this.calculateStyles(event)).flat();
 			data = data.filter((blob) => {
-				return blob.storageId.localeCompare(dateId) === 0;
+				return blob.storageId!.localeCompare(dateId) === 0;
 			});
 
-			data.map((blob) => {
+			data.map((blob: StyledData) => {
 				console.log(blob);
-				calendarTable.insertAdjacentHTML(
+				calendarTable!.insertAdjacentHTML(
 					'beforeend',
 					`<div class="calendar-event ${blob.blobId}">
 							<span class="calendar-event--title">${blob.title},</span>
@@ -405,32 +434,47 @@ class Calendar {
 
 				let temp = calendarTable.lastElementChild;
 
-				temp.style.gridColumn = blob.gridColumn;
-				temp.style.gridRow = blob.gridRow;
-				temp.style.marginTop = blob.marginTop;
-				temp.style.marginBottom = blob.marginBottom;
-				temp.style.paddingTop = blob.paddingTop;
-				temp.style.paddingBottom = blob.paddingBottom;
+				if (temp) {
+					if (blob.gridColumn) {
+						(temp as HTMLDivElement).style.gridColumn = blob.gridColumn;
+					}
+					if (blob.gridRow) {
+						(temp as HTMLDivElement).style.gridRow = blob.gridRow;
+					}
+					if (blob.marginTop) {
+						(temp as HTMLDivElement).style.marginTop = blob.marginTop;
+					}
+					if (blob.marginBottom) {
+						(temp as HTMLDivElement).style.marginBottom = blob.marginBottom;
+					}
+					if (blob.paddingTop) {
+						(temp as HTMLDivElement).style.paddingTop = blob.paddingTop;
+					}
+					if (blob.paddingBottom) {
+						(temp as HTMLDivElement).style.paddingBottom = blob.paddingBottom;
+					}
+				}
 			});
 		}
 	}
 }
 
-/*
- *
- *
- *
- *
- */
-
 const utils = new Utils();
 
-const modal = new Modal(eventModal, eventModalCloseBtn, eventModalSaveBtn);
+const modal = new Modal(
+	eventModal as HTMLElement,
+	eventModalCloseBtn as HTMLButtonElement,
+	eventModalSaveBtn as HTMLButtonElement
+);
 
-const storage = new Storage();
+const storage = new CalendarStorage();
 
-const calendar = new Calendar(calendarTable, calendarHeaderCells, {
-	onClick() {
-		modal.toggle();
-	},
-});
+const calendar = new Calendar(
+	calendarTable as HTMLElement,
+	calendarHeaderCells,
+	{
+		onClick() {
+			modal.toggle();
+		},
+	}
+);
