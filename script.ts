@@ -1,5 +1,7 @@
 'use strict';
 
+//@ts-nocheck
+
 const calendarHeaderCells: NodeListOf<HTMLDivElement> =
 	document.querySelectorAll('.calendar-header--cell')!;
 const calendarTable =
