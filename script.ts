@@ -310,7 +310,7 @@ class Calendar {
 	}
 
 	calculateStyles(data: Data): StyledData | StyledData[] {
-		console.log(data);
+		//console.log(data);
 		const overlapping =
 			this.formatDateToDDMMYY(data.startingDate) !==
 			this.formatDateToDDMMYY(data.finishingDate);
