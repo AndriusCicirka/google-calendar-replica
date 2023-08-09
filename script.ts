@@ -1,15 +1,15 @@
 'use strict';
 
-const calendarHeaderCells: NodeListOf<HTMLElement> = document.querySelectorAll(
-	'.calendar-header--cell'
-)!;
-const calendarTable = document.querySelector<HTMLElement>('.calendar-table')!;
+const calendarHeaderCells: NodeListOf<HTMLDivElement> =
+	document.querySelectorAll('.calendar-header--cell')!;
+const calendarTable =
+	document.querySelector<HTMLDivElement>('.calendar-table')!;
 const weekBackBtn =
-	document.querySelector<HTMLButtonElement>('button-week--back');
+	document.querySelector<HTMLButtonElement>('.button-week--back');
 const weekForwardBtn = document.querySelector<HTMLButtonElement>(
 	'.button-week--forward'
 );
-const eventModal = document.querySelector<HTMLElement>(
+const eventModal = document.querySelector<HTMLFormElement>(
 	'.event-creation--modal'
 );
 const eventModalCloseBtn = document.querySelector<HTMLButtonElement>(
@@ -18,35 +18,36 @@ const eventModalCloseBtn = document.querySelector<HTMLButtonElement>(
 const eventModalSaveBtn = document.querySelector<HTMLButtonElement>(
 	'.modal-save--button'
 );
-const eventBlobs = document.querySelectorAll<HTMLElement>('.calendar-event');
+const eventBlobs = document.querySelectorAll<HTMLDivElement>('.calendar-event');
 const mandatoryInputs =
 	document.querySelectorAll<HTMLInputElement>('.mandatory-input');
 
 class Utils {
 	constructor() {}
 
-	generateId() {
+	generateId(): number {
 		return Date.now();
 	}
 
-	generateDateId(date: Date = new Date()) {
-		return `${this.getWeekOfYear(date)}/${new Date(date).getFullYear()}`;
+	generateDateId(date = new Date()): string {
+		date = new Date(date);
+		return `${this.getWeekOfYear(date)}/${date.getFullYear()}`;
 	}
 
-	getWeekOfYear(date: Date = new Date()) {
-		const copyDate = new Date(date);
-		copyDate.setHours(0, 0, 0, 0);
-		const firstDayOfYear = new Date(copyDate.getFullYear(), 0, 0);
+	getWeekOfYear(date: Date = new Date()): number {
+		date = new Date(date);
+		date.setHours(0, 0, 0, 0);
+		const firstDayOfYear = new Date(date.getFullYear(), 0, 0);
 		const firstSundayOffset = (7 - firstDayOfYear.getDay()) % 7;
-		const firstSundayOfYear = new Date(firstDayOfYear);
+		const firstSundayOfYear = new Date(Number(firstDayOfYear));
 		firstSundayOfYear.setDate(firstDayOfYear.getDate() + firstSundayOffset);
 
-		if (copyDate < firstSundayOfYear) {
+		if (date < firstSundayOfYear) {
 			return 1;
 		}
 
 		const daysSinceFirstSunday =
-			(copyDate.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000);
+			(date.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000);
 
 		let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
 
@@ -55,31 +56,35 @@ class Utils {
 }
 
 class Modal {
-	modal: HTMLElement;
-	closeBtn: HTMLElement;
-	saveBtn: HTMLElement;
+	modal: HTMLFormElement;
+	closeBtn: HTMLButtonElement;
+	saveBtn: HTMLButtonElement;
 
-	constructor(modal: HTMLElement, closeBtn: HTMLElement, saveBtn: HTMLElement) {
+	constructor(
+		modal: HTMLFormElement,
+		closeBtn: HTMLButtonElement,
+		saveBtn: HTMLButtonElement
+	) {
 		this.modal = modal;
 		this.closeBtn = closeBtn;
 		this.saveBtn = saveBtn;
 
-		this.modal.addEventListener('submit', (event: Event) =>
+		this.modal.addEventListener('submit', (event: Event): void =>
 			this.onSubmit(event)
 		);
-		this.closeBtn.addEventListener('click', () => this.hide());
+		this.closeBtn.addEventListener('click', (): void => this.hide());
 	}
 
-	open() {
+	open(): void {
 		this.modal.classList.remove('hide');
 	}
-	hide() {
+	hide(): void {
 		this.modal.classList.add('hide');
 	}
-	toggle() {
+	toggle(): void {
 		this.modal.classList.toggle('hide');
 	}
-	onSubmit(event: Event) {
+	onSubmit(event: Event): void {
 		event.preventDefault();
 
 		let title = (
@@ -113,18 +118,22 @@ class Modal {
 			combinedStart <= combinedFinish
 		) {
 			calendar.getModalData(title, description, combinedStart, combinedFinish);
-			(this.modal as HTMLFormElement).reset();
+			this.modal.reset();
 			this.hide();
-			setTimeout(() => {
-				storage.getData().then((data: StyledData[]) => {
+			setTimeout((): void => {
+				storage.getData().then((data): void => {
+					data?.map((event): void => {
+						event.startingDate = new Date(event.startingDate);
+						event.finishingDate = new Date(event.finishingDate);
+					});
 					calendar.renderEvents(
-						data,
+						data!,
 						utils.generateDateId(calendar.currentView)
 					);
 				});
 			}, 100);
 		} else {
-			for (const input of mandatoryInputs) {
+			for (const input of Array.from(mandatoryInputs)) {
 				if (input instanceof HTMLInputElement) {
 					if (!input.value) {
 						input.style.color = 'red';
@@ -140,7 +149,7 @@ class Modal {
 class CalendarStorage {
 	constructor() {}
 
-	async setData(data: Object) {
+	async setData(data: Object): Promise<void> {
 		let prevData = await this.getData();
 		if (prevData === null) {
 			prevData = [];
@@ -148,17 +157,16 @@ class CalendarStorage {
 		localStorage.setItem('events', JSON.stringify([...prevData, data]));
 	}
 
-	async getData() {
-		const data = await Promise.resolve(localStorage.getItem('events'));
-		if (data) {
-			return JSON.parse(data);
-		}
+	async getData(): Promise<null | Array<Data>> {
+		const data = localStorage.getItem('events');
+		const parsedData = JSON.parse(data!);
+		return data ? parsedData : data;
 	}
 }
 
 interface Data {
 	title: string;
-	id?: string;
+	id: string;
 	storageId?: string;
 	description?: string;
 	startingDate: Date;
@@ -189,55 +197,70 @@ class Calendar {
 	weekForwardButton;
 
 	constructor(
-		table: HTMLElement,
-		calendarHeaderCells: NodeListOf<HTMLElement>,
-		callbacks: Record<string, Function>
+		table: HTMLDivElement,
+		calendarHeaderCells: NodeListOf<HTMLDivElement>
 	) {
 		this.today = this.getToday();
 		this.currentView = this.today;
 		this.headerCells = calendarHeaderCells;
 
-		this.table = table.addEventListener('click', callbacks.onClick());
+		this.table = table.addEventListener('click', (): void => modal.toggle());
 		this.initWeek(this.today);
-		storage.getData().then((data: Array<Data>) => {
-			this.renderEvents(data);
+		storage.getData().then((data): void => {
+			data?.map((event): void => {
+				event.startingDate = new Date(event.startingDate);
+				event.finishingDate = new Date(event.finishingDate);
+			});
+			//console.log(calendar.currentView);
+			this.renderEvents(data!);
 		});
 
-		this.weekBackButton = weekBackBtn?.addEventListener('click', () => {
+		this.weekBackButton = weekBackBtn?.addEventListener('click', (): void => {
 			this.currentView = new Date(
 				this.currentView.setDate(this.currentView.getDate() - 7)
 			);
 			this.initWeek(this.currentView);
-			storage.getData().then((data: Data[]) => {
-				this.renderEvents(data, utils.generateDateId(this.currentView));
+			storage.getData().then((data): void => {
+				data?.map((event): void => {
+					event.startingDate = new Date(event.startingDate);
+					event.finishingDate = new Date(event.finishingDate);
+				});
+				this.renderEvents(data!, utils.generateDateId(calendar.currentView));
 			});
 		});
 
-		this.weekForwardButton = weekForwardBtn?.addEventListener('click', () => {
-			this.currentView = new Date(
-				this.currentView.setDate(this.currentView.getDate() + 7)
-			);
-			this.initWeek(this.currentView);
-			storage.getData().then((data: Data[]) => {
-				this.renderEvents(data, utils.generateDateId(this.currentView));
-			});
-		});
+		this.weekForwardButton = weekForwardBtn?.addEventListener(
+			'click',
+			(): void => {
+				this.currentView = new Date(
+					this.currentView.setDate(this.currentView.getDate() + 7)
+				);
+				this.initWeek(this.currentView);
+				storage.getData().then((data): void => {
+					data?.map((event): void => {
+						event.startingDate = new Date(event.startingDate);
+						event.finishingDate = new Date(event.finishingDate);
+					});
+					this.renderEvents(data!, utils.generateDateId(calendar.currentView));
+				});
+			}
+		);
 	}
 
-	getToday() {
+	getToday(): Date {
 		return new Date();
 	}
 
-	getWeekdays(date = this.today) {
+	getWeekdays(date = this.today): Date[] {
 		return Array(7)
 			.fill('')
 			.map(
-				(_, index) =>
+				(_, index): Date =>
 					new Date(date.setDate(date.getDate() - date.getDay() + index))
 			);
 	}
 
-	initWeek(date = this.today) {
+	initWeek(date = this.today): void {
 		this.today = new Date();
 		utils.getWeekOfYear(this.today);
 		this.week = this.getWeekdays(date);
@@ -257,10 +280,11 @@ class Calendar {
 		}
 	}
 
-	formatDateToDDMMYY(date: Date) {
-		const year = new Date(date).getFullYear();
-		const month = String(new Date(date).getMonth() + 1).padStart(2, '0');
-		const day = String(new Date(date).getDate()).padStart(2, '0');
+	formatDateToDDMMYY(date: Date): string {
+		date = new Date(date);
+		const year = date.getFullYear();
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const day = String(date.getDate()).padStart(2, '0');
 
 		return `${day}/${month}/${year}`;
 	}
@@ -270,8 +294,8 @@ class Calendar {
 		description: string,
 		startingDate: Date,
 		finishingDate: Date
-	) {
-		setTimeout(() => {
+	): void {
+		setTimeout((): void => {
 			const id = utils.generateId();
 			storage.setData({
 				id,
@@ -285,7 +309,7 @@ class Calendar {
 		}, 100);
 	}
 
-	calculateStyles(data: Data) {
+	calculateStyles(data: Data): StyledData | StyledData[] {
 		console.log(data);
 		const overlapping =
 			this.formatDateToDDMMYY(data.startingDate) !==
@@ -301,13 +325,14 @@ class Calendar {
 		if (overlapping) {
 			const blobArray = [];
 			const loopLength = Math.floor(
-				(data.finishingDate.getTime() - data.startingDate.getTime()) /
+				(new Date(data.finishingDate).getTime() -
+					new Date(data.startingDate).getTime()) /
 					(3600 * 24 * 1000)
 			);
 
-			let iterableDate = new Date(data.startingDate);
+			let iterableDate = data.startingDate;
 
-			console.log(data);
+			//console.log(data);
 
 			blobArray.push({
 				...metaData,
@@ -315,9 +340,9 @@ class Calendar {
 				blobId: `${data.id}-0`,
 				storageId: utils.generateDateId(data.startingDate),
 				width: '100%',
-				gridRow: `${new Date(data.startingDate).getHours() + 1}/${25}`,
-				gridColumn: `${new Date(data.startingDate).getDay() + 1}`,
-				marginTop: `${new Date(data.startingDate).getMinutes()}px`,
+				gridRow: `${data.startingDate.getHours() + 1}/${25}`,
+				gridColumn: `${data.startingDate.getDay() + 1}`,
+				marginTop: `${data.startingDate.getMinutes()}px`,
 				marginBottom: '-10px',
 				paddingBottom: '15px',
 			});
@@ -333,9 +358,9 @@ class Calendar {
 						),
 						width: '100%',
 						gridRow: `${1}/${25}`,
-						gridColumn: new Date(
+						gridColumn: `${new Date(
 							iterableDate.setDate(iterableDate.getDate())
-						).getDay(),
+						).getDay()}`,
 
 						marginTop: '-10px',
 						marginBottom: '-10px',
@@ -350,9 +375,9 @@ class Calendar {
 				blobId: `${data.id}-${loopLength}`,
 				storageId: utils.generateDateId(data.finishingDate),
 				width: '100%',
-				gridRow: `${1}/${new Date(data.finishingDate).getHours() + 1}`,
-				gridColumn: `${new Date(data.finishingDate).getDay() + 1}`,
-				marginBottom: `${-new Date(data.finishingDate).getMinutes()}px`,
+				gridRow: `${1}/${data.finishingDate.getHours() + 1}`,
+				gridColumn: `${data.finishingDate.getDay() + 1}`,
+				marginBottom: `${-data.finishingDate.getMinutes()}px`,
 				marginTop: '-10px',
 				paddingTop: '15px',
 			});
@@ -367,63 +392,61 @@ class Calendar {
 					blobId: `${data.id}`,
 					storageId: utils.generateDateId(data.startingDate),
 					width: '100%',
-					gridRow: `${new Date(data.startingDate).getHours() + 1}/${
-						new Date(data.finishingDate).getHours() + 1
+					gridRow: `${data.startingDate.getHours() + 1}/${
+						data.finishingDate.getHours() + 1
 					}`,
-					gridColumn: `${new Date(data.startingDate).getDay() + 1}`,
-					marginTop: `${new Date(data.startingDate).getMinutes()}px`,
-					marginBottom: `${-new Date(data.finishingDate).getMinutes()}px`,
+					gridColumn: `${data.startingDate.getDay() + 1}`,
+					marginTop: `${data.startingDate.getMinutes()}px`,
+					marginBottom: `${-data.finishingDate.getMinutes()}px`,
 				},
 			];
 		}
 	}
 
 	renderEvents(
-		data: Array<Data>,
+		data: Data[],
 		dateId = utils.generateDateId(this.getToday())
-	) {
-		calendarTable!.innerHTML = '';
-
+	): void {
+		calendarTable.innerHTML = '';
 		if (data) {
-			console.log(data);
+			//console.log(data);
 			data = data.filter(
-				(event) =>
+				(event): boolean =>
 					event.startingDateId === dateId || event.finishingDateId === dateId
 			);
-			data = data.map((event) => this.calculateStyles(event)).flat();
-			data = data.filter((blob) => {
+			data = data
+				.map((event): StyledData | StyledData[] => this.calculateStyles(event))
+				.flat();
+			data = data.filter((blob): boolean => {
 				return blob.storageId!.localeCompare(dateId) === 0;
 			});
 
-			data.map((blob: StyledData) => {
-				console.log(blob);
+			data.map((blob: StyledData): void => {
+				//console.log(blob);
 				calendarTable!.insertAdjacentHTML(
 					'beforeend',
 					`<div class="calendar-event ${blob.blobId}">
 							<span class="calendar-event--title">${blob.title},</span>
 							<span class="calendar-event--time">${
 								blob.overlapping
-									? `${new Date(blob.startingDate).toLocaleString('en-US', {
+									? `${blob.startingDate.toLocaleString('en-US', {
 											month: 'short',
-									  })} ${new Date(blob.startingDate).getDate()}, `
+									  })} ${blob.startingDate.getDate()}, `
 									: ''
-							}${String(new Date(blob.startingDate).getHours()).padStart(
+							}${String(blob.startingDate.getHours()).padStart(
 						2,
 						'0'
-					)}:${String(new Date(blob.startingDate).getMinutes()).padStart(
+					)}:${String(blob.startingDate.getMinutes()).padStart(
 						2,
 						'0'
-					)} - ${String(new Date(blob.finishingDate).getHours()).padStart(
+					)} - ${String(blob.finishingDate.getHours()).padStart(
 						2,
 						'0'
-					)}:${String(new Date(blob.finishingDate).getMinutes()).padStart(
-						2,
-						'0'
-					)}${
+					)}:${String(blob.finishingDate.getMinutes()).padStart(2, '0')}${
 						blob.overlapping
-							? `, ${new Date(blob.finishingDate).toLocaleString('en-US', {
+							? `, ${blob.finishingDate.toLocaleString('en-US', {
 									month: 'short',
-							  })} ${new Date(blob.finishingDate).getDate()}`
+							  })} ${blob.finishingDate.getDate()}`
 							: ''
 					} </span>
 							<p class="calendar-event--description">
@@ -432,26 +455,26 @@ class Calendar {
 					</div>`
 				);
 
-				let temp = calendarTable.lastElementChild;
+				let temp = calendarTable.lastElementChild as HTMLDivElement;
 
 				if (temp) {
 					if (blob.gridColumn) {
-						(temp as HTMLDivElement).style.gridColumn = blob.gridColumn;
+						temp.style.gridColumn = blob.gridColumn;
 					}
 					if (blob.gridRow) {
-						(temp as HTMLDivElement).style.gridRow = blob.gridRow;
+						temp.style.gridRow = blob.gridRow;
 					}
 					if (blob.marginTop) {
-						(temp as HTMLDivElement).style.marginTop = blob.marginTop;
+						temp.style.marginTop = blob.marginTop;
 					}
 					if (blob.marginBottom) {
-						(temp as HTMLDivElement).style.marginBottom = blob.marginBottom;
+						temp.style.marginBottom = blob.marginBottom;
 					}
 					if (blob.paddingTop) {
-						(temp as HTMLDivElement).style.paddingTop = blob.paddingTop;
+						temp.style.paddingTop = blob.paddingTop;
 					}
 					if (blob.paddingBottom) {
-						(temp as HTMLDivElement).style.paddingBottom = blob.paddingBottom;
+						temp.style.paddingBottom = blob.paddingBottom;
 					}
 				}
 			});
@@ -461,20 +484,8 @@ class Calendar {
 
 const utils = new Utils();
 
-const modal = new Modal(
-	eventModal as HTMLElement,
-	eventModalCloseBtn as HTMLButtonElement,
-	eventModalSaveBtn as HTMLButtonElement
-);
+const modal = new Modal(eventModal!, eventModalCloseBtn!, eventModalSaveBtn!);
 
 const storage = new CalendarStorage();
 
-const calendar = new Calendar(
-	calendarTable as HTMLElement,
-	calendarHeaderCells,
-	{
-		onClick() {
-			modal.toggle();
-		},
-	}
-);
+const calendar = new Calendar(calendarTable, calendarHeaderCells);
