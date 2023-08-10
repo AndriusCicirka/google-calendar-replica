@@ -15,7 +15,7 @@ function App() {
 				<Placeholder gridArea="aside-left" />
 				<Placeholder gridArea="aside-right" />
 				<CalendarHeader gridArea="calendar-header" />
-				<CalendarTable gridArea="calendar-wrap" />
+				<CalendarTable gridArea="calendar-table" />
 			</Layout>
 		</div>
 	);

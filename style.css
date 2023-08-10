@@ -29,11 +29,6 @@ input {
 }
 
 /*
-*
-*
-*
-*
-*/
 
 .header {
 	display: fixed;
@@ -51,12 +46,6 @@ input {
 	height: calc(100% - 60px);
 }
 
-/*
-*
-*
-*
-*
-*/
 
 .aside-left {
 	grid-area: aside-left;
@@ -74,13 +63,6 @@ input {
 	display: flex;
 	flex-direction: column;
 }
-
-/*
-*
-*
-*
-*
-*/
 
 .calendar-header {
 	grid-area: calendar-header;
@@ -171,12 +153,6 @@ input {
 	background-color: rgb(0, 81, 203);
 }
 
-/*
-*
-*
-*
-*
-*/
 
 .calendar-wrap {
 	grid-area: calendar-table;
@@ -236,11 +212,6 @@ input {
 	box-shadow: 1px 1px 0px rgb(200, 200, 200);
 }
 
-/*
-*
-*
-*
-*
 */
 
 .calendar-event {
