@@ -36,7 +36,7 @@ const loadHeaderCells = (weekdays: string[]): JSX.Element[] => {
 	}
 };
 
-const CalendarHeader: React.FC<Props> = () => {
+const CalendarHeader: React.FC<Props> = (): JSX.Element => {
 	return (
 		<div className="calendar-header--wrap">
 			<>{loadMiscCell()}</>
