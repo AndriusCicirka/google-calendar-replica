@@ -1,6 +1,8 @@
 import React from 'react';
 import './CalendarTable.css';
 
+import Event from './Event';
+
 interface Props {
 	gridArea?: string;
 }
@@ -34,7 +36,7 @@ const TIME_MARKINGS = [
 	'11',
 ];
 
-const calculatePreffix = (i): 'AM' | 'PM' => {
+const calculatePreffix = (i: number): 'AM' | 'PM' => {
 	if (i < 11) {
 		return 'AM';
 	}
@@ -76,7 +78,9 @@ const CalendarTable: React.FC<Props> = (): JSX.Element => {
 				{generateCells(TIME_MARKINGS, true)}
 			</div>
 			<div className="calendar-table--wrap">
-				<div className="calendar-table"></div>
+				<div className="calendar-table">
+					<Event />
+				</div>
 				<div className="calendar-table--invisible">{generateCells()}</div>
 			</div>
 		</div>
