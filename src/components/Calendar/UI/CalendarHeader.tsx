@@ -8,18 +8,6 @@ interface Props {
 const DUMMY = ['6', '7', '8', '9', '10', '11', '12'];
 const DAY_NAMES_SHORT = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
-const loadMiscCell = (): JSX.Element => {
-	return (
-		<div className="calendar-header--misc">
-			<div>
-				<button className="button-week--back">{'<'}</button>
-				<button className="button-week--forward">{'>'}</button>
-			</div>
-			<span className="calendar-header--timezone">GMT+03</span>
-		</div>
-	);
-};
-
 const loadHeaderCells = (
 	weekdays: string[],
 	dayNames: string[]
@@ -44,10 +32,16 @@ const loadHeaderCells = (
 
 const CalendarHeader: React.FC<Props> = (): JSX.Element => {
 	return (
-		<div className="calendar-header--wrap">
-			<>{loadMiscCell()}</>
+		<>
+			<div className="calendar-header--misc">
+				<div>
+					<button className="button-week--back">{'<'}</button>
+					<button className="button-week--forward">{'>'}</button>
+				</div>
+				<span className="calendar-header--timezone">GMT+03</span>
+			</div>
 			<>{loadHeaderCells(DUMMY, DAY_NAMES_SHORT)}</>
-		</div>
+		</>
 	);
 };
 

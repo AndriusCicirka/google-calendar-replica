@@ -6,18 +6,21 @@ import Layout from 'components/Layout/Layout';
 import Placeholder from 'components/Layout/Placeholder';
 import CalendarHeader from 'components/Calendar/UI/CalendarHeader';
 import CalendarTable from 'components/Calendar/UI/CalendarTable';
+import EventModal from 'components/Calendar/UI/EventModal';
 
 function App() {
+	//<CalendarTable gridArea="calendar-main" />
+	//<EventModal />
 	return (
-		<div className="App">
+		<>
 			<Header />
 			<Layout>
 				<Placeholder gridArea="aside-left" />
-				<Placeholder gridArea="aside-right" />
 				<CalendarHeader gridArea="calendar-header" />
-				<CalendarTable gridArea="calendar-table" />
+				<CalendarTable gridArea="calendar-wrap" />
+				<Placeholder gridArea="aside-right" />
 			</Layout>
-		</div>
+		</>
 	);
 }
 

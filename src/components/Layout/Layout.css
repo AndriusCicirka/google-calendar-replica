@@ -4,8 +4,7 @@
 	grid-template-rows: 120px 1fr;
 	grid-template-areas:
 		'aside-left calendar-header aside-right'
-		'aside-left calendar-table aside-right';
-	width: 100%;
+		'aside-left calendar-main aside-right';
 	height: calc(100% - 60px);
 }
 
@@ -19,19 +18,8 @@
 
 .calendar-header {
 	grid-area: calendar-header;
-
-	/*
-	display: grid;
-	grid-template-columns: 85px repeat(7, 1fr);
-
-	padding-right: 15px;
-	padding-bottom: 20px;
-
-	font-family: 'Lato', sans-serif;
-	font-weight: 300;
-    */
 }
 
 .calendar-wrap {
-	grid-area: calendar-table;
+	grid-area: calendar-main;
 }

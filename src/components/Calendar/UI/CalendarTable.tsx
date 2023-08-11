@@ -73,7 +73,7 @@ const generateCells = (
 
 const CalendarTable: React.FC<Props> = (): JSX.Element => {
 	return (
-		<div className="calendar-wrap">
+		<>
 			<div aria-hidden="true" className="calendar-table--time">
 				{generateCells(TIME_MARKINGS, true)}
 			</div>
@@ -83,7 +83,7 @@ const CalendarTable: React.FC<Props> = (): JSX.Element => {
 				</div>
 				<div className="calendar-table--invisible">{generateCells()}</div>
 			</div>
-		</div>
+		</>
 	);
 };
 
