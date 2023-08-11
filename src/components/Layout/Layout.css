@@ -23,3 +23,31 @@
 .calendar-wrap {
 	grid-area: calendar-main;
 }
+
+@media only screen and (max-width: 1600px) {
+	.content-wrap {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			'calendar-header'
+			'calendar-main';
+
+		overflow-x: scroll;
+	}
+
+	.aside-left,
+	.aside-right {
+		display: none;
+	}
+
+	.calendar-header,
+	.calendar-wrap {
+		min-width: 950px;
+	}
+}
+
+@media only screen and (max-width: 700px) {
+	.event-creation--modal {
+		min-width: none;
+		max-width: 90%;
+	}
+}
