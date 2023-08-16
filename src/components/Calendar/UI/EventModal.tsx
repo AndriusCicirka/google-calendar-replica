@@ -15,6 +15,26 @@ const EventModal = (): JSX.Element => {
 
 		onSubmit: (values) => {
 			console.log(values);
+
+			const combinedStart = new Date(
+				`${values.startingDate}T${values.startingTime}`
+			);
+			const combinedFinish = new Date(
+				`${values.finishingDate}T${values.finishingTime}`
+			);
+
+			if (
+				values.title.length > 2 &&
+				values.startingDate &&
+				values.startingTime &&
+				values.finishingTime &&
+				values.finishingDate &&
+				combinedStart <= combinedFinish
+			) {
+				//Fetch data to server
+			} else {
+				//Handle false conditions
+			}
 		},
 	});
 
@@ -34,7 +54,7 @@ const EventModal = (): JSX.Element => {
 						placeholder="Add title"
 						id="event-title"
 						className="mandatory-input"
-						value={formik.values.title}
+						value={formik.values.title.trim()}
 						onChange={formik.handleChange}
 					/>
 				</div>
