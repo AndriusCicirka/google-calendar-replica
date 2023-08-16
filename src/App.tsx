@@ -11,6 +11,7 @@ import EventModal from 'components/Calendar/UI/EventModal';
 function App() {
 	//<CalendarTable gridArea="calendar-main" />
 	//<EventModal />
+
 	return (
 		<>
 			<Header />
