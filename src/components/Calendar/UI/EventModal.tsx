@@ -29,7 +29,7 @@ const EventModal = (): JSX.Element => {
 				<div className="event-creation--modal--input">
 					<input
 						type="text"
-						name="name"
+						name="title"
 						aria-label="Add event title"
 						placeholder="Add title"
 						id="event-title"
