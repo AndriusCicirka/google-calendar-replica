@@ -4,7 +4,9 @@ const modalSlice = createSlice({
 	name: 'modal',
 	initialState: false,
 	reducers: {
-		toggle: (state: boolean) => !state,
+		toggle: (state: boolean) => {
+			return !state;
+		},
 	},
 });
 

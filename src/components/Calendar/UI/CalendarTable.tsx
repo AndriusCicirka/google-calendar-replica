@@ -1,5 +1,7 @@
 import React from 'react';
 import './CalendarTable.css';
+import { useDispatch } from 'react-redux';
+import { toggle } from 'scripts/modalSlice';
 
 import Event from './Event';
 
@@ -72,12 +74,13 @@ const generateCells = (
 };
 
 const CalendarTable: React.FC<Props> = (): JSX.Element => {
+	const dispatch = useDispatch();
 	return (
 		<>
 			<div aria-hidden="true" className="calendar-table--time">
 				{generateCells(TIME_MARKINGS, true)}
 			</div>
-			<div className="calendar-table--wrap">
+			<div className="calendar-table--wrap" onClick={() => dispatch(toggle())}>
 				<div className="calendar-table">
 					<Event />
 				</div>
