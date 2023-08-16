@@ -16,6 +16,8 @@
 
 	transition: 0.3s ease-in-out;
 	overflow-y: scroll;
+
+	scale: 100.75%;
 }
 
 .calendar-event::-webkit-scrollbar {
