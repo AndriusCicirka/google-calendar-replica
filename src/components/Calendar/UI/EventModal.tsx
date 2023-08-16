@@ -1,9 +1,25 @@
 import React from 'react';
 import './EventModal.css';
+import { useFormik } from 'formik';
 
 const EventModal = (): JSX.Element => {
+	const formik = useFormik({
+		initialValues: {
+			title: '',
+			description: '',
+			startingDate: '',
+			startingTime: '',
+			finishingTime: '',
+			finishingDate: '',
+		},
+
+		onSubmit: (values) => {
+			console.log(values);
+		},
+	});
+
 	return (
-		<form className="event-creation--modal">
+		<form className="event-creation--modal" onSubmit={formik.handleSubmit}>
 			<div className="event-creation--modal--header">
 				<button className="modal-close--button" aria-label="Close modal button">
 					X
@@ -18,6 +34,8 @@ const EventModal = (): JSX.Element => {
 						placeholder="Add title"
 						id="event-title"
 						className="mandatory-input"
+						value={formik.values.title}
+						onChange={formik.handleChange}
 					/>
 				</div>
 				<div className="event-creation--modal--time">
@@ -29,6 +47,8 @@ const EventModal = (): JSX.Element => {
 						name="startingDate"
 						id="starting-date"
 						className="mandatory-input"
+						value={formik.values.startingDate}
+						onChange={formik.handleChange}
 					/>
 					<label htmlFor="starting-time" className="hide-visibility">
 						Starting time
@@ -38,6 +58,8 @@ const EventModal = (): JSX.Element => {
 						name="startingTime"
 						id="starting-time"
 						className="mandatory-input"
+						value={formik.values.startingTime}
+						onChange={formik.handleChange}
 					/>
 					<div aria-label="until">-</div>
 					<label htmlFor="finishing-time" className="hide-visibility">
@@ -48,6 +70,8 @@ const EventModal = (): JSX.Element => {
 						name="finishingTime"
 						id="finishing-time"
 						className="mandatory-input"
+						value={formik.values.finishingTime}
+						onChange={formik.handleChange}
 					/>
 					<label htmlFor="finishing-date" className="hide-visibility">
 						Finishing date
@@ -57,6 +81,8 @@ const EventModal = (): JSX.Element => {
 						name="finishingDate"
 						id="finishing-date"
 						className="mandatory-input"
+						value={formik.values.finishingDate}
+						onChange={formik.handleChange}
 					/>
 				</div>
 				<textarea
@@ -64,6 +90,8 @@ const EventModal = (): JSX.Element => {
 					id="event-description"
 					className="event-creation--modal--description"
 					placeholder="Description of the meeting"
+					value={formik.values.description}
+					onChange={formik.handleChange}
 				></textarea>
 				<div className="event-creation--modal--buttons">
 					<button type="submit" className="modal-save--button">
