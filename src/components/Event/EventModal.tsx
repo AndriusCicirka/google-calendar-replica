@@ -5,7 +5,7 @@ import { generateDateId, generateId } from 'utils/utils';
 import { appendData, fetchData } from 'utils/apiHelper';
 
 interface Props {
-	closeOnSubmit: Function;
+	closeModal: Function;
 }
 
 const EventModal: React.FC<Props> = (props): JSX.Element => {
@@ -55,7 +55,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 				};
 
 				appendData('events', eventData);
-				props.closeOnSubmit();
+				props.closeModal();
 			}
 		},
 	});
@@ -63,7 +63,12 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 	return (
 		<form className={styles.modal} onSubmit={formik.handleSubmit}>
 			<div className={styles.modalHeader}>
-				<button className={styles.closeButton} aria-label="Close modal button">
+				<button
+					className={styles.closeButton}
+					aria-label="Close modal button"
+					type="button"
+					onClick={() => props.closeModal()}
+				>
 					X
 				</button>
 			</div>

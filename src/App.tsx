@@ -27,7 +27,7 @@ function App() {
 		<>
 			<Header />
 			{showEventModal && (
-				<EventModal closeOnSubmit={() => handleTableClick(false)} />
+				<EventModal closeModal={() => handleTableClick(false)} />
 			)}
 			<Layout>
 				<Placeholder gridArea="asideLeft" />
