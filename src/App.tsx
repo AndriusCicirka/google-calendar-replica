@@ -26,7 +26,9 @@ function App() {
 	return (
 		<>
 			<Header />
-			{showEventModal && <EventModal />}
+			{showEventModal && (
+				<EventModal closeOnSubmit={() => handleTableClick(false)} />
+			)}
 			<Layout>
 				<Placeholder gridArea="asideLeft" />
 				<CalendarHeader

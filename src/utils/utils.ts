@@ -2,9 +2,8 @@ export const generateId = () => {
 	return Date.now();
 };
 
-export const generateDateId = (date: string) => {
-	const newDate = new Date(date);
-	return `${getWeekOfYear(newDate)}/${newDate.getFullYear()}`;
+export const generateDateId = (date: Date) => {
+	return `${getWeekOfYear(date)}/${date.getFullYear()}`;
 };
 
 export const getWeekOfYear = (date: string | Date) => {

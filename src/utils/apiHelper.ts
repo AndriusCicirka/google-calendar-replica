@@ -1,3 +1,14 @@
+interface Data {
+	title: string;
+	id: number;
+	startingDate: Date;
+	finishingDate: Date;
+	startingDateId: string;
+	finishingDateId: string;
+	storageId?: string;
+	description?: string;
+}
+
 export const fetchData = (storageKey: string) => {
 	const data = localStorage.getItem(storageKey);
 	if (data) {
@@ -6,7 +17,7 @@ export const fetchData = (storageKey: string) => {
 	return null;
 };
 
-export const appendData = (storageKey: string, newData: Object) => {
+export const appendData = (storageKey: string, newData: Data) => {
 	let prevData = fetchData(storageKey);
 	if (!prevData) {
 		prevData = [];

@@ -1,8 +1,14 @@
 import React from 'react';
 import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
+import { generateDateId, generateId } from 'utils/utils';
+import { appendData, fetchData } from 'utils/apiHelper';
 
-const EventModal = (): JSX.Element => {
+interface Props {
+	closeOnSubmit: Function;
+}
+
+const EventModal: React.FC<Props> = (props): JSX.Element => {
 	const formik = useFormik({
 		initialValues: {
 			title: '',
@@ -14,24 +20,42 @@ const EventModal = (): JSX.Element => {
 		},
 
 		onSubmit: (values) => {
-			console.log(values);
+			const {
+				title,
+				description,
+				startingDate,
+				startingTime,
+				finishingTime,
+				finishingDate,
+			} = values;
 
-			const combinedStart = new Date(
-				`${values.startingDate}T${values.startingTime}`
-			);
-			const combinedFinish = new Date(
-				`${values.finishingDate}T${values.finishingTime}`
-			);
+			const combinedStartDate = new Date(`${startingDate}T${startingTime}`);
+			const combinedFinishDate = new Date(`${finishingDate}T${finishingTime}`);
 
 			if (
-				values.title.length > 2 &&
-				values.startingDate &&
-				values.startingTime &&
-				values.finishingTime &&
-				values.finishingDate &&
-				combinedStart <= combinedFinish
+				title.length > 2 &&
+				startingDate &&
+				startingTime &&
+				finishingTime &&
+				finishingDate &&
+				combinedStartDate <= combinedFinishDate
 			) {
-			} else {
+				const id = generateId();
+				const startingDateId = generateDateId(combinedStartDate);
+				const finishingDateId = generateDateId(combinedFinishDate);
+
+				const eventData = {
+					id,
+					title,
+					description,
+					startingDate: combinedStartDate,
+					finishingDate: combinedFinishDate,
+					startingDateId,
+					finishingDateId,
+				};
+
+				appendData('events', eventData);
+				props.closeOnSubmit();
 			}
 		},
 	});
