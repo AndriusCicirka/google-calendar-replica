@@ -9,9 +9,18 @@ import CalendarHeader from 'components/Calendar/CalendarHeader';
 import CalendarTable from 'components/Calendar/CalendarTable';
 import EventModal from 'components/Event/EventModal';
 import { RootState } from 'store/store';
+import { getToday } from 'utils/calendar';
+
+import { useState } from 'react';
 
 function App() {
 	const modalToggle = useSelector((state: RootState) => state.modal);
+
+	const [currentWeeklyView, setCurrentWeeklyView] = useState(getToday());
+
+	const handleViewChange = (newDate: Date) => {
+		setCurrentWeeklyView(newDate);
+	};
 
 	return (
 		<>
@@ -19,7 +28,11 @@ function App() {
 			{modalToggle && <EventModal />}
 			<Layout>
 				<Placeholder gridArea="asideLeft" />
-				<CalendarHeader gridArea="calendarHeader" />
+				<CalendarHeader
+					gridArea="calendarHeader"
+					currentWeeklyView={currentWeeklyView}
+					onViewChange={handleViewChange}
+				/>
 				<CalendarTable gridArea="calendarWrap" />
 				<Placeholder gridArea="asideRight" />
 			</Layout>

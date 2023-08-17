@@ -3,12 +3,14 @@ export const getToday = () => {
 };
 
 export const getWeekdays = (date: Date) => {
+	const startDate = new Date(date);
 	return Array(7)
 		.fill('')
-		.map(
-			(_, index) =>
-				new Date(date.setDate(date.getDate() - (date.getDay() + index)))
-		);
+		.map((_, index) => {
+			const newDate = new Date(startDate);
+			newDate.setDate(startDate.getDate() - (startDate.getDay() - index));
+			return newDate;
+		});
 };
 
 export const formatDateToDDMMYY = (date: Date) => {

@@ -1,39 +1,93 @@
 import React from 'react';
 import styles from './CalendarHeader.module.css';
 
+import { getToday, getWeekdays } from 'utils/calendar';
 interface Props {
 	gridArea?: string;
+	currentWeeklyView: Date;
+	onViewChange: Function;
 }
 
-const DUMMY = ['6', '7', '8', '9', '10', '11', '12'];
-const DAY_NAMES_SHORT = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const DAYS_IN_WEEK = 7;
 
-const CalendarHeader: React.FC<Props> = (): JSX.Element => {
-	const loadHeaderCells = (weekdays: string[], dayNames: string[]) => {
-		if (weekdays) {
-			return weekdays.map((day: string, index): JSX.Element => {
-				return (
-					<div className={styles.headerCell} key={index + 123}>
-						<span className={styles.headerCellLetters}>{dayNames[index]}</span>
-						<span className={styles.headerCellNumbers}>{day}</span>
-					</div>
-				);
-			});
-		} else {
-			throw new Error('Calendar header had problems loading weekday cells');
-		}
+const CalendarHeader: React.FC<Props> = (props): JSX.Element => {
+	const today = getToday();
+	const weekdays = getWeekdays(props.currentWeeklyView);
+
+	const formatDayName = (day: Date) => {
+		return day
+			.toLocaleString('en-US', {
+				weekday: 'short',
+			})
+			.toUpperCase();
+	};
+
+	const handleWeekNavigation = (
+		direction: 'forward' | 'backward',
+		currentDate: Date
+	) => {
+		const updatedDate =
+			direction === 'forward'
+				? new Date(currentDate.setDate(currentDate.getDate() + DAYS_IN_WEEK))
+				: new Date(currentDate.setDate(currentDate.getDate() - DAYS_IN_WEEK));
+
+		props.onViewChange(updatedDate);
+	};
+
+	const checkIfSameDay = (today: Date, otherDate: Date) => {
+		return (
+			today.getFullYear() === otherDate.getFullYear() &&
+			today.getMonth() === otherDate.getMonth() &&
+			today.getDate() === otherDate.getDate()
+		);
 	};
 
 	return (
 		<>
 			<div className={styles.headerMisc}>
 				<div>
-					<button className={styles.buttonWeek}>{'<'}</button>
-					<button className={styles.buttonWeek}>{'>'}</button>
+					<button
+						className={styles.buttonWeek}
+						onClick={() =>
+							handleWeekNavigation('backward', props.currentWeeklyView)
+						}
+					>
+						{'<'}
+					</button>
+					<button
+						className={styles.buttonWeek}
+						onClick={() =>
+							handleWeekNavigation('forward', props.currentWeeklyView)
+						}
+					>
+						{'>'}
+					</button>
 				</div>
 				<span className={styles.headerTimezone}>GMT+03</span>
 			</div>
-			<>{loadHeaderCells(DUMMY, DAY_NAMES_SHORT)}</>
+			<>
+				{weekdays.map((day: Date, index): JSX.Element => {
+					const isToday = checkIfSameDay(today, day);
+					return (
+						<div className={styles.headerCell} key={index + 123}>
+							<span
+								className={`${styles.headerCellLetters} ${
+									isToday && styles.currentDayLetters
+								}`}
+							>
+								{formatDayName(day)}
+							</span>
+							<span
+								className={`${styles.headerCellNumbers} ${
+									isToday && styles.currentDayNumbers
+								}`}
+							>
+								{day.getDate()}
+							</span>
+						</div>
+					);
+				})}
+			</>
 		</>
 	);
 };
