@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './CalendarHeader.module.css';
 
-import { getToday, getWeekdays } from 'utils/calendar';
+import { getToday, getWeekdays } from 'utils/utils';
 interface Props {
 	gridArea?: string;
 	currentWeeklyView: Date;

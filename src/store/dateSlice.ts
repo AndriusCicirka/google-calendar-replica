@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { getToday } from 'utils/calendar';
+import { getToday } from 'utils/utils';
 
 const dateSlice = createSlice({
 	name: 'modal',

@@ -7,7 +7,7 @@ import Placeholder from 'components/Layout/Placeholder';
 import CalendarHeader from 'components/Calendar/CalendarHeader';
 import CalendarTable from 'components/Calendar/CalendarTable';
 import EventModal from 'components/Event/EventModal';
-import { getToday } from 'utils/calendar';
+import { getToday } from 'utils/utils';
 
 import { useState } from 'react';
 
