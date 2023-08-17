@@ -5,6 +5,9 @@ import Event from '../Event/Event';
 
 interface Props {
 	gridArea?: string;
+	currentWeeklyView: Date;
+	showEventModal: boolean;
+	onTableClick: Function;
 }
 
 const WEEK_LENGTH = 7;
@@ -71,7 +74,11 @@ const generateCells = (
 	return cells;
 };
 
-const CalendarTable: React.FC<Props> = (): JSX.Element => {
+const CalendarTable: React.FC<Props> = (props): JSX.Element => {
+	const tableClickHandler = (modalState: boolean) => {
+		props.onTableClick(!modalState);
+	};
+
 	return (
 		<>
 			<div aria-hidden="true" className={styles.tableTime}>
@@ -79,7 +86,7 @@ const CalendarTable: React.FC<Props> = (): JSX.Element => {
 			</div>
 			<div
 				className={styles.tableWrap}
-				onClick={() => console.log('modal toggle')}
+				onClick={() => tableClickHandler(props.showEventModal)}
 			>
 				<div className={styles.table}>
 					<Event />
