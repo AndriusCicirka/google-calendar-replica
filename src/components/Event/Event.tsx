@@ -7,18 +7,27 @@ interface EventInformation {
 	description?: string;
 	startingDate: Date;
 	finishingDate: Date;
-	startingDateId: string;
-	finishingDateId: string;
+	startingDateId?: string;
+	finishingDateId?: string;
 	overlapping: boolean;
-	locale: string;
+	locale?: string;
 }
 
-const Event = (eventInfo): JSX.Element => {
+const renderHHMMString = (date: Date) => {
+	return `${String(date.getHours()).padStart(2, '0')}:${String(
+		date.getMinutes()
+	).padStart(2, '0')}}`;
+};
+
+const Event: React.FC<EventInformation> = (event): JSX.Element => {
 	return (
 		<div className={styles.event}>
-			<span className={styles.eventTitle}>Cat Shower, </span>
-			<span className={styles.eventTime}>08:00 - 10:00</span>
-			<p className={styles.eventDescription}>Cat like bath, yes</p>
+			<span className={styles.eventTitle}>{event.title}, </span>
+			<span className={styles.eventTime}>
+				{renderHHMMString(event.startingDate)} -{' '}
+				{renderHHMMString(event.finishingDate)}
+			</span>
+			<p className={styles.eventDescription}>{event.description}</p>
 		</div>
 	);
 };

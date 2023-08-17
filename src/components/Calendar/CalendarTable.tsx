@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
+import { calculateStyles, generateDateId } from 'utils/utils';
+import { fetchData } from 'utils/apiHelper';
 
 interface Props {
 	gridArea?: string;
@@ -47,7 +49,7 @@ const calculatePreffix = (i: number): 'AM' | 'PM' => {
 	return 'PM';
 };
 
-const generateCells = (
+const renderCells = (
 	timeMarkings?: string[],
 	preffixAmPm?: boolean
 ): JSX.Element[] => {
@@ -74,24 +76,71 @@ const generateCells = (
 	return cells;
 };
 
+const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
+	const viewId = generateDateId(currentWeeklyView);
+	if (eventData) {
+		const filteredData = eventData.filter(
+			(event) =>
+				event.startingDateId === viewId || event.finishingDateId === viewId
+		);
+
+		let styledData = filteredData.map((event) => calculateStyles(event)).flat();
+
+		styledData = styledData.filter(
+			(event) => event.storageId!.localeCompare(viewId) === 0
+		);
+
+		return styledData.map((event) => {
+			const {
+				id,
+				title,
+				description,
+				startingDate,
+				finishingDate,
+				overlapping,
+				width,
+				gridRow,
+				gridColumn,
+				marginBottom,
+				marginTop,
+				paddingTop,
+				paddingBottom,
+			} = event;
+			return (
+				<Event
+					id={id}
+					key={id}
+					title={title}
+					description={description}
+					startingDate={startingDate}
+					finishingDate={finishingDate}
+					overlapping={overlapping}
+				/>
+			);
+		});
+	} else return null;
+};
+
 const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 	const tableClickHandler = (modalState: boolean) => {
 		props.onTableClick(!modalState);
 	};
 
+	const temp = fetchData('events');
+
 	return (
 		<>
 			<div aria-hidden="true" className={styles.tableTime}>
-				{generateCells(TIME_MARKINGS, true)}
+				{renderCells(TIME_MARKINGS, true)}
 			</div>
 			<div
 				className={styles.tableWrap}
 				onClick={() => tableClickHandler(props.showEventModal)}
 			>
 				<div className={styles.table}>
-					<Event />
+					{renderEvents(props.currentWeeklyView, temp)}
 				</div>
-				<div className={styles.tableInvisible}>{generateCells()}</div>
+				<div className={styles.tableInvisible}>{renderCells()}</div>
 			</div>
 		</>
 	);
