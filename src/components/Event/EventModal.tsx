@@ -2,8 +2,7 @@ import React from 'react';
 import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
 import { generateDateId, generateId } from 'utils/utils';
-import { appendData, fetchData } from 'utils/apiHelper';
-
+import { appendData } from 'utils/apiHelper';
 interface Props {
 	closeModal: Function;
 }
