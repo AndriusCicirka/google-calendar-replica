@@ -1,4 +1,4 @@
-.calendar-event {
+.event {
 	width: 100%;
 	border-radius: 10px;
 
@@ -20,36 +20,36 @@
 	scale: 100.75%;
 }
 
-.calendar-event::-webkit-scrollbar {
+.event::-webkit-scrollbar {
 	width: 7px;
 }
 
-.calendar-event::-webkit-scrollbar-track {
+.event::-webkit-scrollbar-track {
 	background: transparent;
 }
 
-.calendar-event::-webkit-scrollbar-thumb {
+.event::-webkit-scrollbar-thumb {
 	border-radius: 100px;
 	background: rgb(0, 100, 255);
 }
 
-.calendar-event::-webkit-scrollbar-thumb:hover {
+.event::-webkit-scrollbar-thumb:hover {
 	background: rgb(0, 81, 203);
 }
 
-.calendar-event:hover {
+.event:hover {
 	cursor: pointer;
 	z-index: 100;
 	background-color: rgb(225, 237, 255);
 }
 
-.calendar-event--title {
+.eventTitle {
 	font-weight: 600;
 }
 
-.calendar-event--time {
+.eventTime {
 }
 
-.calendar-event--description {
+.eventDescription {
 	margin-top: 3px;
 }

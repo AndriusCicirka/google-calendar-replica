@@ -9,6 +9,10 @@
 	box-sizing: border-box;
 }
 
+.error {
+	color: red;
+}
+
 body,
 html {
 	height: 100%;

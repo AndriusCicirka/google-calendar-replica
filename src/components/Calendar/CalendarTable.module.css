@@ -1,10 +1,4 @@
-.calendar-wrap {
-	display: flex;
-	/* height: 100%; */
-	overflow: auto;
-}
-
-.calendar-table--time {
+.tableTime {
 	display: grid;
 	grid-template-rows: repeat(24, 60px);
 
@@ -15,19 +9,19 @@
 	padding-right: 5px;
 }
 
-.time-marker {
+.timeMarker {
 	padding-top: 55px;
 	font-family: Arial, Helvetica, sans-serif;
 	color: gray;
 }
 
-.calendar-table--wrap {
+.tableWrap {
 	width: 100%;
 	height: inherit;
 	padding-left: 15px;
 }
 
-.calendar-table {
+.table {
 	display: grid;
 	width: 100%;
 	grid-template-columns: repeat(7, 1fr);
@@ -39,7 +33,7 @@
 	z-index: 2;
 }
 
-.calendar-table--invisible {
+.tableInvisible {
 	display: grid;
 	width: 100%;
 	height: inherit;
@@ -52,6 +46,6 @@
 	z-index: 1;
 }
 
-.calendar-table--invisible > .calendar-table--cell {
+.tableInvisible > .tableCell {
 	box-shadow: 1px 1px 0px rgb(200, 200, 200);
 }

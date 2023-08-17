@@ -1,9 +1,7 @@
 import React from 'react';
-import './CalendarTable.css';
-import { useDispatch } from 'react-redux';
-import { toggle } from 'scripts/modalSlice';
+import styles from './CalendarTable.module.css';
 
-import Event from './Event';
+import Event from '../Event/Event';
 
 interface Props {
 	gridArea?: string;
@@ -54,12 +52,12 @@ const generateCells = (
 
 	if (!timeMarkings) {
 		for (let i = 1; i < WEEK_LENGTH * HOURS_IN_DAY; i++) {
-			cells.push(<div className="calendar-table--cell" key={i}></div>);
+			cells.push(<div className={styles.tableCell} key={i}></div>);
 		}
 	} else if (timeMarkings) {
 		for (let i = 0; i < HOURS_IN_DAY - 1; i++) {
 			cells.push(
-				<span className="time-marker" key={i}>
+				<span className={styles.timeMarker} key={i}>
 					{timeMarkings[i]} {preffixAmPm && calculatePreffix(i)}
 				</span>
 			);
@@ -74,17 +72,19 @@ const generateCells = (
 };
 
 const CalendarTable: React.FC<Props> = (): JSX.Element => {
-	const dispatch = useDispatch();
 	return (
 		<>
-			<div aria-hidden="true" className="calendar-table--time">
+			<div aria-hidden="true" className={styles.tableTime}>
 				{generateCells(TIME_MARKINGS, true)}
 			</div>
-			<div className="calendar-table--wrap" onClick={() => dispatch(toggle())}>
-				<div className="calendar-table">
+			<div
+				className={styles.tableWrap}
+				onClick={() => console.log('modal toggle')}
+			>
+				<div className={styles.table}>
 					<Event />
 				</div>
-				<div className="calendar-table--invisible">{generateCells()}</div>
+				<div className={styles.tableInvisible}>{generateCells()}</div>
 			</div>
 		</>
 	);

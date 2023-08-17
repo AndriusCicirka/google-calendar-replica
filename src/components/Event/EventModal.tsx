@@ -1,5 +1,5 @@
 import React from 'react';
-import './EventModal.css';
+import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
 
 const EventModal = (): JSX.Element => {
@@ -31,34 +31,32 @@ const EventModal = (): JSX.Element => {
 				values.finishingDate &&
 				combinedStart <= combinedFinish
 			) {
-				//Fetch data to server
 			} else {
-				//Handle false conditions
 			}
 		},
 	});
 
 	return (
-		<form className="event-creation--modal" onSubmit={formik.handleSubmit}>
-			<div className="event-creation--modal--header">
-				<button className="modal-close--button" aria-label="Close modal button">
+		<form className={styles.modal} onSubmit={formik.handleSubmit}>
+			<div className={styles.modalHeader}>
+				<button className={styles.closeButton} aria-label="Close modal button">
 					X
 				</button>
 			</div>
-			<div className="event-creation--modal--wrap">
-				<div className="event-creation--modal--input">
+			<div className={styles.eventCreationWrap}>
+				<div className={styles.eventCreationInput}>
 					<input
 						type="text"
 						name="title"
 						aria-label="Add event title"
 						placeholder="Add title"
 						id="event-title"
-						className="mandatory-input"
+						className={styles.mandatoryInput}
 						value={formik.values.title.trim()}
 						onChange={formik.handleChange}
 					/>
 				</div>
-				<div className="event-creation--modal--time">
+				<div className={styles.eventCreationTime}>
 					<label htmlFor="starting-date" className="hide-visibility">
 						Starting date
 					</label>
@@ -66,7 +64,7 @@ const EventModal = (): JSX.Element => {
 						type="date"
 						name="startingDate"
 						id="starting-date"
-						className="mandatory-input"
+						className={styles.mandatoryInput}
 						value={formik.values.startingDate}
 						onChange={formik.handleChange}
 					/>
@@ -77,7 +75,7 @@ const EventModal = (): JSX.Element => {
 						type="time"
 						name="startingTime"
 						id="starting-time"
-						className="mandatory-input"
+						className={styles.mandatoryInput}
 						value={formik.values.startingTime}
 						onChange={formik.handleChange}
 					/>
@@ -89,7 +87,7 @@ const EventModal = (): JSX.Element => {
 						type="time"
 						name="finishingTime"
 						id="finishing-time"
-						className="mandatory-input"
+						className={styles.mandatoryInput}
 						value={formik.values.finishingTime}
 						onChange={formik.handleChange}
 					/>
@@ -100,7 +98,7 @@ const EventModal = (): JSX.Element => {
 						type="date"
 						name="finishingDate"
 						id="finishing-date"
-						className="mandatory-input"
+						className={styles.mandatoryInput}
 						value={formik.values.finishingDate}
 						onChange={formik.handleChange}
 					/>
@@ -108,13 +106,13 @@ const EventModal = (): JSX.Element => {
 				<textarea
 					name="description"
 					id="event-description"
-					className="event-creation--modal--description"
+					className={styles.eventCreationDescription}
 					placeholder="Description of the meeting"
 					value={formik.values.description}
 					onChange={formik.handleChange}
 				></textarea>
-				<div className="event-creation--modal--buttons">
-					<button type="submit" className="modal-save--button">
+				<div className={styles.eventCreationButtons}>
+					<button type="submit" className={styles.saveButton}>
 						Save
 					</button>
 				</div>

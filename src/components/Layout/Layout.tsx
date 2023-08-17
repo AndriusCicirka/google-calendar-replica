@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import './Layout.css';
+import styles from './Layout.module.css';
 
 interface Props {
 	children?: ReactNode;
@@ -7,14 +7,14 @@ interface Props {
 
 const Layout: React.FC<Props> = (props): JSX.Element => {
 	return (
-		<div className="content-wrap">
+		<div className={styles.contentWrap}>
 			{props.children &&
 				React.Children.map(
 					props.children,
 					(element, index: number): ReactNode => {
 						if (React.isValidElement(element)) {
 							return (
-								<div className={element.props.gridArea} key={index}>
+								<div className={styles[element.props.gridArea]} key={index}>
 									{element}
 								</div>
 							);

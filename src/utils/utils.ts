@@ -1,13 +1,13 @@
-const generateId = () => {
+export const generateId = () => {
 	return Date.now();
 };
 
-const generateDateId = (date: string) => {
+export const generateDateId = (date: string) => {
 	const newDate = new Date(date);
 	return `${getWeekOfYear(newDate)}/${newDate.getFullYear()}`;
 };
 
-const getWeekOfYear = (date: string | Date) => {
+export const getWeekOfYear = (date: string | Date) => {
 	date = new Date(date);
 	date.setHours(0, 0, 0, 0);
 	const firstDayOfYear = new Date(date.getFullYear(), 0, 0);
@@ -25,10 +25,4 @@ const getWeekOfYear = (date: string | Date) => {
 	let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
 
 	return weekNumber;
-};
-
-module.exports = {
-	generateId,
-	generateDateId,
-	getWeekOfYear,
 };
