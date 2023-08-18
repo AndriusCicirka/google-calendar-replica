@@ -41,30 +41,25 @@ const TIME_MARKINGS = [
 	'11',
 ];
 
-const renderCells = (
-	timeMarkings?: string[],
-	preffixAmPm?: boolean
-): JSX.Element[] => {
+const renderCells = (): JSX.Element[] => {
 	const cells: JSX.Element[] = [];
 
-	if (!timeMarkings) {
-		for (let i = 1; i < WEEK_LENGTH * HOURS_IN_DAY; i++) {
-			cells.push(<div className={styles.tableCell} key={i}></div>);
-		}
-	} else if (timeMarkings) {
-		for (let i = 0; i < HOURS_IN_DAY - 1; i++) {
-			cells.push(
-				<span className={styles.timeMarker} key={i}>
-					{timeMarkings[i]} {preffixAmPm && calculatePreffix(i)}
-				</span>
-			);
-		}
-	} else {
-		throw new Error(
-			'CalendarTable encountered an error while generating cells'
-		);
+	for (let i = 1; i < WEEK_LENGTH * HOURS_IN_DAY; i++) {
+		cells.push(<div className={styles.tableCell} key={i}></div>);
 	}
 
+	return cells;
+};
+
+const renderTimeMarkings = () => {
+	const cells: JSX.Element[] = [];
+	for (let i = 0; i < HOURS_IN_DAY - 1; i++) {
+		cells.push(
+			<span className={styles.timeMarker} key={i}>
+				{TIME_MARKINGS[i]} {calculatePreffix(i)}
+			</span>
+		);
+	}
 	return cells;
 };
 
@@ -131,7 +126,7 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 	return (
 		<>
 			<div aria-hidden="true" className={styles.tableTime}>
-				{renderCells(TIME_MARKINGS, true)}
+				{renderTimeMarkings()}
 			</div>
 			<div
 				className={styles.tableWrap}
