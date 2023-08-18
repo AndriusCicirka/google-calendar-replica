@@ -32,7 +32,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 			const combinedFinishDate = new Date(`${finishingDate}T${finishingTime}`);
 
 			if (
-				title.length > 2 &&
+				title.trim().length > 2 &&
 				startingDate &&
 				startingTime &&
 				finishingTime &&
@@ -80,7 +80,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						placeholder="Add title"
 						id="event-title"
 						className={styles.mandatoryInput}
-						value={formik.values.title.trim()}
+						value={formik.values.title}
 						onChange={formik.handleChange}
 					/>
 				</div>
