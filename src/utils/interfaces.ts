@@ -3,6 +3,7 @@ export interface EventInfo {
 	key: string;
 	title: string;
 	description?: string;
+	storageId?: string;
 	startingDate: Date;
 	finishingDate: Date;
 	startingDateId?: string;

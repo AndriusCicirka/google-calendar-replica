@@ -1,3 +1,5 @@
+import { StyledEventInfo } from './interfaces';
+
 export const getToday = () => {
 	return new Date();
 };
@@ -74,7 +76,7 @@ export const calculateStyles = (event: Data) => {
 	const HOURS_IN_DAY = 24;
 
 	if (overlapping) {
-		const styledData: any = [];
+		const styledData: StyledEventInfo[] = [];
 		const loopLength = Math.floor(
 			(new Date(event.finishingDate).getTime() -
 				new Date(event.startingDate).getTime()) /
@@ -86,7 +88,7 @@ export const calculateStyles = (event: Data) => {
 		styledData.push({
 			...metaData,
 			id,
-			blobId: `${id}-0`,
+			key: `${id}-0`,
 			storageId: generateDateId(event.startingDate),
 			width: '100%',
 			gridRow: `${startingDate.getHours() + 1}/${25}`,
@@ -96,20 +98,20 @@ export const calculateStyles = (event: Data) => {
 			paddingBottom: '15px',
 		});
 
-		if (loopLength > 2) {
+		if (loopLength > 1) {
 			for (let i = 1; i < loopLength; i++) {
 				styledData.push({
 					...metaData,
 					id,
-					blobId: `${id}-${i}`,
+					key: `${id}-${i}`,
 					storageId: generateDateId(
 						new Date(iterableDate.setDate(iterableDate.getDate() + 1))
 					),
 					width: '100%',
 					gridRow: `${1}/${25}`,
-					gridColumn: `${new Date(
-						iterableDate.setDate(iterableDate.getDate())
-					).getDay()}`,
+					gridColumn: `${
+						new Date(iterableDate.setDate(iterableDate.getDate())).getDay() + 1
+					}`,
 
 					marginTop: '-10px',
 					marginBottom: '-10px',
@@ -121,8 +123,8 @@ export const calculateStyles = (event: Data) => {
 
 		styledData.push({
 			...metaData,
-			id: id,
-			blobId: `${id}-${loopLength}`,
+			id,
+			key: `${id}-${loopLength}`,
 			storageId: generateDateId(finishingDate),
 			width: '100%',
 			gridRow: `${1}/${finishingDate.getHours() + 1}`,
@@ -131,15 +133,13 @@ export const calculateStyles = (event: Data) => {
 			marginTop: '-10px',
 			paddingTop: '15px',
 		});
-
-		//console.log(blobArray);
 		return [...styledData];
 	} else {
 		return [
 			{
 				...metaData,
 				id,
-				blobId: `${id}`,
+				key: `${id}`,
 				storageId: generateDateId(startingDate),
 				width: '100%',
 				gridRow: `${startingDate.getHours() + 1}/${

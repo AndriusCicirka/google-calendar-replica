@@ -93,6 +93,7 @@ const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
 		return styledData.map((event) => {
 			const {
 				id,
+				key,
 				title,
 				description,
 				startingDate,
@@ -109,12 +110,19 @@ const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
 			return (
 				<Event
 					id={id}
-					key={id}
+					key={key}
 					title={title}
 					description={description}
 					startingDate={startingDate}
 					finishingDate={finishingDate}
 					overlapping={overlapping}
+					width={width}
+					gridRow={gridRow}
+					gridColumn={gridColumn}
+					marginBottom={marginBottom}
+					marginTop={marginTop}
+					paddingBottom={paddingBottom}
+					paddingTop={paddingTop}
 				/>
 			);
 		});

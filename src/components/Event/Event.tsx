@@ -1,27 +1,27 @@
 import React from 'react';
 import styles from './Event.module.css';
 
-interface EventInformation {
-	id: string;
-	title: string;
-	description?: string;
-	startingDate: Date;
-	finishingDate: Date;
-	startingDateId?: string;
-	finishingDateId?: string;
-	overlapping: boolean;
-	locale?: string;
-}
+import { StyledEventInfo } from 'utils/interfaces';
 
 const renderHHMMString = (date: Date) => {
 	return `${String(date.getHours()).padStart(2, '0')}:${String(
 		date.getMinutes()
-	).padStart(2, '0')}}`;
+	).padStart(2, '0')}`;
 };
 
-const Event: React.FC<EventInformation> = (event): JSX.Element => {
+const Event: React.FC<StyledEventInfo> = (event): JSX.Element => {
 	return (
-		<div className={styles.event}>
+		<div
+			className={styles.event}
+			style={{
+				gridRow: event.gridRow,
+				gridColumn: event.gridColumn,
+				marginBottom: event.marginBottom,
+				marginTop: event.marginTop,
+				paddingBottom: event.paddingBottom,
+				paddingTop: event.paddingTop,
+			}}
+		>
 			<span className={styles.eventTitle}>{event.title}, </span>
 			<span className={styles.eventTime}>
 				{renderHHMMString(event.startingDate)} -{' '}
