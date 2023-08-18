@@ -1,5 +1,10 @@
 import { StyledEventInfo } from './interfaces';
 
+const MS_IN_SECOND = 1000;
+const SECONDS_IN_HOUR = 3600;
+const HOURS_IN_DAY = 24;
+const DAYS_IN_WEEK = 7;
+
 export const getToday = () => {
 	return new Date();
 };
@@ -36,7 +41,8 @@ export const getWeekOfYear = (date: string | Date) => {
 	date = new Date(date);
 	date.setHours(0, 0, 0, 0);
 	const firstDayOfYear = new Date(date.getFullYear(), 0, 0);
-	const firstSundayOffset = (7 - firstDayOfYear.getDay()) % 7;
+	const firstSundayOffset =
+		(DAYS_IN_WEEK - firstDayOfYear.getDay()) % DAYS_IN_WEEK;
 	const firstSundayOfYear = new Date(Number(firstDayOfYear));
 	firstSundayOfYear.setDate(firstDayOfYear.getDate() + firstSundayOffset);
 
@@ -45,9 +51,10 @@ export const getWeekOfYear = (date: string | Date) => {
 	}
 
 	const daysSinceFirstSunday =
-		(date.getTime() - firstDayOfYear.getTime()) / (24 * 60 * 60 * 1000);
+		(date.getTime() - firstDayOfYear.getTime()) /
+		(HOURS_IN_DAY * SECONDS_IN_HOUR * MS_IN_SECOND);
 
-	let weekNumber = Math.floor(daysSinceFirstSunday / 7) + 1;
+	let weekNumber = Math.floor(daysSinceFirstSunday / DAYS_IN_WEEK) + 1;
 
 	return weekNumber;
 };
@@ -78,10 +85,6 @@ export const calculateStyles = (event: Data) => {
 		finishingDate,
 		overlapping,
 	};
-
-	const MS_IN_SECOND = 1000;
-	const SECONDS_IN_HOUR = 3600;
-	const HOURS_IN_DAY = 24;
 
 	if (overlapping) {
 		const styledData: StyledEventInfo[] = [];
