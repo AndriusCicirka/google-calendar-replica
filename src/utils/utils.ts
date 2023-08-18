@@ -94,7 +94,7 @@ export const calculateStyles = (event: Data) => {
 				(SECONDS_IN_HOUR * HOURS_IN_DAY * MS_IN_SECOND)
 		);
 
-		let iterableDate = event.startingDate;
+		let iterableDate = new Date(event.startingDate);
 
 		styledData.push({
 			...metaData,
