@@ -24,8 +24,16 @@ const Event: React.FC<StyledEventInfo> = (event): JSX.Element => {
 		>
 			<span className={styles.eventTitle}>{event.title}, </span>
 			<span className={styles.eventTime}>
+				{event.overlapping &&
+					`${event.startingDate.toLocaleString('en-US', {
+						month: 'short',
+					})} ${event.startingDate.getDate()}, `}
 				{renderHHMMString(event.startingDate)} -{' '}
 				{renderHHMMString(event.finishingDate)}
+				{event.overlapping &&
+					`, ${event.finishingDate.toLocaleString('en-US', {
+						month: 'short',
+					})} ${event.finishingDate.getDate()}`}
 			</span>
 			<p className={styles.eventDescription}>{event.description}</p>
 		</div>
