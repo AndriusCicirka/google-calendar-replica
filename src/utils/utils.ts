@@ -52,6 +52,14 @@ export const getWeekOfYear = (date: string | Date) => {
 	return weekNumber;
 };
 
+export const calculatePreffix = (i: number): 'AM' | 'PM' => {
+	if (i < 11) {
+		return 'AM';
+	}
+
+	return 'PM';
+};
+
 export const calculateStyles = (event: Data) => {
 	const overlapping =
 		formatDateToDDMMYY(event.startingDate) !==

@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
-import { calculateStyles, generateDateId } from 'utils/utils';
+import { calculateStyles, calculatePreffix, generateDateId } from 'utils/utils';
 import { fetchData } from 'utils/apiHelper';
 
 interface Props {
@@ -40,14 +40,6 @@ const TIME_MARKINGS = [
 	'10',
 	'11',
 ];
-
-const calculatePreffix = (i: number): 'AM' | 'PM' => {
-	if (i < 11) {
-		return 'AM';
-	}
-
-	return 'PM';
-};
 
 const renderCells = (
 	timeMarkings?: string[],
