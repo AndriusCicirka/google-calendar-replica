@@ -9,6 +9,12 @@ const renderHHMMString = (date: Date) => {
 	).padStart(2, '0')}`;
 };
 
+const renderShortDate = (date: Date) => {
+	return `${date.toLocaleString('en-US', {
+		month: 'short',
+	})} ${date.getDate()}`;
+};
+
 const Event: React.FC<StyledEventInfo> = (event): JSX.Element => {
 	return (
 		<div
@@ -24,16 +30,10 @@ const Event: React.FC<StyledEventInfo> = (event): JSX.Element => {
 		>
 			<span className={styles.eventTitle}>{event.title}, </span>
 			<span className={styles.eventTime}>
-				{event.overlapping &&
-					`${event.startingDate.toLocaleString('en-US', {
-						month: 'short',
-					})} ${event.startingDate.getDate()}, `}
+				{event.overlapping && `${renderShortDate(event.startingDate)}, `}
 				{renderHHMMString(event.startingDate)} -{' '}
 				{renderHHMMString(event.finishingDate)}
-				{event.overlapping &&
-					`, ${event.finishingDate.toLocaleString('en-US', {
-						month: 'short',
-					})} ${event.finishingDate.getDate()}`}
+				{event.overlapping && `, ${renderShortDate(event.finishingDate)}`}
 			</span>
 			<p className={styles.eventDescription}>{event.description}</p>
 		</div>
