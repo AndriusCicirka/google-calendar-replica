@@ -11,7 +11,7 @@ export const getToday = () => {
 
 export const getWeekdays = (date: Date) => {
 	const startDate = new Date(date);
-	return Array(7)
+	return Array(DAYS_IN_WEEK)
 		.fill('')
 		.map((_, index) => {
 			const newDate = new Date(startDate);
