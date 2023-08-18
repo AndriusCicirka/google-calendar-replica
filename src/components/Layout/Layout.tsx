@@ -20,7 +20,7 @@ const Layout: React.FC<Props> = (props): JSX.Element => {
 							);
 						} else {
 							throw new Error(
-								'Layout module had problems loading page elements'
+								'Layout module had problems rendering page elements'
 							);
 						}
 					}
