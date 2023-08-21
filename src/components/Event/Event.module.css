@@ -1,5 +1,6 @@
 .event {
-	width: 100%;
+	width: 95%;
+	margin-left: 0.5px;
 	border-radius: 10px;
 
 	background-color: white;
@@ -14,8 +15,6 @@
 	transition: 0.3s ease-in-out;
 	overflow-y: scroll;
 	word-wrap: break-word;
-
-	scale: 100.5%;
 }
 
 .event::-webkit-scrollbar {
@@ -43,9 +42,6 @@
 
 .eventTitle {
 	font-weight: 600;
-}
-
-.eventTime {
 }
 
 .eventDescription {
