@@ -1,4 +1,5 @@
-.error {
+.error,
+.error::placeholder {
 	color: rgb(214, 18, 18);
 }
 

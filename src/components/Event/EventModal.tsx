@@ -3,6 +3,7 @@ import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
 import { generateDateId, generateId } from 'utils/utils';
 import { appendData } from 'utils/apiHelper';
+import { useState } from 'react';
 interface Props {
 	closeModal: Function;
 }
@@ -56,18 +57,61 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 				appendData('events', eventData);
 				props.closeModal();
 			} else {
+				!formik.values.title.trim()
+					? setTitleError(true)
+					: setTitleError(false);
+				!formik.values.startingDate
+					? setStartingDateError(true)
+					: setStartingDateError(false);
+				!formik.values.startingTime
+					? setStartingTimeError(true)
+					: setStartingTimeError(false);
+				!formik.values.finishingDate
+					? setFinishingDateError(true)
+					: setFinishingDateError(false);
+				!formik.values.finishingTime
+					? setFinishingTimeError(true)
+					: setFinishingTimeError(false);
 			}
 		},
 	});
 
+	const [titleError, setTitleError] = useState(false);
+	const [startingDateError, setStartingDateError] = useState(false);
+	const [startingTimeError, setStartingTimeError] = useState(false);
+	const [finishingDateError, setFinishingDateError] = useState(false);
+	const [finishingTimeError, setFinishingTimeError] = useState(false);
+
+	const inputMapping = {
+		'event-title': 'title',
+		'starting-date': 'startingDate',
+		'starting-time': 'startingTime',
+		'finishing-date': 'finishingDate',
+		'finishing-time': 'finishingTime',
+	};
+
+	const handleClick = (event) => {
+		formik.setFieldTouched(inputMapping[event.target.id]);
+	};
+
 	const handleBlur = (event) => {
 		formik.handleBlur(event);
-		if (formik.values.title.length < 3) {
-			formik.setErrors({
-				...formik.errors,
-				title: 'Title has to be at least three characters long!',
-			});
-		}
+
+		formik.values.title.trim().length < 3
+			? setTitleError(true)
+			: setTitleError(false);
+		!formik.values.startingDate && formik.touched.startingDate
+			? setStartingDateError(true)
+			: setStartingDateError(false);
+		!formik.values.startingTime && formik.touched.startingTime
+			? setStartingTimeError(true)
+			: setStartingTimeError(false);
+		!formik.values.finishingDate && formik.touched.finishingDate
+			? setFinishingDateError(true)
+			: setFinishingDateError(false);
+		!formik.values.finishingTime && formik.touched.finishingTime
+			? setFinishingTimeError(true)
+			: setFinishingTimeError(false);
 	};
 
 	return (
@@ -90,8 +134,11 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						aria-label="Add event title"
 						placeholder="Add title"
 						id="event-title"
-						className={`${styles.mandatoryInput} `}
+						className={`${styles.mandatoryInput}
+							${titleError && styles.error}
+						`}
 						value={formik.values.title}
+						onClick={handleClick}
 						onChange={formik.handleChange}
 						onBlur={handleBlur}
 					/>
@@ -104,10 +151,13 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						type="date"
 						name="startingDate"
 						id="starting-date"
-						className={styles.mandatoryInput}
+						className={`${styles.mandatoryInput}
+							${startingDateError && styles.error}
+						`}
 						value={formik.values.startingDate}
+						onClick={handleClick}
 						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onBlur={handleBlur}
 					/>
 					<label htmlFor="starting-time" className="hide-visibility">
 						Starting time
@@ -116,10 +166,13 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						type="time"
 						name="startingTime"
 						id="starting-time"
-						className={styles.mandatoryInput}
+						className={`${styles.mandatoryInput}
+							${startingTimeError && styles.error}
+						`}
 						value={formik.values.startingTime}
+						onClick={handleClick}
 						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onBlur={handleBlur}
 					/>
 					<div aria-label="until">-</div>
 					<label htmlFor="finishing-time" className="hide-visibility">
@@ -129,10 +182,13 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						type="time"
 						name="finishingTime"
 						id="finishing-time"
-						className={styles.mandatoryInput}
+						className={`${styles.mandatoryInput}
+							${finishingTimeError && styles.error}
+						`}
 						value={formik.values.finishingTime}
+						onClick={handleClick}
 						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onBlur={handleBlur}
 					/>
 					<label htmlFor="finishing-date" className="hide-visibility">
 						Finishing date
@@ -141,10 +197,13 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						type="date"
 						name="finishingDate"
 						id="finishing-date"
-						className={styles.mandatoryInput}
+						className={`${styles.mandatoryInput}
+							${finishingDateError && styles.error}
+						`}
 						value={formik.values.finishingDate}
+						onClick={handleClick}
 						onChange={formik.handleChange}
-						onBlur={formik.handleBlur}
+						onBlur={handleBlur}
 					/>
 				</div>
 				<textarea
@@ -153,8 +212,9 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 					className={styles.eventCreationDescription}
 					placeholder="Description of the meeting"
 					value={formik.values.description}
+					onClick={handleClick}
 					onChange={formik.handleChange}
-					onBlur={formik.handleBlur}
+					onBlur={handleBlur}
 				></textarea>
 				<div className={styles.eventCreationButtons}>
 					<button type="submit" className={styles.saveButton}>
