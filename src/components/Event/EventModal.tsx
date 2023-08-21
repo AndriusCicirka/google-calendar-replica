@@ -55,9 +55,20 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 
 				appendData('events', eventData);
 				props.closeModal();
+			} else {
 			}
 		},
 	});
+
+	const handleBlur = (event) => {
+		formik.handleBlur(event);
+		if (formik.values.title.length < 3) {
+			formik.setErrors({
+				...formik.errors,
+				title: 'Title has to be at least three characters long!',
+			});
+		}
+	};
 
 	return (
 		<form className={styles.modal} onSubmit={formik.handleSubmit}>
@@ -79,9 +90,10 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						aria-label="Add event title"
 						placeholder="Add title"
 						id="event-title"
-						className={styles.mandatoryInput}
+						className={`${styles.mandatoryInput} `}
 						value={formik.values.title}
 						onChange={formik.handleChange}
+						onBlur={handleBlur}
 					/>
 				</div>
 				<div className={styles.eventCreationTime}>
@@ -95,6 +107,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						className={styles.mandatoryInput}
 						value={formik.values.startingDate}
 						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					<label htmlFor="starting-time" className="hide-visibility">
 						Starting time
@@ -106,6 +119,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						className={styles.mandatoryInput}
 						value={formik.values.startingTime}
 						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					<div aria-label="until">-</div>
 					<label htmlFor="finishing-time" className="hide-visibility">
@@ -118,6 +132,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						className={styles.mandatoryInput}
 						value={formik.values.finishingTime}
 						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 					<label htmlFor="finishing-date" className="hide-visibility">
 						Finishing date
@@ -129,6 +144,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 						className={styles.mandatoryInput}
 						value={formik.values.finishingDate}
 						onChange={formik.handleChange}
+						onBlur={formik.handleBlur}
 					/>
 				</div>
 				<textarea
@@ -138,6 +154,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 					placeholder="Description of the meeting"
 					value={formik.values.description}
 					onChange={formik.handleChange}
+					onBlur={formik.handleBlur}
 				></textarea>
 				<div className={styles.eventCreationButtons}>
 					<button type="submit" className={styles.saveButton}>

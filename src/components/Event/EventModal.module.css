@@ -1,3 +1,7 @@
+.error {
+	color: rgb(214, 18, 18);
+}
+
 .modal {
 	position: absolute;
 	width: 550px;
