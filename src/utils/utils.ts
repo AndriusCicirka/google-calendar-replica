@@ -102,7 +102,7 @@ export const calculateStyles = (event: Data) => {
 			key: `${id}-0`,
 			storageId: generateDateId(event.startingDate),
 			width: '100%',
-			gridRow: `${startingDate.getHours() + 1}/${25}`,
+			gridRow: `${startingDate.getHours() + 1}/${HOURS_IN_DAY + 1}`,
 			gridColumn: `${startingDate.getDay() + 1}`,
 			marginTop: `${startingDate.getMinutes()}px`,
 			marginBottom: '-10px',
@@ -119,7 +119,7 @@ export const calculateStyles = (event: Data) => {
 						new Date(iterableDate.setDate(iterableDate.getDate() + 1))
 					),
 					width: '100%',
-					gridRow: `${1}/${25}`,
+					gridRow: `${1}/${HOURS_IN_DAY + 1}`,
 					gridColumn: `${
 						new Date(iterableDate.setDate(iterableDate.getDate())).getDay() + 1
 					}`,
