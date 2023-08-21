@@ -13,6 +13,7 @@
 
 	transition: 0.3s ease-in-out;
 	overflow-y: scroll;
+	word-wrap: break-word;
 
 	scale: 100.5%;
 }
