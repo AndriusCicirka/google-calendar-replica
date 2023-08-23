@@ -1,13 +1,4 @@
-interface Data {
-	title: string;
-	id: number;
-	startingDate: Date;
-	finishingDate: Date;
-	startingDateId: string;
-	finishingDateId: string;
-	storageId?: string;
-	description?: string;
-}
+import { CalendarEvent } from 'types';
 
 export const fetchData = (storageKey: string) => {
 	const data = localStorage.getItem(storageKey);
@@ -17,7 +8,7 @@ export const fetchData = (storageKey: string) => {
 	return null;
 };
 
-export const appendData = (storageKey: string, newData: Data) => {
+export const appendData = (storageKey: string, newData: CalendarEvent) => {
 	let prevData = fetchData(storageKey);
 	if (!prevData) {
 		prevData = [];
