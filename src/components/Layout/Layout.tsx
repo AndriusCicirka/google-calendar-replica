@@ -1,30 +1,13 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import styles from './Layout.module.css';
 
-interface Props {
-	children?: ReactNode;
-}
-
-const Layout: React.FC<Props> = (props): JSX.Element => {
+const Layout: React.FC<React.PropsWithChildren> = (props) => {
+	const childrenArray = React.Children.toArray(props.children);
 	return (
-		<div className={styles.contentWrap}>
-			{props.children &&
-				React.Children.map(
-					props.children,
-					(element, index: number): ReactNode => {
-						if (React.isValidElement(element)) {
-							return (
-								<div className={styles[element.props.gridArea]} key={index}>
-									{element}
-								</div>
-							);
-						} else {
-							throw new Error(
-								'Layout module had problems rendering page elements'
-							);
-						}
-					}
-				)}
+		<div className={styles.container}>
+			{childrenArray.map((element) => {
+				return element;
+			})}
 		</div>
 	);
 };

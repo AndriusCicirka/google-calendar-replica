@@ -5,8 +5,8 @@ interface Props {
 	gridArea?: string;
 }
 
-const Placeholder: React.FC<Props> = (gridArea) => {
-	return <div className={`${styles.element} ${gridArea}`} />;
+const Placeholder: React.FC<Props> = (props) => {
+	return <div className={`${styles.container} ${props.gridArea}`} />;
 };
 
 export default Placeholder;

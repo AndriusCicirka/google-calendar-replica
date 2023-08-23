@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './App.module.css';
 import Header from 'components/Layout/Header';
 import Layout from 'components/Layout/Layout';
 import Placeholder from 'components/Layout/Placeholder';
@@ -13,12 +14,13 @@ function App() {
 	const [showEventModal, setShowEventModal] = useState(false);
 
 	return (
-		<>
+		<div className={styles.container}>
 			<Header />
 			{showEventModal && (
 				<EventModal closeModal={() => setShowEventModal(false)} />
 			)}
 			<Layout>
+				<Placeholder gridArea="asideLeft" />
 				<Placeholder gridArea="asideLeft" />
 				<CalendarHeader
 					gridArea="calendarHeader"
@@ -32,8 +34,9 @@ function App() {
 					onTableClick={(newState) => setShowEventModal(newState)}
 				/>
 				<Placeholder gridArea="asideRight" />
+				<Placeholder gridArea="asideRight" />
 			</Layout>
-		</>
+		</div>
 	);
 }
 

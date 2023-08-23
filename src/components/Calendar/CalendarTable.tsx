@@ -5,7 +5,7 @@ import Event from '../Event/Event';
 import { calculateStyles, calculatePreffix, generateDateId } from 'utils/utils';
 import { fetchData } from 'utils/apiHelper';
 interface Props {
-	gridArea?: string;
+	gridArea: string;
 	currentWeeklyView: Date;
 	showEventModal: boolean;
 	onTableClick: Function;
@@ -123,7 +123,7 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 	const temp = fetchData('events');
 
 	return (
-		<>
+		<div className={styles[props.gridArea]}>
 			<div aria-hidden="true" className={styles.tableTime}>
 				{renderTimeMarkings()}
 			</div>
@@ -136,7 +136,7 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 				</div>
 				<div className={styles.tableInvisible}>{renderCells()}</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

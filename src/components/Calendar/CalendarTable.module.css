@@ -1,3 +1,9 @@
+.calendarWrap {
+	grid-area: calendar-main;
+	display: flex;
+	overflow: auto;
+}
+
 .tableTime {
 	display: grid;
 	grid-template-rows: repeat(24, 60px);
@@ -48,4 +54,10 @@
 
 .tableInvisible > .tableCell {
 	box-shadow: 1px 1px 0px rgb(200, 200, 200);
+}
+
+@media only screen and (max-width: 1600px) {
+	.calendarWrap {
+		min-width: 950px;
+	}
 }

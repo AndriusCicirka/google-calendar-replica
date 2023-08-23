@@ -1,9 +1,10 @@
 import React from 'react';
 import styles from './CalendarHeader.module.css';
-
+import classNames from 'classnames';
 import { getToday, getWeekdays } from 'utils/utils';
+
 interface Props {
-	gridArea?: string;
+	gridArea: string;
 	currentWeeklyView: Date;
 	onViewChange: Function;
 }
@@ -43,7 +44,7 @@ const CalendarHeader: React.FC<Props> = (props): JSX.Element => {
 	};
 
 	return (
-		<>
+		<div className={styles[props.gridArea]}>
 			<div className={styles.headerMisc}>
 				<div>
 					<button
@@ -88,7 +89,7 @@ const CalendarHeader: React.FC<Props> = (props): JSX.Element => {
 					);
 				})}
 			</>
-		</>
+		</div>
 	);
 };
 
