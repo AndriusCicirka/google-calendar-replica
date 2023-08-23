@@ -1,5 +1,7 @@
 import { CalendarEventWithStyles } from '../types';
 
+import { v4 as uuidv4 } from 'uuid';
+
 const MS_IN_SECOND = 1000;
 const SECONDS_IN_HOUR = 3600;
 const HOURS_IN_DAY = 24;
@@ -30,7 +32,7 @@ export const formatDateToDDMMYY = (date: Date) => {
 };
 
 export const generateId = () => {
-	return Date.now();
+	return uuidv4();
 };
 
 export const generateDateId = (date: Date) => {
