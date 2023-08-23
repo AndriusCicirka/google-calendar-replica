@@ -146,23 +146,20 @@ export const calculateStyles = (event: CalendarEvent) => {
 			marginTop: '-10px',
 			paddingTop: '15px',
 		});
-		return [...styledData];
+		return styledData;
 	}
 
 	return [
-			{
-				...metaData,
-				id,
-				key: `${id}`,
-				storageId: generateDateId(startingDate),
-				width: '100%',
-				gridRow: `${startingDate.getHours() + 1}/${
-					finishingDate.getHours() + 1
-				}`,
-				gridColumn: `${startingDate.getDay() + 1}`,
-				marginTop: `${startingDate.getMinutes()}px`,
-				marginBottom: `${-finishingDate.getMinutes()}px`,
-			},
-		];
-	}
+		{
+			...metaData,
+			id,
+			key: `${id}`,
+			storageId: generateDateId(startingDate),
+			width: '100%',
+			gridRow: `${startingDate.getHours() + 1}/${finishingDate.getHours() + 1}`,
+			gridColumn: `${startingDate.getDay() + 1}`,
+			marginTop: `${startingDate.getMinutes()}px`,
+			marginBottom: `${-finishingDate.getMinutes()}px`,
+		},
+	];
 };
