@@ -147,8 +147,9 @@ export const calculateStyles = (event: CalendarEvent) => {
 			paddingTop: '15px',
 		});
 		return [...styledData];
-	} else {
-		return [
+	}
+
+	return [
 			{
 				...metaData,
 				id,
