@@ -8,10 +8,13 @@ import CalendarTable from 'components/CalendarTable';
 import EventModal from 'components/EventModal';
 import { getToday } from 'utils';
 import { useState } from 'react';
+import useEventsService from 'hooks/useEventsService';
 
 function App() {
 	const [currentWeeklyView, setCurrentWeeklyView] = useState(getToday());
 	const [showEventModal, setShowEventModal] = useState(false);
+
+	const { eventsService } = useEventsService();
 
 	return (
 		<div className={styles.container}>

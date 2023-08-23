@@ -31,7 +31,7 @@ export const formatDateToDDMMYY = (date: Date) => {
 	return `${day}/${month}/${year}`;
 };
 
-export const generateId = () => {
+export const generateId = (): string => {
 	return uuidv4();
 };
 
