@@ -35,10 +35,6 @@ export const generateId = () => {
 	return uuidv4();
 };
 
-export const generateDateId = (date: Date) => {
-	return `${getWeekOfYear(date)}/${date.getFullYear()}`;
-};
-
 export const getWeekOfYear = (date: string | Date) => {
 	date = new Date(date);
 	date.setHours(0, 0, 0, 0);
@@ -59,6 +55,10 @@ export const getWeekOfYear = (date: string | Date) => {
 	let weekNumber = Math.floor(daysSinceFirstSunday / DAYS_IN_WEEK) + 1;
 
 	return weekNumber;
+};
+
+export const generateDateId = (date: Date) => {
+	return `${getWeekOfYear(date)}/${date.getFullYear()}`;
 };
 
 export const calculatePreffix = (i: number): 'AM' | 'PM' => {
