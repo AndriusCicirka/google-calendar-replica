@@ -1,4 +1,4 @@
-import { CalendarEventWithStyles } from '../types';
+import { CalendarEvent, CalendarEventWithStyles } from '../types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -69,7 +69,7 @@ export const calculatePreffix = (i: number): 'AM' | 'PM' => {
 	return 'PM';
 };
 
-export const calculateStyles = (event: Data) => {
+export const calculateStyles = (event: CalendarEvent) => {
 	const overlapping =
 		formatDateToDDMMYY(event.startingDate) !==
 		formatDateToDDMMYY(event.finishingDate);
