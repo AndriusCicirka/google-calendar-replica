@@ -15,7 +15,7 @@ const renderShortDate = (date: Date) => {
 	})} ${date.getDate()}`;
 };
 
-const Event: React.FC<CalendarEventWithStyles> = (props): JSX.Element => {
+const Event: React.FC<CalendarEventWithStyles> = (props) => {
 	return (
 		<div
 			className={styles.event}
