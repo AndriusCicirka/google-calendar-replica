@@ -1,4 +1,4 @@
-import { EventWithAddedStyles } from './types';
+import { CalendarEventWithStyles } from '../types';
 
 const MS_IN_SECOND = 1000;
 const SECONDS_IN_HOUR = 3600;
@@ -87,7 +87,7 @@ export const calculateStyles = (event: Data) => {
 	};
 
 	if (overlapping) {
-		const styledData: EventWithAddedStyles[] = [];
+		const styledData: CalendarEventWithStyles[] = [];
 		const loopLength = Math.floor(
 			(new Date(event.finishingDate).getTime() -
 				new Date(event.startingDate).getTime()) /

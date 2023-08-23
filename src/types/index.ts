@@ -1,4 +1,4 @@
-export interface Event {
+export interface CalendarEvent {
 	id: string;
 	key: string;
 	title: string;
@@ -12,7 +12,7 @@ export interface Event {
 	locale?: string;
 }
 
-export interface EventWithAddedStyles extends Event {
+export interface CalendarEventWithStyles extends CalendarEvent {
 	width?: string;
 	gridRow: string;
 	gridColumn: string;
