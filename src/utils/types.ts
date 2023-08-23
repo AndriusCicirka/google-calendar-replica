@@ -1,4 +1,4 @@
-export interface EventInfo {
+export interface Event {
 	id: string;
 	key: string;
 	title: string;
@@ -12,7 +12,7 @@ export interface EventInfo {
 	locale?: string;
 }
 
-export interface StyledEventInfo extends EventInfo {
+export interface EventWithAddedStyles extends Event {
 	width?: string;
 	gridRow: string;
 	gridColumn: string;

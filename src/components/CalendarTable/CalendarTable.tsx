@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
-import { calculateStyles, calculatePreffix, generateDateId } from 'utils/utils';
+import { calculateStyles, calculatePreffix, generateDateId } from 'utils';
 import { fetchData } from 'utils/apiHelper';
 interface Props {
 	gridArea: string;

@@ -1,12 +1,12 @@
 import React from 'react';
 import styles from './App.module.css';
-import Header from 'components/Layout/Header';
-import Layout from 'components/Layout/Layout';
-import Placeholder from 'components/Layout/Placeholder';
-import CalendarHeader from 'components/Calendar/CalendarHeader';
-import CalendarTable from 'components/Calendar/CalendarTable';
-import EventModal from 'components/Event/EventModal';
-import { getToday } from 'utils/utils';
+import Header from 'components/Header';
+import Layout from 'components/Layout';
+import Placeholder from 'components/Placeholder';
+import CalendarHeader from 'components/CalendarHeader';
+import CalendarTable from 'components/CalendarTable';
+import EventModal from 'components/EventModal';
+import { getToday } from 'utils';
 import { useState } from 'react';
 
 function App() {

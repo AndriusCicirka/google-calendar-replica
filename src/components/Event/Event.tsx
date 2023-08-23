@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Event.module.css';
 
-import { StyledEventInfo } from 'utils/interfaces';
+import { EventWithAddedStyles } from 'utils/types';
 
 const renderHHMMString = (date: Date) => {
 	return `${String(date.getHours()).padStart(2, '0')}:${String(
@@ -15,7 +15,7 @@ const renderShortDate = (date: Date) => {
 	})} ${date.getDate()}`;
 };
 
-const Event: React.FC<StyledEventInfo> = (event): JSX.Element => {
+const Event: React.FC<EventWithAddedStyles> = (event): JSX.Element => {
 	return (
 		<div
 			className={styles.event}

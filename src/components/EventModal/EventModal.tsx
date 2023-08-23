@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
-import { generateDateId, generateId } from 'utils/utils';
+import { generateDateId, generateId } from 'utils';
 import { appendData } from 'utils/apiHelper';
 import { useState } from 'react';
 interface Props {
