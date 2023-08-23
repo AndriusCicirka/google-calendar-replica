@@ -1,6 +1,4 @@
 import React from 'react';
-import './App.css';
-
 import Header from 'components/Layout/Header';
 import Layout from 'components/Layout/Layout';
 import Placeholder from 'components/Layout/Placeholder';
@@ -8,7 +6,6 @@ import CalendarHeader from 'components/Calendar/CalendarHeader';
 import CalendarTable from 'components/Calendar/CalendarTable';
 import EventModal from 'components/Event/EventModal';
 import { getToday } from 'utils/utils';
-
 import { useState } from 'react';
 
 function App() {
