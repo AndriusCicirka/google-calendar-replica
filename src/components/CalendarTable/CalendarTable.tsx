@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
+import { CalendarEvent } from 'types';
 import { calculateStyles, calculatePreffix, generateDateId } from 'utils';
 import { fetchData } from 'utils/apiHelper';
 interface Props {
@@ -62,7 +63,7 @@ const renderTimeMarkings = () => {
 	return cells;
 };
 
-const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
+const renderEvents = (currentWeeklyView: Date, eventData: CalendarEvent[]) => {
 	const viewId = generateDateId(currentWeeklyView);
 	if (eventData) {
 		const filteredData = eventData.filter(
@@ -84,7 +85,7 @@ const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
 				description,
 				startingDate,
 				finishingDate,
-				overlapping,
+				extendsOverMultipleDays,
 				width,
 				gridRow,
 				gridColumn,
@@ -101,7 +102,7 @@ const renderEvents = (currentWeeklyView: Date, eventData: Data[]) => {
 					description={description}
 					startingDate={startingDate}
 					finishingDate={finishingDate}
-					overlapping={overlapping}
+					extendsOverMultipleDays={extendsOverMultipleDays}
 					width={width}
 					gridRow={gridRow}
 					gridColumn={gridColumn}
