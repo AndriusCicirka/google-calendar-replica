@@ -30,10 +30,12 @@ const Event: React.FC<CalendarEventWithStyles> = (event): JSX.Element => {
 		>
 			<span className={styles.eventTitle}>{event.title}, </span>
 			<span className={styles.eventTime}>
-				{event.overlapping && `${renderShortDate(event.startingDate)}, `}
+				{event.extendsOverMultipleDays &&
+					`${renderShortDate(event.startingDate)}, `}
 				{renderHHMMString(event.startingDate)} -{' '}
 				{renderHHMMString(event.finishingDate)}
-				{event.overlapping && `, ${renderShortDate(event.finishingDate)}`}
+				{event.extendsOverMultipleDays &&
+					`, ${renderShortDate(event.finishingDate)}`}
 			</span>
 			<p className={styles.eventDescription}>{event.description}</p>
 		</div>

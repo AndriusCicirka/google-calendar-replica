@@ -70,7 +70,7 @@ export const calculatePreffix = (i: number): 'AM' | 'PM' => {
 };
 
 export const calculateStyles = (event: CalendarEvent) => {
-	const overlapping =
+	const extendsOverMultipleDays =
 		formatDateToDDMMYY(event.startingDate) !==
 		formatDateToDDMMYY(event.finishingDate);
 
@@ -85,10 +85,10 @@ export const calculateStyles = (event: CalendarEvent) => {
 		description,
 		startingDate,
 		finishingDate,
-		overlapping,
+		extendsOverMultipleDays,
 	};
 
-	if (overlapping) {
+	if (extendsOverMultipleDays) {
 		const styledData: CalendarEventWithStyles[] = [];
 		const loopLength = Math.floor(
 			(new Date(event.finishingDate).getTime() -

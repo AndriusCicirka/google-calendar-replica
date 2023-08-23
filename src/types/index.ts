@@ -8,7 +8,7 @@ export interface CalendarEvent {
 	finishingDate: Date;
 	startingDateId?: string;
 	finishingDateId?: string;
-	overlapping: boolean;
+	extendsOverMultipleDays: boolean;
 	locale?: string;
 }
 
