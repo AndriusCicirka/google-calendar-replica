@@ -12,32 +12,24 @@ function App() {
 	const [currentWeeklyView, setCurrentWeeklyView] = useState(getToday());
 	const [showEventModal, setShowEventModal] = useState(false);
 
-	const handleViewChange = (newDate: Date) => {
-		setCurrentWeeklyView(newDate);
-	};
-
-	const handleTableClick = (newState: boolean) => {
-		setShowEventModal(newState);
-	};
-
 	return (
 		<>
 			<Header />
 			{showEventModal && (
-				<EventModal closeModal={() => handleTableClick(false)} />
+				<EventModal closeModal={() => setShowEventModal(false)} />
 			)}
 			<Layout>
 				<Placeholder gridArea="asideLeft" />
 				<CalendarHeader
 					gridArea="calendarHeader"
 					currentWeeklyView={currentWeeklyView}
-					onViewChange={handleViewChange}
+					onViewChange={(newDate) => setCurrentWeeklyView(newDate)}
 				/>
 				<CalendarTable
 					gridArea="calendarWrap"
 					currentWeeklyView={currentWeeklyView}
 					showEventModal={showEventModal}
-					onTableClick={handleTableClick}
+					onTableClick={(newState) => setShowEventModal(newState)}
 				/>
 				<Placeholder gridArea="asideRight" />
 			</Layout>
