@@ -19,28 +19,6 @@ interface Props {
 	onTableClick: Function;
 }
 
-const renderCells = (): JSX.Element[] => {
-	const cells: JSX.Element[] = [];
-
-	for (let i = 1; i < WEEK_LENGTH * HOURS_IN_DAY; i++) {
-		cells.push(<div className={styles.tableCell} key={i}></div>);
-	}
-
-	return cells;
-};
-
-const renderTimeMarkings = () => {
-	const cells: JSX.Element[] = [];
-	for (let i = 0; i < HOURS_IN_DAY - 1; i++) {
-		cells.push(
-			<span className={styles.timeMarker} key={i}>
-				{TIME_MARKINGS[i]} {calculatePreffix(i)}
-			</span>
-		);
-	}
-	return cells;
-};
-
 const renderEvents = (currentWeeklyView: Date, eventData: CalendarEvent[]) => {
 	const viewId = generateDateId(currentWeeklyView);
 	if (eventData) {
@@ -102,7 +80,11 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 	return (
 		<div className={styles[props.gridArea]}>
 			<div aria-hidden="true" className={styles.tableTime}>
-				{renderTimeMarkings()}
+				{Array.from({ length: HOURS_IN_DAY - 1 }, (_, i) => (
+					<span className={styles.timeMarker} key={i}>
+						{TIME_MARKINGS[i]} {calculatePreffix(i)}
+					</span>
+				))}
 			</div>
 			<div
 				className={styles.tableWrap}
@@ -111,7 +93,11 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 				<div className={styles.table}>
 					{renderEvents(props.currentWeeklyView, props.eventList)}
 				</div>
-				<div className={styles.tableInvisible}>{renderCells()}</div>
+				<div className={styles.tableInvisible}>
+					{Array.from({ length: WEEK_LENGTH * HOURS_IN_DAY }, (_, i) => (
+						<div className={styles.tableCell} key={i}></div>
+					))}
+				</div>
 			</div>
 		</div>
 	);
