@@ -4,22 +4,25 @@ import { useFormik } from 'formik';
 import { generateDateId, generateId } from 'utils';
 import { useState } from 'react';
 import { CalendarEvent } from 'types';
+
 interface Props {
 	currentEventData: CalendarEvent[];
 	closeModal: Function;
 	onSubmit: Function;
 }
 
-const EventModal: React.FC<Props> = (props): JSX.Element => {
+const initialFormValues = {
+	title: '',
+	description: '',
+	startingDate: '',
+	startingTime: '',
+	finishingTime: '',
+	finishingDate: '',
+};
+
+const EventModal: React.FC<Props> = (props, initialFormValues): JSX.Element => {
 	const formik = useFormik({
-		initialValues: {
-			title: '',
-			description: '',
-			startingDate: '',
-			startingTime: '',
-			finishingTime: '',
-			finishingDate: '',
-		},
+		initialValues: initialFormValues,
 
 		onSubmit: (values) => {
 			const {
@@ -31,6 +34,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 				finishingDate,
 			} = values;
 
+			// FIXME:
 			const combinedStartDate = new Date(`${startingDate}T${startingTime}`);
 			const combinedFinishDate = new Date(`${finishingDate}T${finishingTime}`);
 
