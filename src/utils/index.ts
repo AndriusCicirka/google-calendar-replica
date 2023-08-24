@@ -177,8 +177,16 @@ export const calculateStyles = (event: CalendarEvent) => {
 	}
 
 	let marginBottomCalc = 0;
-	if (finishingDate.getMinutes() !== 0) {
+	if (
+		finishingDate.getMinutes() !== 0 &&
+		startingDate.getHours() === finishingDate.getHours()
+	) {
 		marginBottomCalc = 60 - finishingDate.getMinutes();
+	} else if (
+		finishingDate.getMinutes() !== 0 &&
+		startingDate.getHours() !== finishingDate.getHours()
+	) {
+		marginBottomCalc = 0 - finishingDate.getMinutes();
 	}
 
 	return [
@@ -194,4 +202,22 @@ export const calculateStyles = (event: CalendarEvent) => {
 			marginBottom: `${marginBottomCalc}px`,
 		},
 	];
+};
+
+export const processEventDataByWeek = (currentWeeklyView, eventData) => {
+	if (!eventData) {
+		return;
+	}
+	const viewId = generateDateId(currentWeeklyView);
+
+	const filteredData = eventData.filter(
+		(event) =>
+			event.startingDateId === viewId || event.finishingDateId === viewId
+	);
+
+	const styledData = filteredData.map((event) => calculateStyles(event)).flat();
+
+	return styledData.filter(
+		(event) => event.storageId!.localeCompare(viewId) === 0
+	);
 };
