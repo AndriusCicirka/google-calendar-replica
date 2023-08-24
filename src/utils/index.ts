@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 export const MS_IN_SECOND = 1000;
 export const SECONDS_IN_HOUR = 3600;
 export const HOURS_IN_DAY = 24;
+export const MINUTES_IN_HOUR = 60;
 export const DAYS_IN_WEEK = 7;
 
 export const getToday = () => {
@@ -149,6 +150,11 @@ export const calculateStyles = (event: CalendarEvent) => {
 		return styledData;
 	}
 
+	let marginBottomCalc = 0;
+	if (finishingDate.getMinutes() !== 0) {
+		marginBottomCalc = 60 - finishingDate.getMinutes();
+	}
+
 	return [
 		{
 			...metaData,
@@ -159,7 +165,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 			gridRow: `${startingDate.getHours() + 1}/${finishingDate.getHours() + 1}`,
 			gridColumn: `${startingDate.getDay() + 1}`,
 			marginTop: `${startingDate.getMinutes()}px`,
-			marginBottom: `${-finishingDate.getMinutes()}px`,
+			marginBottom: `${marginBottomCalc}px`,
 		},
 	];
 };

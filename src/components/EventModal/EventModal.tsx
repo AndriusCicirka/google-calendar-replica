@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { generateDateId, generateId } from 'utils';
 import { useState } from 'react';
 import { CalendarEvent } from 'types';
+import * as Yup from 'yup';
 
 interface Props {
 	currentEventData: CalendarEvent[];
@@ -20,10 +21,33 @@ const initialFormValues = {
 	finishingDate: '',
 };
 
-const EventModal: React.FC<Props> = (props, initialFormValues): JSX.Element => {
+const formValidationSchema = Yup.object()
+	.shape({
+		title: Yup.string().min(3, 'Too Short!').max(50, 'Too Long!').required(),
+		startingDate: Yup.string().required(),
+		startingTime: Yup.string().required(),
+		finishingTime: Yup.string().required(),
+		finishingDate: Yup.string().required(),
+	})
+	.test(
+		'date-time-check',
+		'Starting time should be before ending time',
+		(values) => {
+			const combinedStartDate = new Date(
+				`${values.startingDate}T${values.startingTime}`
+			);
+			const combinedFinishDate = new Date(
+				`${values.finishingDate}T${values.finishingTime}`
+			);
+
+			return combinedStartDate < combinedFinishDate;
+		}
+	);
+
+const EventModal: React.FC<Props> = (props) => {
 	const formik = useFormik({
 		initialValues: initialFormValues,
-
+		validationSchema: formValidationSchema,
 		onSubmit: (values) => {
 			const {
 				title,
@@ -34,51 +58,25 @@ const EventModal: React.FC<Props> = (props, initialFormValues): JSX.Element => {
 				finishingDate,
 			} = values;
 
-			// FIXME:
 			const combinedStartDate = new Date(`${startingDate}T${startingTime}`);
 			const combinedFinishDate = new Date(`${finishingDate}T${finishingTime}`);
 
-			if (
-				title.trim().length > 2 &&
-				startingDate &&
-				startingTime &&
-				finishingTime &&
-				finishingDate &&
-				combinedStartDate <= combinedFinishDate
-			) {
-				const id = generateId();
-				const startingDateId = generateDateId(combinedStartDate);
-				const finishingDateId = generateDateId(combinedFinishDate);
+			const id = generateId();
+			const startingDateId = generateDateId(combinedStartDate);
+			const finishingDateId = generateDateId(combinedFinishDate);
 
-				const eventData = {
-					id,
-					title,
-					description,
-					startingDate: combinedStartDate,
-					finishingDate: combinedFinishDate,
-					startingDateId,
-					finishingDateId,
-				};
+			const eventData = {
+				id,
+				title,
+				description,
+				startingDate: combinedStartDate,
+				finishingDate: combinedFinishDate,
+				startingDateId,
+				finishingDateId,
+			};
 
-				props.onSubmit(eventData);
-				props.closeModal();
-			} else {
-				!formik.values.title.trim()
-					? setTitleError(true)
-					: setTitleError(false);
-				!formik.values.startingDate
-					? setStartingDateError(true)
-					: setStartingDateError(false);
-				!formik.values.startingTime
-					? setStartingTimeError(true)
-					: setStartingTimeError(false);
-				!formik.values.finishingDate
-					? setFinishingDateError(true)
-					: setFinishingDateError(false);
-				!formik.values.finishingTime
-					? setFinishingTimeError(true)
-					: setFinishingTimeError(false);
-			}
+			props.onSubmit(eventData);
+			props.closeModal();
 		},
 	});
 
