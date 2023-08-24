@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
-import { CalendarEvent } from 'types';
+import { CalendarEvent, CalendarEventWithStyles } from 'types';
 import {
 	calculatePreffix,
 	WEEK_LENGTH,
@@ -15,7 +15,7 @@ interface Props {
 	gridArea: string;
 	currentWeeklyView: Date;
 	showEventModal: boolean;
-	eventList: CalendarEvent[];
+	eventList: CalendarEventWithStyles[];
 	onTableClick: Function;
 }
 
@@ -23,11 +23,6 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 	const tableClickHandler = (modalState: boolean) => {
 		props.onTableClick(!modalState);
 	};
-
-	const currentViewEvents = processEventDataByWeek(
-		props.currentWeeklyView,
-		props.eventList
-	);
 
 	return (
 		<div className={styles[props.gridArea]}>
@@ -44,7 +39,7 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 			>
 				<div className={styles.table}>
 					{props.eventList &&
-						currentViewEvents.map((event) => {
+						props.eventList.map((event) => {
 							const {
 								id,
 								key,

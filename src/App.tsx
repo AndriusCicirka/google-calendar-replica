@@ -6,11 +6,11 @@ import Placeholder from 'components/Placeholder';
 import CalendarHeader from 'components/CalendarHeader';
 import CalendarTable from 'components/CalendarTable';
 import EventModal from 'components/EventModal';
-import { getToday } from 'utils';
+import { getToday, processEventDataByWeek } from 'utils';
 import { useState } from 'react';
 import useEventsService from 'hooks/useEventsService';
 import { useQuery, useMutation } from 'react-query';
-import { CalendarEvent } from 'types';
+import { CalendarEvent, CalendarEventWithStyles } from 'types';
 import { useEffect } from 'react';
 
 function App() {
@@ -39,6 +39,11 @@ function App() {
 		}
 	}, [data]);
 
+	const currentViewEvents = processEventDataByWeek(
+		currentWeeklyView,
+		eventData
+	);
+
 	return (
 		<div className={styles.container}>
 			<Header />
@@ -61,7 +66,7 @@ function App() {
 					gridArea="calendarWrap"
 					currentWeeklyView={currentWeeklyView}
 					showEventModal={showEventModal}
-					eventList={eventData as CalendarEvent[]}
+					eventList={currentViewEvents as CalendarEventWithStyles[]}
 					onTableClick={(newState) => setShowEventModal(newState)}
 				/>
 				<Placeholder gridArea="asideRight" />
