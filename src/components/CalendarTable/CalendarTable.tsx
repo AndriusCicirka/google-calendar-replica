@@ -3,7 +3,14 @@ import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
 import { CalendarEvent } from 'types';
-import { calculateStyles, calculatePreffix, generateDateId } from 'utils';
+import {
+	calculateStyles,
+	calculatePreffix,
+	generateDateId,
+	WEEK_LENGTH,
+	HOURS_IN_DAY,
+	TIME_MARKINGS,
+} from 'utils';
 interface Props {
 	gridArea: string;
 	currentWeeklyView: Date;
@@ -11,35 +18,6 @@ interface Props {
 	eventList: CalendarEvent[];
 	onTableClick: Function;
 }
-
-const WEEK_LENGTH = 7;
-const HOURS_IN_DAY = 24;
-
-const TIME_MARKINGS = [
-	'1',
-	'2',
-	'3',
-	'4',
-	'5',
-	'6',
-	'7',
-	'8',
-	'9',
-	'10',
-	'11',
-	'12',
-	'1',
-	'2',
-	'3',
-	'4',
-	'5',
-	'6',
-	'7',
-	'8',
-	'9',
-	'10',
-	'11',
-];
 
 const renderCells = (): JSX.Element[] => {
 	const cells: JSX.Element[] = [];

@@ -7,6 +7,32 @@ export const SECONDS_IN_HOUR = 3600;
 export const HOURS_IN_DAY = 24;
 export const MINUTES_IN_HOUR = 60;
 export const DAYS_IN_WEEK = 7;
+export const WEEK_LENGTH = 7;
+export const TIME_MARKINGS = [
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'10',
+	'11',
+	'12',
+	'1',
+	'2',
+	'3',
+	'4',
+	'5',
+	'6',
+	'7',
+	'8',
+	'9',
+	'10',
+	'11',
+];
 
 export const getToday = () => {
 	return new Date();
