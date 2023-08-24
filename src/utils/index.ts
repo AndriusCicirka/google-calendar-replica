@@ -2,10 +2,10 @@ import { CalendarEvent, CalendarEventWithStyles } from '../types';
 
 import { v4 as uuidv4 } from 'uuid';
 
-const MS_IN_SECOND = 1000;
-const SECONDS_IN_HOUR = 3600;
-const HOURS_IN_DAY = 24;
-const DAYS_IN_WEEK = 7;
+export const MS_IN_SECOND = 1000;
+export const SECONDS_IN_HOUR = 3600;
+export const HOURS_IN_DAY = 24;
+export const DAYS_IN_WEEK = 7;
 
 export const getToday = () => {
 	return new Date();
