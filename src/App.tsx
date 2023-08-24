@@ -9,18 +9,45 @@ import EventModal from 'components/EventModal';
 import { getToday } from 'utils';
 import { useState } from 'react';
 import useEventsService from 'hooks/useEventsService';
+import { useQuery, useMutation } from 'react-query';
+import { CalendarEvent } from 'types';
+import { useEffect } from 'react';
 
 function App() {
 	const [currentWeeklyView, setCurrentWeeklyView] = useState(getToday());
 	const [showEventModal, setShowEventModal] = useState(false);
+	const [eventData, setEventData] = useState<CalendarEvent[]>();
 
 	const { eventsService } = useEventsService();
+	const { data, isSuccess } = useQuery('events', () =>
+		eventsService.getEvents('events')
+	);
+
+	const createNewEvent = useMutation((newData: CalendarEvent[]) =>
+		eventsService.createEvent(newData, 'events')
+	);
+
+	const handleSubmit = (newData) => {
+		const combinedData = [...(eventData as CalendarEvent[]), newData];
+		setEventData(combinedData);
+		createNewEvent.mutateAsync(combinedData);
+	};
+
+	useEffect(() => {
+		if (isSuccess) {
+			setEventData(data);
+		}
+	}, [data]);
 
 	return (
 		<div className={styles.container}>
 			<Header />
 			{showEventModal && (
-				<EventModal closeModal={() => setShowEventModal(false)} />
+				<EventModal
+					currentEventData={eventData as CalendarEvent[]}
+					closeModal={() => setShowEventModal(false)}
+					onSubmit={(newData) => handleSubmit(newData)}
+				/>
 			)}
 			<Layout>
 				<Placeholder gridArea="asideLeft" />
@@ -34,6 +61,7 @@ function App() {
 					gridArea="calendarWrap"
 					currentWeeklyView={currentWeeklyView}
 					showEventModal={showEventModal}
+					eventList={eventData as CalendarEvent[]}
 					onTableClick={(newState) => setShowEventModal(newState)}
 				/>
 				<Placeholder gridArea="asideRight" />

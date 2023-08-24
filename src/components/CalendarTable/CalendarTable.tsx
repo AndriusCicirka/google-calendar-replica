@@ -4,11 +4,11 @@ import styles from './CalendarTable.module.css';
 import Event from '../Event/Event';
 import { CalendarEvent } from 'types';
 import { calculateStyles, calculatePreffix, generateDateId } from 'utils';
-import { fetchData } from 'utils/apiHelper';
 interface Props {
 	gridArea: string;
 	currentWeeklyView: Date;
 	showEventModal: boolean;
+	eventList: CalendarEvent[];
 	onTableClick: Function;
 }
 
@@ -121,8 +121,6 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 		props.onTableClick(!modalState);
 	};
 
-	const temp = fetchData('events');
-
 	return (
 		<div className={styles[props.gridArea]}>
 			<div aria-hidden="true" className={styles.tableTime}>
@@ -133,7 +131,7 @@ const CalendarTable: React.FC<Props> = (props): JSX.Element => {
 				onClick={() => tableClickHandler(props.showEventModal)}
 			>
 				<div className={styles.table}>
-					{renderEvents(props.currentWeeklyView, temp)}
+					{renderEvents(props.currentWeeklyView, props.eventList)}
 				</div>
 				<div className={styles.tableInvisible}>{renderCells()}</div>
 			</div>

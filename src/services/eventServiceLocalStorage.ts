@@ -7,8 +7,7 @@ export const eventServiceLocalStorage: EventService = {
 		return Promise.resolve(events);
 	},
 
-	createEvent: async (event, storageKey) => {
-		const events = [event];
+	createEvent: async (events: CalendarEvent[], storageKey) => {
 		localStorage.setItem(storageKey, JSON.stringify(events));
 		return Promise.resolve();
 	},

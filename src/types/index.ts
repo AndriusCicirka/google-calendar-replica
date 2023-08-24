@@ -25,5 +25,8 @@ export interface CalendarEventWithStyles extends CalendarEvent {
 
 export interface EventService {
 	getEvents: (storageKey: string) => Promise<CalendarEvent[]>;
-	createEvent: (event: CalendarEvent, storageKey: string) => Promise<void>;
+	createEvent: (
+		event: CalendarEvent | CalendarEvent[],
+		storageKey: string
+	) => Promise<void>;
 }

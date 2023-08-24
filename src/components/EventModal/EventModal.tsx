@@ -2,10 +2,12 @@ import React from 'react';
 import styles from './EventModal.module.css';
 import { useFormik } from 'formik';
 import { generateDateId, generateId } from 'utils';
-import { appendData } from 'utils/apiHelper';
 import { useState } from 'react';
+import { CalendarEvent } from 'types';
 interface Props {
+	currentEventData: CalendarEvent[];
 	closeModal: Function;
+	onSubmit: Function;
 }
 
 const EventModal: React.FC<Props> = (props): JSX.Element => {
@@ -54,7 +56,7 @@ const EventModal: React.FC<Props> = (props): JSX.Element => {
 					finishingDateId,
 				};
 
-				appendData('events', eventData);
+				props.onSubmit(eventData);
 				props.closeModal();
 			} else {
 				!formik.values.title.trim()
