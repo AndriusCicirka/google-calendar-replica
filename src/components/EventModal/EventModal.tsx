@@ -5,6 +5,7 @@ import { generateDateId, generateId } from 'utils';
 import { useState } from 'react';
 import { CalendarEvent } from 'types';
 import * as Yup from 'yup';
+import classnames from 'classnames';
 
 interface Props {
 	currentEventData: CalendarEvent[];
@@ -138,9 +139,10 @@ const EventModal: React.FC<Props> = (props) => {
 						aria-label="Add event title"
 						placeholder="Add title"
 						id="event-title"
-						className={`${styles.mandatoryInput}
-							${titleError && styles.error}
-						`}
+						className={classnames(
+							styles.mandatoryInput,
+							titleError && styles.error
+						)}
 						value={formik.values.title}
 						onClick={handleClick}
 						onChange={formik.handleChange}
@@ -155,9 +157,10 @@ const EventModal: React.FC<Props> = (props) => {
 						type="date"
 						name="startingDate"
 						id="starting-date"
-						className={`${styles.mandatoryInput}
-							${startingDateError && styles.error}
-						`}
+						className={classnames(
+							styles.mandatoryInput,
+							startingDateError && styles.error
+						)}
 						value={formik.values.startingDate}
 						onClick={handleClick}
 						onChange={formik.handleChange}
@@ -170,9 +173,10 @@ const EventModal: React.FC<Props> = (props) => {
 						type="time"
 						name="startingTime"
 						id="starting-time"
-						className={`${styles.mandatoryInput}
-							${startingTimeError && styles.error}
-						`}
+						className={classnames(
+							styles.mandatoryInput,
+							startingTimeError && styles.error
+						)}
 						value={formik.values.startingTime}
 						onClick={handleClick}
 						onChange={formik.handleChange}
@@ -186,9 +190,10 @@ const EventModal: React.FC<Props> = (props) => {
 						type="time"
 						name="finishingTime"
 						id="finishing-time"
-						className={`${styles.mandatoryInput}
-							${finishingTimeError && styles.error}
-						`}
+						className={classnames(
+							styles.mandatoryInput,
+							finishingTimeError && styles.error
+						)}
 						value={formik.values.finishingTime}
 						onClick={handleClick}
 						onChange={formik.handleChange}
@@ -201,9 +206,10 @@ const EventModal: React.FC<Props> = (props) => {
 						type="date"
 						name="finishingDate"
 						id="finishing-date"
-						className={`${styles.mandatoryInput}
-							${finishingDateError && styles.error}
-						`}
+						className={classnames(
+							styles.mandatoryInput,
+							finishingDateError && styles.error
+						)}
 						value={formik.values.finishingDate}
 						onClick={handleClick}
 						onChange={formik.handleChange}
