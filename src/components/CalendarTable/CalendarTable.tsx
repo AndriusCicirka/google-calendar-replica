@@ -19,6 +19,9 @@ interface Props {
 	onTableClick: Function;
 }
 
+const tableCells = Array(WEEK_LENGTH * HOURS_IN_DAY).fill('');
+const timeMarkings = Array(HOURS_IN_DAY - 1).fill('');
+
 const CalendarTable: React.FC<Props> = (props) => {
 	const tableClickHandler = (modalState: boolean) => {
 		props.onTableClick(!modalState);
@@ -27,7 +30,7 @@ const CalendarTable: React.FC<Props> = (props) => {
 	return (
 		<div className={styles[props.gridArea]}>
 			<div aria-hidden="true" className={styles.tableTime}>
-				{Array.from({ length: HOURS_IN_DAY - 1 }, (_, i) => (
+				{timeMarkings.map((_, i) => (
 					<span className={styles.timeMarker} key={i}>
 						{TIME_MARKINGS[i]} {calculatePreffix(i)}
 					</span>
@@ -77,7 +80,7 @@ const CalendarTable: React.FC<Props> = (props) => {
 						})}
 				</div>
 				<div className={styles.tableInvisible}>
-					{Array.from({ length: WEEK_LENGTH * HOURS_IN_DAY }, (_, i) => (
+					{tableCells.map((_, i) => (
 						<div className={styles.tableCell} key={i}></div>
 					))}
 				</div>
