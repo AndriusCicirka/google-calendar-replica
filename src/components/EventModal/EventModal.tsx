@@ -62,18 +62,14 @@ const EventModal: React.FC<Props> = (props) => {
 			const combinedStartDate = new Date(`${startingDate}T${startingTime}`);
 			const combinedFinishDate = new Date(`${finishingDate}T${finishingTime}`);
 
-			const id = generateId();
-			const startingDateId = generateDateId(combinedStartDate);
-			const finishingDateId = generateDateId(combinedFinishDate);
-
 			const eventData = {
-				id,
+				id: generateId(),
 				title,
 				description,
-				startingDate: combinedStartDate,
-				finishingDate: combinedFinishDate,
-				startingDateId,
-				finishingDateId,
+				startingDate: new Date(combinedStartDate),
+				finishingDate: new Date(combinedFinishDate),
+				startingDateId: generateDateId(combinedStartDate),
+				finishingDateId: generateDateId(combinedFinishDate),
 			};
 
 			props.onSubmit(eventData);

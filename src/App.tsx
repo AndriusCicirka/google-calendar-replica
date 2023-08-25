@@ -28,7 +28,10 @@ function App() {
 	);
 
 	const handleSubmit = (newData) => {
-		const combinedData = [...(eventData as CalendarEvent[]), newData];
+		const combinedData = [
+			...(eventData as CalendarEvent[]),
+			newData as CalendarEvent,
+		];
 		setEventData(combinedData);
 		createNewEvent.mutateAsync(combinedData);
 	};

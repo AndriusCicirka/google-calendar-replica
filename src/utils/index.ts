@@ -101,10 +101,10 @@ export const calculateStyles = (event: CalendarEvent) => {
 		formatDateToDDMMYY(event.startingDate) !==
 		formatDateToDDMMYY(event.finishingDate);
 
-	event.startingDate = new Date(event.startingDate);
-	event.finishingDate = new Date(event.finishingDate);
+	const startingDate = new Date(event.startingDate);
+	const finishingDate = new Date(event.finishingDate);
 
-	const { id, title, description, startingDate, finishingDate } = event;
+	const { id, title, description } = event;
 
 	const metaData = {
 		id,
