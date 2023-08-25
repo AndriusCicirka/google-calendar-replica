@@ -125,7 +125,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 		styledData.push({
 			...metaData,
 			key: `${id}-0`,
-			storageId: generateDateId(event.startingDate),
+			weekViewId: generateDateId(event.startingDate),
 			width: '100%',
 			gridRow: `${startingDate.getHours() + 1}/${HOURS_IN_DAY + 1}`,
 			gridColumn: `${startingDate.getDay() + 1}`,
@@ -139,7 +139,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 				styledData.push({
 					...metaData,
 					key: `${id}-${i}`,
-					storageId: generateDateId(
+					weekViewId: generateDateId(
 						new Date(iterableDate.setDate(iterableDate.getDate() + 1))
 					),
 					width: '100%',
@@ -159,7 +159,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 		styledData.push({
 			...metaData,
 			key: `${id}-${loopLength}`,
-			storageId: generateDateId(finishingDate),
+			weekViewId: generateDateId(finishingDate),
 			width: '100%',
 			gridRow: `${1}/${finishingDate.getHours() + 1}`,
 			gridColumn: `${finishingDate.getDay() + 1}`,
@@ -187,7 +187,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 		{
 			...metaData,
 			key: `${id}`,
-			storageId: generateDateId(startingDate),
+			weekViewId: generateDateId(startingDate),
 			width: '100%',
 			gridRow: `${startingDate.getHours() + 1}/${finishingDate.getHours() + 1}`,
 			gridColumn: `${startingDate.getDay() + 1}`,
@@ -225,6 +225,6 @@ export const processEventDataByWeek = (currentWeeklyView, eventData) => {
 		.flat();
 
 	return styledData.filter(
-		(event) => event.storageId!.localeCompare(viewId) === 0
+		(event) => event.weekViewId!.localeCompare(viewId) === 0
 	);
 };

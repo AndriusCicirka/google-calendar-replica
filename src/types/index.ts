@@ -2,7 +2,7 @@ export interface CalendarEvent {
 	id: string;
 	title: string;
 	description?: string;
-	storageId?: string;
+	weekViewId?: string;
 	startingDate: Date;
 	finishingDate: Date;
 	startingDateId?: string;
