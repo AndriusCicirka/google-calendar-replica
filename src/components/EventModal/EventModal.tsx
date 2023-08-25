@@ -66,8 +66,8 @@ const EventModal: React.FC<Props> = (props) => {
 				id: generateId(),
 				title,
 				description,
-				startingDate: new Date(combinedStartDate),
-				finishingDate: new Date(combinedFinishDate),
+				startingDate: combinedStartDate,
+				finishingDate: combinedFinishDate,
 				startingDateId: generateDateId(combinedStartDate),
 				finishingDateId: generateDateId(combinedFinishDate),
 			};
