@@ -2,13 +2,12 @@ import React from 'react';
 import styles from './CalendarTable.module.css';
 
 import Event from '../Event/Event';
-import { CalendarEvent, CalendarEventWithStyles } from 'types';
+import { CalendarEventWithStyles } from 'types';
 import {
 	calculatePreffix,
 	WEEK_LENGTH,
 	HOURS_IN_DAY,
 	TIME_MARKINGS,
-	processEventDataByWeek,
 } from 'utils';
 
 interface Props {
