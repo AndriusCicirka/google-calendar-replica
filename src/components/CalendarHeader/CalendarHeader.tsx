@@ -2,6 +2,8 @@ import React from 'react';
 import styles from './CalendarHeader.module.css';
 import { getToday, getWeekdays, DAYS_IN_WEEK } from 'utils';
 
+import classnames from 'classnames';
+
 interface Props {
 	gridArea: string;
 	currentWeeklyView: Date;
@@ -69,16 +71,18 @@ const CalendarHeader: React.FC<Props> = (props) => {
 					return (
 						<div className={styles.headerCell} key={index + 123}>
 							<span
-								className={`${styles.headerCellLetters} ${
+								className={classnames(
+									styles.headerCellLetters,
 									isToday && styles.currentDayLetters
-								}`}
+								)}
 							>
 								{formatDayName(day)}
 							</span>
 							<span
-								className={`${styles.headerCellNumbers} ${
+								className={classnames(
+									styles.headerCellNumbers,
 									isToday && styles.currentDayNumbers
-								}`}
+								)}
 							>
 								{day.getDate()}
 							</span>
