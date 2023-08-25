@@ -23,15 +23,12 @@ function App() {
 		eventsService.getEvents('events')
 	);
 
-	const createNewEvent = useMutation((newData: CalendarEvent[]) =>
-		eventsService.createEvent(newData, 'events')
+	const createNewEvent = useMutation((newEvent: CalendarEvent[]) =>
+		eventsService.createEvent(newEvent, 'events')
 	);
 
-	const handleSubmit = (newData) => {
-		const combinedData = [
-			...(eventData as CalendarEvent[]),
-			newData as CalendarEvent,
-		];
+	const handleSubmit = (newEvent) => {
+		const combinedData = [...(eventData as CalendarEvent[]), newEvent];
 		setEventData(combinedData);
 		createNewEvent.mutateAsync(combinedData);
 	};
@@ -54,7 +51,7 @@ function App() {
 				<EventModal
 					currentEventData={eventData as CalendarEvent[]}
 					closeModal={() => setShowEventModal(false)}
-					onSubmit={(newData) => handleSubmit(newData)}
+					onSubmit={(newEvent) => handleSubmit(newEvent)}
 				/>
 			)}
 			<Layout>

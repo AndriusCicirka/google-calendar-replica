@@ -101,10 +101,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 		formatDateToDDMMYY(event.startingDate) !==
 		formatDateToDDMMYY(event.finishingDate);
 
-	const startingDate = new Date(event.startingDate);
-	const finishingDate = new Date(event.finishingDate);
-
-	const { id, title, description } = event;
+	const { id, title, description, startingDate, finishingDate } = event;
 
 	const metaData = {
 		id,
@@ -201,6 +198,7 @@ export const calculateStyles = (event: CalendarEvent) => {
 };
 
 export const processEventDataByWeek = (currentWeeklyView, eventData) => {
+	console.log(eventData);
 	if (!eventData) {
 		return;
 	}
@@ -211,7 +209,21 @@ export const processEventDataByWeek = (currentWeeklyView, eventData) => {
 			event.startingDateId === viewId || event.finishingDateId === viewId
 	);
 
-	const styledData = filteredData.map((event) => calculateStyles(event)).flat();
+	const filteredDataFixedTypes = filteredData.map((event) => {
+		return {
+			id: event.id,
+			title: event.title,
+			startingDateId: event.startingDateId,
+			finishingDateId: event.finishingDateId,
+			description: event.description,
+			startingDate: new Date(event.startingDate),
+			finishingDate: new Date(event.finishingDate),
+		};
+	});
+
+	const styledData = filteredDataFixedTypes
+		.map((event) => calculateStyles(event))
+		.flat();
 
 	return styledData.filter(
 		(event) => event.storageId!.localeCompare(viewId) === 0
