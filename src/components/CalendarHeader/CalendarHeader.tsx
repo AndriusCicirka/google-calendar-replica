@@ -1,14 +1,12 @@
 import React from 'react';
 import styles from './CalendarHeader.module.css';
-import { getToday, getWeekdays } from 'utils';
+import { getToday, getWeekdays, DAYS_IN_WEEK } from 'utils';
 
 interface Props {
 	gridArea: string;
 	currentWeeklyView: Date;
 	onViewChange: Function;
 }
-
-const DAYS_IN_WEEK = 7;
 
 const CalendarHeader: React.FC<Props> = (props) => {
 	const today = getToday();
