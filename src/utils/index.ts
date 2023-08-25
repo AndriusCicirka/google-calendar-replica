@@ -198,7 +198,6 @@ export const calculateStyles = (event: CalendarEvent) => {
 };
 
 export const processEventDataByWeek = (currentWeeklyView, eventData) => {
-	console.log(eventData);
 	if (!eventData) {
 		return;
 	}
