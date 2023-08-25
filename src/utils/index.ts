@@ -127,7 +127,6 @@ export const calculateStyles = (event: CalendarEvent) => {
 
 		styledData.push({
 			...metaData,
-			id,
 			key: `${id}-0`,
 			storageId: generateDateId(event.startingDate),
 			width: '100%',
@@ -142,7 +141,6 @@ export const calculateStyles = (event: CalendarEvent) => {
 			for (let i = 1; i < loopLength; i++) {
 				styledData.push({
 					...metaData,
-					id,
 					key: `${id}-${i}`,
 					storageId: generateDateId(
 						new Date(iterableDate.setDate(iterableDate.getDate() + 1))
@@ -163,7 +161,6 @@ export const calculateStyles = (event: CalendarEvent) => {
 
 		styledData.push({
 			...metaData,
-			id,
 			key: `${id}-${loopLength}`,
 			storageId: generateDateId(finishingDate),
 			width: '100%',
@@ -192,7 +189,6 @@ export const calculateStyles = (event: CalendarEvent) => {
 	return [
 		{
 			...metaData,
-			id,
 			key: `${id}`,
 			storageId: generateDateId(startingDate),
 			width: '100%',
