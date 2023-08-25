@@ -10,7 +10,7 @@ interface Props {
 
 const DAYS_IN_WEEK = 7;
 
-const CalendarHeader: React.FC<Props> = (props): JSX.Element => {
+const CalendarHeader: React.FC<Props> = (props) => {
 	const today = getToday();
 	const weekdays = getWeekdays(props.currentWeeklyView);
 
@@ -66,7 +66,7 @@ const CalendarHeader: React.FC<Props> = (props): JSX.Element => {
 				<span className={styles.headerTimezone}>GMT+03</span>
 			</div>
 			<>
-				{weekdays.map((day: Date, index): JSX.Element => {
+				{weekdays.map((day: Date, index) => {
 					const isToday = checkIfSameDay(today, day);
 					return (
 						<div className={styles.headerCell} key={index + 123}>

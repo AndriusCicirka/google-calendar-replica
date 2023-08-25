@@ -19,7 +19,7 @@ interface Props {
 	onTableClick: Function;
 }
 
-const CalendarTable: React.FC<Props> = (props): JSX.Element => {
+const CalendarTable: React.FC<Props> = (props) => {
 	const tableClickHandler = (modalState: boolean) => {
 		props.onTableClick(!modalState);
 	};
