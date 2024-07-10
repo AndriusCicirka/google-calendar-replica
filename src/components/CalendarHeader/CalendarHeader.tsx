@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './CalendarHeader.module.css';
-import { getToday, getWeekdays, DAYS_IN_WEEK } from 'utils';
+import { getToday, getWeekdays} from 'utils';
 
 import classnames from 'classnames';
 
@@ -22,18 +22,6 @@ const CalendarHeader: React.FC<Props> = (props) => {
 			.toUpperCase();
 	};
 
-	const handleWeekNavigation = (
-		direction: 'forward' | 'backward',
-		currentDate: Date
-	) => {
-		const updatedDate =
-			direction === 'forward'
-				? new Date(currentDate.setDate(currentDate.getDate() + DAYS_IN_WEEK))
-				: new Date(currentDate.setDate(currentDate.getDate() - DAYS_IN_WEEK));
-
-		props.onViewChange(updatedDate);
-	};
-
 	const checkIfSameDay = (today: Date, otherDate: Date) => {
 		return (
 			today.getFullYear() === otherDate.getFullYear() &&
@@ -44,27 +32,6 @@ const CalendarHeader: React.FC<Props> = (props) => {
 
 	return (
 		<div className={styles[props.gridArea]}>
-			<div className={styles.headerMisc}>
-				<div>
-					<button
-						className={styles.buttonWeek}
-						onClick={() =>
-							handleWeekNavigation('backward', props.currentWeeklyView)
-						}
-					>
-						{'<'}
-					</button>
-					<button
-						className={styles.buttonWeek}
-						onClick={() =>
-							handleWeekNavigation('forward', props.currentWeeklyView)
-						}
-					>
-						{'>'}
-					</button>
-				</div>
-				<span className={styles.headerTimezone}>GMT+03</span>
-			</div>
 			<>
 				{weekdays.map((day: Date, index) => {
 					const isToday = checkIfSameDay(today, day);

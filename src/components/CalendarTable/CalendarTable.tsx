@@ -4,10 +4,8 @@ import styles from './CalendarTable.module.css';
 import Event from '../Event/Event';
 import { CalendarEventWithStyles } from 'types';
 import {
-	calculatePreffix,
 	WEEK_LENGTH,
 	HOURS_IN_DAY,
-	TIME_MARKINGS,
 } from 'utils';
 
 interface Props {
@@ -19,22 +17,14 @@ interface Props {
 }
 
 const tableCells = Array(WEEK_LENGTH * HOURS_IN_DAY).fill('');
-const timeMarkings = Array(HOURS_IN_DAY - 1).fill('');
 
 const CalendarTable: React.FC<Props> = (props) => {
 	const tableClickHandler = (modalState: boolean) => {
 		props.onTableClick(!modalState);
 	};
-
+	
 	return (
-		<div className={styles[props.gridArea]}>
-			<div aria-hidden="true" className={styles.tableTime}>
-				{timeMarkings.map((_, i) => (
-					<span className={styles.timeMarker} key={i}>
-						{TIME_MARKINGS[i]} {calculatePreffix(i)}
-					</span>
-				))}
-			</div>
+		<div className={styles.calendarWrap}>
 			<div
 				className={styles.tableWrap}
 				onClick={() => tableClickHandler(props.showEventModal)}

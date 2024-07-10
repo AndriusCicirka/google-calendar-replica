@@ -1,8 +1,17 @@
 import React from 'react';
 import styles from './Header.module.css';
 
-const Header = () => {
-	return <header className={styles.header} />;
+interface Props {
+	currentWeeklyView: Date;
+}
+
+const Header: React.FC<Props> = ({currentWeeklyView}) => {
+
+	const date = currentWeeklyView.toLocaleDateString('default', { year: 'numeric', month: 'long' });
+
+	return <header className={styles.header}>
+		<h1 className={styles.date}>{date}</h1>
+	</header>;
 };
 
 export default Header;

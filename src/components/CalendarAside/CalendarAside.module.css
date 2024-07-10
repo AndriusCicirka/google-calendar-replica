@@ -1,0 +1,58 @@
+.calendarAside {
+  display: flex;
+  grid-area: calendar-aside;
+  flex-direction: column;
+  width: 75px;
+}
+
+.headerCell {
+	display: flex;
+
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.headerMisc {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+  height: 120px;
+}
+
+.headerMisc > * {
+	margin-block: 5px;
+}
+
+.buttonWeek {
+	font-size: 24px;
+	margin-inline: 7px;
+	cursor: pointer;
+}
+
+.headerTimezone {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	color: rgb(70, 70, 70);
+}
+
+
+.tableTime {
+	display: grid;
+	grid-template-rows: repeat(24, 60px);
+
+	width: inherit;
+	text-align: right;
+
+	font-size: 10px;
+	padding-right: 10px;
+}
+
+.timeMarker {
+	padding-top: 55px;
+	font-family: Arial, Helvetica, sans-serif;
+	color: gray;
+}
+

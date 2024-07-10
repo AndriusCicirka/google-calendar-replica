@@ -1,10 +1,9 @@
 import React from 'react';
-import styles from './App.module.css';
 import Header from 'components/Header';
 import Layout from 'components/Layout';
-import Placeholder from 'components/Placeholder';
 import CalendarHeader from 'components/CalendarHeader';
 import CalendarTable from 'components/CalendarTable';
+import CalendarAside from 'components/CalendarAside/CalendarAside';
 import EventModal from 'components/EventModal';
 import { getToday, processEventDataByWeek } from 'utils';
 import { useState } from 'react';
@@ -45,8 +44,8 @@ function App() {
 	);
 
 	return (
-		<div className={styles.container}>
-			<Header />
+		<>
+			<Header currentWeeklyView={currentWeeklyView}/>
 			{showEventModal && (
 				<EventModal
 					currentEventData={eventData as CalendarEvent[]}
@@ -55,13 +54,12 @@ function App() {
 				/>
 			)}
 			<Layout>
-				<Placeholder gridArea="asideLeft" />
-				<Placeholder gridArea="asideLeft" />
 				<CalendarHeader
 					gridArea="calendarHeader"
 					currentWeeklyView={currentWeeklyView}
 					onViewChange={(newDate) => setCurrentWeeklyView(newDate)}
 				/>
+				<CalendarAside gridArea="calendarAside" currentWeeklyView={currentWeeklyView} onViewChange={(newDate) => setCurrentWeeklyView(newDate)}/>
 				<CalendarTable
 					gridArea="calendarWrap"
 					currentWeeklyView={currentWeeklyView}
@@ -69,10 +67,8 @@ function App() {
 					eventList={currentViewEvents as CalendarEventWithStyles[]}
 					onTableClick={(newState) => setShowEventModal(newState)}
 				/>
-				<Placeholder gridArea="asideRight" />
-				<Placeholder gridArea="asideRight" />
 			</Layout>
-		</div>
+		</>
 	);
 }
 
