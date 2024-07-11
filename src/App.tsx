@@ -1,16 +1,12 @@
 import React from 'react';
-import Header from 'components/Header';
-import Layout from 'components/Layout';
-import CalendarHeader from 'components/CalendarHeader';
-import CalendarTable from 'components/CalendarTable';
-import CalendarAside from 'components/CalendarAside/CalendarAside';
-import EventModal from 'components/EventModal';
-import { getToday, processEventDataByWeek } from 'utils';
-import { useState } from 'react';
-import useEventsService from 'hooks/useEventsService';
+import { useEffect, useState } from 'react';
 import { useQuery, useMutation } from 'react-query';
+
+import { Header, Layout } from 'components/ui';
+import {CalendarHeader, CalendarTable, CalendarAside, EventModal} from 'components';
+import { getToday, processEventDataByWeek } from 'utils';
+import { useEventsService } from 'hooks';
 import { CalendarEvent, CalendarEventWithStyles } from 'types';
-import { useEffect } from 'react';
 
 function App() {
 	const [currentWeeklyView, setCurrentWeeklyView] = useState(getToday());

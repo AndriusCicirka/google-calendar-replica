@@ -1,11 +1,12 @@
-import React from 'react';
-import styles from './EventModal.module.css';
-import { useFormik } from 'formik';
-import { generateDateId, generateId } from 'utils';
-import { useState } from 'react';
-import { CalendarEvent } from 'types';
-import * as Yup from 'yup';
+import styles from '../css/EventModal.module.css';
+
+import React, { useState } from 'react';
 import classnames from 'classnames';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { generateDateId, generateId } from 'utils';
+import { CalendarEvent } from 'types';
 
 interface Props {
 	currentEventData: CalendarEvent[];

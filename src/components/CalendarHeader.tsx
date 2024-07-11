@@ -1,8 +1,9 @@
-import React from 'react';
-import styles from './CalendarHeader.module.css';
-import { getToday, getWeekdays} from 'utils';
+import styles from '../css/CalendarHeader.module.css';
 
+import React from 'react';
 import classnames from 'classnames';
+
+import { getToday, getWeekdays} from 'utils';
 
 interface Props {
 	gridArea: string;

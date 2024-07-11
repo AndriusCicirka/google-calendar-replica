@@ -1,6 +1,6 @@
-import React from 'react';
+import styles from '../css/CalendarAside.module.css'
 
-import styles from './CalendarAside.module.css'
+import React from 'react';
 
 import { calculatePreffix, DAYS_IN_WEEK, TIME_MARKINGS, HOURS_IN_DAY } from 'utils';
 

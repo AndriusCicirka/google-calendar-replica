@@ -1,5 +1,6 @@
+import styles from '../../css/Layout.module.css';
+
 import React from 'react';
-import styles from './Layout.module.css';
 
 const Layout: React.FC<React.PropsWithChildren> = (props) => {
 	const childrenArray = React.Children.toArray(props.children);

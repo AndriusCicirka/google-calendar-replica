@@ -1,5 +1,6 @@
+import styles from '../../css/Placeholder.module.css';
+
 import React from 'react';
-import styles from './Placeholder.module.css';
 
 interface Props {
 	gridArea?: string;

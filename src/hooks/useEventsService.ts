@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+
 import { EventService } from 'types';
 import { EventServiceContext } from 'index';
 

@@ -1,5 +1,6 @@
+import styles from '../../css/Header.module.css';
+
 import React from 'react';
-import styles from './Header.module.css';
 
 interface Props {
 	currentWeeklyView: Date;

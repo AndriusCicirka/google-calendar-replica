@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './CalendarTable.module.css';
+import styles from '../css/CalendarTable.module.css';
 
-import Event from '../Event/Event';
+import React from 'react';
+
+import Event from './Event';
 import { CalendarEventWithStyles } from 'types';
 import {
 	WEEK_LENGTH,

@@ -1,0 +1,1 @@
+export {eventServiceLocalStorage} from './eventServiceLocalStorage';

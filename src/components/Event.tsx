@@ -1,7 +1,8 @@
-import React from 'react';
-import styles from './Event.module.css';
+import styles from '../css/Event.module.css';
 
-import { CalendarEventWithStyles } from '../../types';
+import React from 'react';
+
+import { CalendarEventWithStyles } from '../types';
 
 const renderHHMMString = (date: Date) => {
 	return `${String(date.getHours()).padStart(2, '0')}:${String(
