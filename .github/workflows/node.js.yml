@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install dependencies and build project
-        working-directory: /
+        working-directory: ./
         run: |
           npm ci --force
           npm run build
