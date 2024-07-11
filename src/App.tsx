@@ -36,7 +36,7 @@ function App() {
 		if (isSuccess) {
 			setEventData(data);
 		}
-	}, [data]);
+	}, [isSuccess, data]);
 
 	const currentViewEvents = processEventDataByWeek(
 		currentWeeklyView,
