@@ -42,7 +42,9 @@
     ]
   },
   "lint-staged": {
-  "*.{ts,tsx}": "eslint --fix"
+    "src/**/*.{.js,.jsx,.ts,.tsx}": [
+      "eslint --fix"
+    ]
   },
   "husky": {
     "hooks": {
