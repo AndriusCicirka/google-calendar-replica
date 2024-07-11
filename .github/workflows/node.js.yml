@@ -18,5 +18,5 @@ jobs:
       - name: Install dependencies and build project
         working-directory: ./
         run: |
-          npm ci --force
-          npm run build
+          yarn
+          yarn build
