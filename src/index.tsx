@@ -13,17 +13,17 @@ const root = ReactDOM.createRoot(
 );
 
 export const EventServiceContext = React.createContext(
-	eventServiceLocalStorage
+  eventServiceLocalStorage
 );
 
 const queryClient = new QueryClient();
 
 root.render(
-	<React.StrictMode>
-		<EventServiceContext.Provider value={eventServiceLocalStorage}>
-			<QueryClientProvider client={queryClient}>
-				<App />
-			</QueryClientProvider>
-		</EventServiceContext.Provider>
-	</React.StrictMode>
+  <React.StrictMode>
+    <EventServiceContext.Provider value={eventServiceLocalStorage}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </EventServiceContext.Provider>
+  </React.StrictMode>
 );

@@ -3,28 +3,21 @@
 		"noEmit": true,
 		"target": "es6", // using babel-loader to transpile to es5
 		"module": "esnext", //commonjs destroys 'dynamic imports' which is used for code splitting
-		"noImplicitAny": false,
 		"preserveConstEnums": true,
 		"baseUrl": "./src",
-		"jsx": "react", // process JSX
-		"lib": ["dom", "es5", "es6", "es7", "es2017", "es2019"],
-		"allowSyntheticDefaultImports": true, // no errors with commonjs modules interop
-		"esModuleInterop": true,
-		"allowJs": true, // include js files
-		"declaration": false,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"forceConsistentCasingInFileNames": true,
+		"jsx": "react-jsx", // process JSX
+		"lib": ["DOM", "DOM.Iterable", "es5", "es6", "es7", "es2017", "es2019"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
 		"moduleResolution": "node",
-		"noEmitOnError": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noUnusedLocals": false,
-		"strict": true,
-		"strictFunctionTypes": false,
-		"pretty": true,
-		"removeComments": true,
+		"resolveJsonModule": true,
+    "isolatedModules": true,
 		"sourceMap": true
 	}
 }
