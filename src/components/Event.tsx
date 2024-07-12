@@ -15,28 +15,33 @@ const renderShortDate = (date: Date) => {
 };
 
 const Event: React.FC<CalendarEventWithStyles> = (props) => {
+
+  const { gridRow, gridColumn, marginBottom, marginTop, paddingBottom, paddingTop } = props;
+
+  const {title, description, extendsOverMultipleDays, startingDate, finishingDate} = props;
+
   return (
     <div
       className={styles.event}
       style={{
-        gridRow: props.gridRow,
-        gridColumn: props.gridColumn,
-        marginBottom: props.marginBottom,
-        marginTop: props.marginTop,
-        paddingBottom: props.paddingBottom,
-        paddingTop: props.paddingTop,
+        gridRow,
+        gridColumn,
+        marginBottom,
+        marginTop,
+        paddingBottom,
+        paddingTop,
       }}
     >
-      <span className={styles.eventTitle}>{props.title}, </span>
+      <span className={styles.eventTitle}>{title}, </span>
       <span className={styles.eventTime}>
-        {props.extendsOverMultipleDays &&
-					`${renderShortDate(props.startingDate)}, `}
-        {renderHHMMString(props.startingDate)} -{' '}
-        {renderHHMMString(props.finishingDate)}
-        {props.extendsOverMultipleDays &&
-					`, ${renderShortDate(props.finishingDate)}`}
+        {extendsOverMultipleDays &&
+					`${renderShortDate(startingDate)}, `}
+        {renderHHMMString(startingDate)} -{' '}
+        {renderHHMMString(finishingDate)}
+        {extendsOverMultipleDays &&
+					`, ${renderShortDate(finishingDate)}`}
       </span>
-      <p className={styles.eventDescription}>{props.description}</p>
+      <p className={styles.eventDescription}>{description}</p>
     </div>
   );
 };

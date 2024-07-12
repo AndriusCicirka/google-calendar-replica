@@ -46,7 +46,7 @@ const formValidationSchema = Yup.object()
     }
   );
 
-const EventModal: React.FC<Props> = (props) => {
+const EventModal: React.FC<Props> = ({onSubmit, closeModal}) => {
   const formik = useFormik({
     initialValues: initialFormValues,
     validationSchema: formValidationSchema,
@@ -73,8 +73,8 @@ const EventModal: React.FC<Props> = (props) => {
         finishingDateId: generateDateId(combinedFinishDate),
       };
 
-      props.onSubmit(eventData);
-      props.closeModal();
+      onSubmit(eventData);
+      closeModal();
     },
   });
 
@@ -123,7 +123,7 @@ const EventModal: React.FC<Props> = (props) => {
           className={styles.closeButton}
           aria-label="Close modal button"
           type="button"
-          onClick={() => props.closeModal()}
+          onClick={() => closeModal()}
         >
 					X
         </button>
