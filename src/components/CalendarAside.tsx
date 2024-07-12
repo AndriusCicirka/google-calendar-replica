@@ -3,12 +3,11 @@ import styles from '../css/CalendarAside.module.css';
 import { calculatePreffix, DAYS_IN_WEEK, TIME_MARKINGS, HOURS_IN_DAY } from 'utils';
 
 interface Props {
-gridArea: string;
-currentWeeklyView: Date;
-onViewChange: Function;
+  currentWeeklyView: Date;
+  onViewChange: Function;
 }
 
-const CalendarAside: React.FC<Props> = ({gridArea, currentWeeklyView, onViewChange}) => {
+const CalendarAside: React.FC<Props> = ({ currentWeeklyView, onViewChange}) => {
 
   const timeMarkings = Array(HOURS_IN_DAY - 1).fill('');
   const handleWeekNavigation = (
@@ -24,7 +23,7 @@ direction === 'forward'
   };
 
   return (
-    <div className={styles[gridArea]}>			
+    <div className={styles.calendarHeader}>			
       <div className={styles.headerMisc}>
         <div>
           <button

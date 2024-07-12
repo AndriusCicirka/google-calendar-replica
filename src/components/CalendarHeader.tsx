@@ -5,14 +5,13 @@ import classnames from 'classnames';
 import { getToday, getWeekdays} from 'utils';
 
 interface Props {
-	gridArea: string;
 	currentWeeklyView: Date;
 	onViewChange: Function;
 }
 
-const CalendarHeader: React.FC<Props> = (props) => {
+const CalendarHeader: React.FC<Props> = ({ currentWeeklyView }) => {
   const today = getToday();
-  const weekdays = getWeekdays(props.currentWeeklyView);
+  const weekdays = getWeekdays(currentWeeklyView);
 
   const formatDayName = (day: Date) => {
     return day
@@ -31,7 +30,7 @@ const CalendarHeader: React.FC<Props> = (props) => {
   };
 
   return (
-    <div className={styles[props.gridArea]}>
+    <div className={styles.calendarHeader}>
       <>
         {weekdays.map((day: Date, index) => {
           const isToday = checkIfSameDay(today, day);

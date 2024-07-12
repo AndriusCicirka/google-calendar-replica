@@ -1,4 +1,4 @@
-.calendarWrap {
+.calendarMain {
 	grid-area: calendar-main;
 	display: flex;
 	width: 100%;

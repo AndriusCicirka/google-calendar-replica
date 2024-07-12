@@ -50,14 +50,11 @@ function App() {
       )}
       <Layout>
         <CalendarHeader
-          gridArea="calendarHeader"
           currentWeeklyView={currentWeeklyView}
           onViewChange={(newDate) => setCurrentWeeklyView(newDate)}
         />
-        <CalendarAside gridArea="calendarAside" currentWeeklyView={currentWeeklyView} onViewChange={(newDate) => setCurrentWeeklyView(newDate)}/>
+        <CalendarAside currentWeeklyView={currentWeeklyView} onViewChange={(newDate) => setCurrentWeeklyView(newDate)}/>
         <CalendarTable
-          gridArea="calendarWrap"
-          currentWeeklyView={currentWeeklyView}
           showEventModal={showEventModal}
           eventList={currentViewEvents as CalendarEventWithStyles[]}
           onTableClick={(newState) => setShowEventModal(newState)}
