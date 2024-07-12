@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import { getToday, getWeekdays} from 'utils';
 
 interface Props {
+	gridArea: string;
 	currentWeeklyView: Date;
 	onViewChange: Function;
 }

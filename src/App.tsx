@@ -55,6 +55,7 @@ function App() {
         />
         <CalendarAside currentWeeklyView={currentWeeklyView} onViewChange={(newDate) => setCurrentWeeklyView(newDate)}/>
         <CalendarTable
+
           showEventModal={showEventModal}
           eventList={currentViewEvents as CalendarEventWithStyles[]}
           onTableClick={(newState) => setShowEventModal(newState)}

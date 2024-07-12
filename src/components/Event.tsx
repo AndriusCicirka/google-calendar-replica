@@ -15,11 +15,11 @@ const renderShortDate = (date: Date) => {
 };
 
 const Event: React.FC<CalendarEventWithStyles> = (props) => {
-
+  
   const { gridRow, gridColumn, marginBottom, marginTop, paddingBottom, paddingTop } = props;
 
   const {title, description, extendsOverMultipleDays, startingDate, finishingDate} = props;
-
+        
   return (
     <div
       className={styles.event}

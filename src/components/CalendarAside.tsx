@@ -7,8 +7,6 @@ interface Props {
   onViewChange: Function;
 }
 
-const CalendarAside: React.FC<Props> = ({ currentWeeklyView, onViewChange}) => {
-
   const timeMarkings = Array(HOURS_IN_DAY - 1).fill('');
   const handleWeekNavigation = (
     direction: 'forward' | 'backward',
